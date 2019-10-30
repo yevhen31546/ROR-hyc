@@ -10,7 +10,7 @@ gem "paperclip", "~> 2.7.0"
 gem "parndt-acts_as_tree", "~> 1.2.5", :require => "acts_as_tree"
 gem "authlogic", "~> 3.1.0"
 gem "formtastic", "~> 1.2.4"
-gem "haml", "~> 4.0.7"
+gem "haml", "~> 5.0.0"
 gem "haml-contrib", "~> 1.0.0.1" # required for textile filter
 
 gem "truncate_html", "~> 0.9.3" # I've been using this one since the start but it drops unicode chars like euro symbol
