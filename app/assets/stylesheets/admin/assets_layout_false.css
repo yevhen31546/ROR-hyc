@@ -1,0 +1,17 @@
+body {
+  background: none;
+  margin: 20px;
+}
+
+#primary_wrapper, #main_content, #main_content_inner {
+  width: auto !important;
+}
+
+#header, #footer {
+  display: none;
+}
+
+ul.sf-menu {
+  display: none !important;
+}
+

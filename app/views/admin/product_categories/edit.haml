@@ -1,0 +1,7 @@
+%h1
+  #{link_to 'Products', admin_products_path}
+  &rsaquo; #{link_to 'Product Categories', admin_product_categories_path}
+  &rsaquo; Editing '#{@product_category.name}'
+
+#main
+  = render 'form'

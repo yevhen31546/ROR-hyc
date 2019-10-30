@@ -1,0 +1,9 @@
+%h1 Duplicate Trophy Winners From #{@trophy_event.name} (#{@trophy_event.year})
+
+= form_tag '' do
+  %p
+    = label_tag :to_trophy_event_id, "Duplicate to #{@trophy_event.year} and event :"
+    - opts = []
+    - opts = TrophyEvent.where("id != ?", @trophy_event.id).order('year desc').group_by(&:year).map { |year, group| [year.to_s, group.map { |te| [te.name, te.id] }] }
+    = select_tag :to_trophy_event_id, grouped_options_for_select(opts)
+  %p= submit_tag 'Duplicate'

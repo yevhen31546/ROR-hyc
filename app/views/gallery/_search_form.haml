@@ -1,0 +1,5 @@
+= form_tag search_gallery_photos_path, method: :get, class: 'gallery-search-form' do
+  = hidden_field_tag 'gallery_album_id', @gallery_album.id if @gallery_album
+  = hidden_field_tag 'gallery_category_id', @gallery_category.id if @gallery_category
+  = text_field_tag 'query', @query, class: 'gallery-search-form-input'
+  = submit_tag 'Search', class: 'gallery-search-form-button'

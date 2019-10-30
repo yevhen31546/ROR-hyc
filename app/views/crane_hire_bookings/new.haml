@@ -1,0 +1,23 @@
+- @page_name = 'Crane Booking'
+- @no_sidebar = true
+
+- content_for :breadcrumbs do
+  %li
+    %span New #{@page_name}
+
+#main-content-inner
+  %h1= @page_name
+
+  %p
+    This is a booking system only, so you are not charged on submission of the form.
+    %br
+    Payment is made as usual when you contact the marina office, by phone or visit.
+    %br
+    All services must be paid in full before facilities are provided.
+
+  %p The objective of this online booking system is to automate the scheduling of the crane and cradle.
+
+
+  = render :partial => "form"
+
+

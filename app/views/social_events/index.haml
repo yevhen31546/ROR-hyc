@@ -1,0 +1,29 @@
+- @page_name = 'Events'
+
+- content_for :breadcrumbs do
+  %li
+    %span Open Events
+
+#main-content-inner
+
+  %strong Social Events
+
+  - if !@events.empty?
+    %table#events{:cellspacing => 10}
+      %thead
+        %tr
+          %th.title Event
+          %th.date Date
+      %tbody
+        - @events.each do |event|
+          %tr.spacer.spacer_top
+            %td{:colspan => 2} &nbsp;
+          %tr.event
+            %td.title
+              = link_to event.name, social_event_path(event)
+            %td.date
+              = event.date.strftime("%d-%m-%Y")
+          %tr.spacer
+            %td{:colspan => 2} &nbsp;
+  - else
+    %p No Events

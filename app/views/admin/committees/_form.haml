@@ -1,0 +1,10 @@
+= semantic_form_for([:admin, @committee]) do |f|
+  = render 'layouts/error_messages', :target => object
+  %fieldset
+    %ul
+      = f.input :name
+      = f.input :phone
+      = f.input :email
+
+  %fieldset
+    %ul= f.commit_button f.object.new_record? ? 'Save' : 'Update', :button_html => { :id => nil }

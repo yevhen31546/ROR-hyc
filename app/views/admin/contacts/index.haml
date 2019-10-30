@@ -1,0 +1,34 @@
+%h1 Contacts
+
+%ul#actions
+  %li= link_to 'Add new contact', new_object_path, :class => 'add_icon'
+  %li= link_to 'Visit contacts', contacts_path, :class => 'visit_icon'
+
+= paginated_section collection do
+  %table#contacts.index.sortable_table
+    %tr
+      %th
+      %th Category
+      %th Position
+      %th Name
+      %th Phone
+      %th Email
+      %th Photo
+      %th Actions
+    - @contacts.each do |contact|
+      %tr{:class => "contact #{cycle('odd', 'even')}", :"data-id" => contact.id}
+        %td.handle [drag]
+        %td= contact.category.presence || 'No category'
+        %td
+          = contact.position
+          - if contact.sub_position.present?
+            %br
+            = contact.sub_position
+        %td= contact.name
+        %td= contact.phone
+        %td= contact.email
+        %td= image_tag contact.photo.url(:thumb) if contact.photo.exists?
+        %td(nowrap="nowrap")
+          = link_to 'Visit', contact_path(contact), :class => 'inline_visit_icon'
+          = link_to 'Edit', edit_object_path(contact), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(contact), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

@@ -1,0 +1,10 @@
+<% # this template is not currently used as we dont give the user an option, we just skip ahead to completing the 3d secure process %>
+</form>
+<h2>Complete 3D Secure</h2>
+
+<form name="form" action="" method="POST" target="_top">
+  <input type="hidden" name="PaRes"  value="<%= @pa_res %>"/>
+  <input type="hidden" name="MD"     value="<%= @md %>"/>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"/>
+  <center><p>Please click button below to Authorise your card</p><input type="submit" value="Go"/></p></center>
+</form>

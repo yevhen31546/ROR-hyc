@@ -1,0 +1,10 @@
+- content_for :breadcrumbs do
+  %li
+    %span Social Events
+
+.show_event.event
+
+  %h1= @event.name
+  .date= @event.try(:date).try(:to_s) || 'No Date Set'
+
+  .content= @event.description.html_safe

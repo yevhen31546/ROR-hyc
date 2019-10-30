@@ -1,0 +1,14 @@
+%ul{:id => "category_#{i}", :class => 'category', :data => {:id => category_form.object.try(:id)}}
+  .handle
+  = category_form.input :name, :input_html => {:size => 80}
+  = category_form.input :options, :input_html => {:cols => 75}
+  %li{:style => 'float: right; margin-right: 200px; margin-top: 20px;'}
+    Only one item per line
+    %br
+    in both options and short options
+    %br
+    %br
+    Short options are used in the Admin Data tables
+  = category_form.input :short_options, :input_html => {:cols => 35}
+  = category_form.input :is_required, :label => "Required?"
+  = category_form.input :_destroy, :as => :boolean

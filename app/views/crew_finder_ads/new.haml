@@ -1,0 +1,16 @@
+- @page_name = 'Crew Finder'
+
+- content_for :breadcrumbs do
+  %li
+    = link_to "Crew Finder", crew_finder_ads_path
+  %li
+    %span New Crew Finder Ad
+
+- content_for :sidebar do
+  &nbsp;
+
+#main-content-inner
+  %h1 Crew Finder
+  = render :partial => "form"
+
+

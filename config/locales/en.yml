@@ -1,0 +1,14 @@
+en:
+  number:
+    currency:
+      format:
+        unit: "€"
+  views:
+    pagination:
+      previous: "&laquo; Prev"
+      next: "Next &raquo;"
+      truncate: "&hellip;"
+  activerecord:
+    attributes:
+      contact_us:
+        num_attendees: "Number of Attendees"

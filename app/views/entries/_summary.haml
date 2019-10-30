@@ -1,0 +1,22 @@
+.entry_summary
+  %h2 Entry Summary
+
+  .summary_section
+    %h3 Event Details
+
+    %dl
+      %dt Event:
+      %dd= entry.event.title
+
+    %dl
+      %dt= (entry.event.dates.length > 1 ? "Date(s):" : "Date:")
+      %dd= display_multiple_dates(*entry.event.dates)
+
+  .summary_section
+    %h3 Personal Details
+
+    %dl
+      %dt Name:
+      %dd= entry.name
+
+

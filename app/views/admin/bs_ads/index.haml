@@ -1,0 +1,52 @@
+%h1 Buy and Sell Ads
+%ul#actions
+  %li= link_to 'Add new ad', new_object_path, :class => 'add_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th= sortable_column_link_to 'Name', 'name'
+      %th Ad Type
+      %th Category
+      %th Location
+      %th Description
+      %th= sortable_column_link_to 'User', 'contact_name'
+      %th Ad Ref
+      %th Status
+      %th
+    - @bs_ads.each do |bs_ad|
+      %tr{:class => cycle('odd', 'even')}
+        %td= link_to bs_ad.name, edit_object_path(bs_ad)
+        %td= bs_ad.ad_type.humanize
+        %td= bs_ad.category.humanize
+        %td= bs_ad.location
+        %td= truncate_html(nl2br(bs_ad.description), :limit => 50)
+        %td= bs_ad.contact_name
+        %td= bs_ad.id
+        %td{:nowrap => true}
+          - current_status = (bs_ad.active? ? 'active' : 'inactive')
+          %p
+            %strong #{current_status.humanize}
+
+          %p
+            Active <b>#{bs_ad.created_at.strftime("%d %b %Y")}</b>
+            - if bs_ad.inactive_date.present?
+              to <b>#{bs_ad.inactive_date.strftime("%d %b %Y")}</b>
+            - if bs_ad.inactive_date.present?
+              %br
+              Inactive <b>#{bs_ad.inactive_date.strftime("%d %b %Y")}</b>
+              - if bs_ad.delete_date.present?
+                to <b>#{bs_ad.delete_date.strftime("%d %b %Y")}</b>
+            - if bs_ad.delete_date
+              %br
+              Deleted after <b>#{bs_ad.delete_date.try(:strftime, "%d %b %Y")}</b>
+          -#- unless bs_ad.active? || bs_ad.approved?
+          -#  %p= link_to 'Activate', activate_admin_bs_ad_path(bs_ad), :confirm => 'Are you sure?', :method => :put, :class => 'inline_edit_icon'
+          -#- unless bs_ad.inactive? || bs_ad.rejected?
+          -#  %p= link_to 'Deactivate', deactivate_admin_bs_ad_path(bs_ad), :confirm => 'Are you sure?', :method => :put, :class => 'inline_edit_icon'
+        %td
+          = link_to 'Edit', edit_object_path(bs_ad), :class => 'inline_edit_icon'
+          -# Copy currently only updates, doesn't create a copy
+          -# = link_to 'Copy', new_admin_bs_ad_path(:copy_id => bs_ad.id), :class => 'inline_copy_icon'
+          = link_to 'Delete', object_path(bs_ad), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+

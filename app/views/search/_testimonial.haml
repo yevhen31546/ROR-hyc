@@ -1,0 +1,4 @@
+%li.testimonial
+  %div
+    = link_to truncate(testimonial.quote.html_safe, :length => 120), testimonials_path
+    %span.name - #{testimonial.name}, #{testimonial.from}

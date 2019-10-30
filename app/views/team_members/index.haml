@@ -1,0 +1,22 @@
+%h1= @page_name = 'Team Members'
+
+#team-members
+  - TeamMember.all.each do |team_member|
+    .team-member
+      %h2.name= link_to team_member.name, team_member
+      - if team_member.role.present?
+        %h3 #{team_member.role}
+
+      .details
+        - if team_member.photo.present? && team_member.photo.exists?      
+          .photo= image_tag team_member.photo.url(:normal), :alt => ''
+        .contact-details
+          - if team_member.department.present?
+            %p #{team_member.department}
+          - if team_member.phone.present?
+            %p t: #{team_member.phone}
+          - if team_member.mobile.present?
+            %p m: #{team_member.mobile}
+          - if team_member.email.present?
+            %p e: #{auto_link team_member.email}
+        .content= team_member.content.html_safe

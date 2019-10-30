@@ -1,0 +1,165 @@
+form.bs_ad {
+  width: 500px;
+
+  p.inline-hints {
+    display: block;
+  }
+
+  li {
+    textarea {
+      width: 500px;
+    }
+
+    fieldset {
+      width: 500px;
+    }
+
+    input[type='submit'] {
+      margin: auto;
+    }
+  }
+}
+
+.form-box {
+  width: 100%;
+  background-color: #ddd;
+  padding: 10px;
+
+  .field {
+    display: inline-block;
+    margin: 5px;
+  }
+
+  .field select {
+    width: 220px;
+    padding-left: 20px;
+  }
+
+  .field.submit {
+    display: block;
+    float: right;
+    margin-top: -35px;
+    margin-right: 20px;
+  }
+}
+
+table.search-results {
+  width: 100%;
+  font-size: 14px;
+
+  tr.spacer {
+    &.spacer_top {
+      border-top: 1px dotted #606776;
+    }
+
+    td {
+      line-height: 10px;
+    }
+  }
+
+  tr:nth-child(2n) {
+    background-color: #eee;
+  }
+
+  th {
+    color: #b0b1b5;
+    font-weight: bold;
+    line-height: 30px;
+    padding: 0 10px;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  td {
+    vertical-align: top;
+    color: #404559;
+    padding: 0 10px;
+    border-left: 1px dotted #cbcdd2;
+
+    p { margin-top: 0; }
+
+    &:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+}
+
+#sidebar {
+  .more {
+    position: absolute;
+    top: 250px;
+
+    .detail.photo {
+      float: left;
+      img {
+        width: 280px;
+        max-height: 300px;
+      }
+    }
+
+    .detail.doc a {
+      line-height: 24px;
+      vertical-align: top;
+    }
+  }
+}
+
+.detail {
+  .key {
+    clear: left;
+    float: left;
+    width: 150px;
+  }
+
+  .value {
+    float: left;
+  }
+}
+
+#main-content-inner {
+
+  .crew_finder_ad, .bs_ad {
+
+    h1 {
+      margin-top: 60px;
+      color: #dc241c;
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    .ad_type, .category, .location {
+      display: inline-block;
+    }
+
+    .description {
+      margin-top: 20px;
+    }
+
+    .price {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  }
+
+  hr {
+    height: 1px;
+    border: 0px;
+    border-top: 1px dotted #000;
+  }
+}
+
+#body-bs-ads-index #sidebar {
+  width: 260px;
+  padding-right: 0;
+  font-size: 13px;
+
+  h3 {color: #d8231c; }
+  h4 {margin-bottom: 3px;}
+  p {margin: 0 0 5px 0;}
+  ul li {list-style: disc; margin-left: 20px;}
+}
+

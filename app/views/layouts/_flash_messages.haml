@@ -1,0 +1,5 @@
+- [:alert, :error, :notice, :success].each do |flash_type|
+  - if flash && !flash[flash_type].blank?
+    - flash_message = flash[flash_type].gsub(/^Successfully removed$/, 'Item deleted')
+    - flash_type = 'success' if flash_message =~ /^Successfully/
+    %div{:id => "flash-#{flash_type}"}= flash_message

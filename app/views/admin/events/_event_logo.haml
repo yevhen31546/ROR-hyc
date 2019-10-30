@@ -1,0 +1,9 @@
+%ul{:id => "event_logo_#{i}", :class => 'event_logo', :data => {:id => event_logo_form.object.try(:id)}}
+  .handle
+  .group
+    %div{:style => "float: left; margin-right: 20px;"}
+      - if event_logo_form.object.image.exists?
+        = image_tag event_logo_form.object.image.url(:thumb)
+    = event_logo_form.input :image, :as => :file
+    = event_logo_form.input :url, :input_html => {:class => 'text-hint', :size => 80}
+    = event_logo_form.input :_destroy, :as => :boolean

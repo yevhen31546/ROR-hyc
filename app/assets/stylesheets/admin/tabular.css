@@ -1,0 +1,57 @@
+/* tables for tabular data */
+table.index {
+  width: 100%;
+}
+
+table.index tr.odd {
+  background-color: #fff;
+}
+
+table.index tr.even {
+  background-color: #eee;
+}
+
+table.index  tr.odd:hover, table.index tr.even:hover {
+  background-color: #C2DCEF;
+}
+
+table.index td, table.index th {
+    padding: 6px;
+    border: 1px solid #d0d7e5;
+}
+
+table.index th {
+  font-size: 120%;
+  color: white;
+  background-color: #1b598a;
+  vertical-align: bottom;
+}
+
+table.index td {
+  vertical-align: middle;
+}
+
+table.index th.name {
+    width: 40%;
+}
+
+table.index a {
+	text-decoration: none;
+}
+
+table.index a:hover {
+	text-decoration: underline;
+}
+
+table.index .numeric {
+    text-align: right;
+}
+
+table.index .date {
+    text-align: right;
+    min-width: 70px;
+}
+
+table.index tr.has_comment td {
+  background-color: #D0D7E5;
+}

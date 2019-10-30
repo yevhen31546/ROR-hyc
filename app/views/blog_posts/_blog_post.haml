@@ -1,0 +1,12 @@
+.post{:itemscope=>'', :itemtype => "http://schema.org/Blog"}
+  %h2.post-title= link_to blog_post.title, object_path(blog_post), {:itemprop=>"name"}
+  .post-info{:itemprop => 'datePublished'}== #{blog_post.created_at.to_s(:longdate)}
+  - if !defined?(blog_post_counter)
+    .post-content= blog_post.content.html_safe
+  - else
+    .post-content= read_more(blog_post.content.html_safe, :length => 400)
+    = link_to 'More >', blog_post, :class => 'read_more'    
+  .post-metadata== #{post_metadata(blog_post)}#{link_to "#{blog_post.blog_comments.approved.count} comments", "#{object_path(blog_post)}#comments"}
+
+  -# - if !defined?(blog_post_counter)
+  -#   = render 'layouts/social_media_buttons'

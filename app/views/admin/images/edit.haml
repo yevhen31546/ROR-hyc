@@ -1,0 +1,7 @@
+%h1 #{link_to 'Images', :action => 'index'} &rsaquo; Editing '#{@image.name}' 
+
+= render 'form'
+
+= link_to 'Show', object_path
+|
+= link_to 'Back', collection_path

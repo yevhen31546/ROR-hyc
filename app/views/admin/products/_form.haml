@@ -1,0 +1,8 @@
+= semantic_form_for [:admin, @product], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :product_category
+    = f.input :name
+    = f.input :position
+
+    = f.commit_button (f.object.new_record? ? 'Add product' : 'Edit product')

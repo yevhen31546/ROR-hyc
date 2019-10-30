@@ -1,0 +1,27 @@
+%h1 Entry Lists
+
+%ul#actions
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: 500px;'}
+    = form_tag '', :method => :get do
+      = select_tag 'year', options_for_select(Event.years, @year), :include_blank => false, :id => 'event_year_filter'
+      = select_tag 'event_id', render(:partial => 'admin/events/options', :locals => {:events => @events, :selected_event => @selected_event})
+      = submit_tag 'Select Event'
+
+- if @selected_event.present?
+  %h1 Entry Lists for #{@selected_event.title}
+  - if @entry_lists.present?
+    %table.index#entry_lists
+      %tr
+        %th.resources Name
+        %th.actions Actions
+      - @entry_lists.each do |entry_list|
+        %tr{:class => cycle('odd', 'even')}
+          %td= entry_list.name
+          %td(nowrap="nowrap")
+            = link_to 'View', admin_entry_list_path(entry_list), :class => 'inline_show_icon'
+            = link_to 'Edit', edit_admin_entry_list_path(entry_list), :class => 'inline_edit_icon'
+            = link_to 'Delete', admin_entry_list_path(entry_list), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+  - else
+    %p None found.
+
+  %p= link_to 'Create New Entry List', new_admin_entry_list_path(:event_id => @selected_event.id)

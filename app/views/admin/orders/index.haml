@@ -1,0 +1,39 @@
+%h1 Orders
+
+= form_tag export_admin_orders_path(format: :csv), method: :get do
+  %ul
+    %li
+      = text_field_tag 'date', @specific_date, placeholder: "Last 6 Months", class: 'ui-datepicker', style: "width: 100px;"
+      = button_tag 'Download as Excel'
+
+%br
+
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Reference
+      %th Member Name
+      %th Member ID
+      %th Member Email
+      %th Total
+      %th Payment
+      %th Status
+      %th Comment
+      %th Date
+      %th Actions
+    - @orders.each do |order|
+      %tr{:class => cycle('odd', 'even')}
+        %td= order.reference
+        %td= order.member_name
+        %td= order.member_id
+        %td= order.email
+        %td= number_to_currency order.total
+        %td= order.payment_item.try(:payment_id)
+        %td= order.payment_status == 1 ? 'paid' : 'unpaid'
+        %td= order.comment.present? ? 'yes' : '-'
+        %td(nowrap="nowrap")= order.created_at.to_s
+        %td(nowrap="nowrap")
+          = link_to 'Details', object_path(order), :class => 'inline_show_icon'
+          = link_to 'Edit', edit_object_path(order), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(order), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

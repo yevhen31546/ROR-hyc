@@ -1,0 +1,27 @@
+- @page_name = "Payment for entry to #{@event.title}"
+
+- content_for :breadcrumbs do
+  %li= link_to "Open Events", :controller => 'events', :action => :index, :event_type => 'open'
+  %li
+    %span= @page_name
+
+- content_for :sidebar do
+  - if @event.sponsor_logo.exists?
+    = image_tag @event.sponsor_logo.url(:normal)
+  - else
+    %p
+
+#main-content-inner
+  %p You must complete payment before your entry can be confirmed!
+
+  = render :partial => 'summary', :locals => {:entry => @entry}
+
+  %h1 Payment Options
+
+  #payment_card_logos
+    = image_tag 'card_logos.png', alt: "VISA and Mastercard Accepted"
+    %br
+    = image_tag '3dsecure.png', alt: "VISA and Mastercard Accepted"
+
+  = render partial: 'payments/form', locals: {payment_item: @payment_item, total: @entry.total}
+

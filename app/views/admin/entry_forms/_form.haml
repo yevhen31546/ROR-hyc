@@ -1,0 +1,142 @@
+= semantic_form_for [:admin, @entry_form] do |f|
+  = render 'layouts/error_messages', :target => @entry_form
+
+  %fieldset
+    %h3 Event: #{@entry_form.event.title}
+    %ul= f.input :event_id, :as => :hidden
+
+  %fieldset
+
+    %p
+      WARNING: Below select boxes will not save unless the corresponding field is enabled in the list of 'Fields to display'
+
+    %div.floated_uls
+      %ul
+        = f.input :clubs, :label => "Clubs", :multiple => true, :collection => Club.order('name asc'), :input_html => {:size => 32}
+      %ul
+        = f.input :boat_classes, :label => "Classes", :multiple => true, :group_by => :boat_category, :input_html => {:size => 34}
+        - if f.object.boat_classes.present? && f.object.boat_classes.size > 1
+          %li
+            %h3 Order of classes
+            %ul
+              = f.fields_for :boat_classes_entry_forms do |bcef|
+                - if bcef.object.boat_class
+                  = bcef.hidden_field :boat_class_id
+                  %li
+                    = bcef.text_field :position, :size => 3
+                    = label_tag bcef.object.boat_class.try(:name)
+    %div.floated_uls
+      %ul{:style => 'width: 374px;'}
+        = f.input :rigs, :label => "Rigs", :multiple => true
+        = f.input :fleets, :label => "Fleets", :multiple => true, :input_html => {:style => "clear: left;"}
+      %ul
+        = f.input :countries, :label => "Countries", :multiple => true, :input_html => {:size => 12}
+
+
+  %fieldset
+    %legend Fields to display
+    %ul
+      = f.input :display_loan_boat, :label => "Loan boat"
+      = f.input :display_sail_no, :label => "sail_no".humanize
+      = f.input :display_boat_class, :label => "boat_class".humanize
+      = f.input :display_boat_class_specific, :label => "If 'Other' specific class"
+      = f.input :display_boat_name, :label => "boat_name".humanize
+      = f.input :display_boat_type_note, :label => "Boat Type Note", :input_html => {:size => 80}
+      = f.input :display_boat_builder, :label => "Boat Builder"
+      = f.input :display_boat_builder_with_select, :label => "Boat Builder + Listbox"
+      = f.input :display_boat_model, :label => "boat_model".humanize
+      = f.input :display_boat_type, :label => "Boat LOA / LWL"
+      = f.input :display_beam, :label => "Boat Beam"
+      = f.input :display_hull_colour, :label => "Hull Colour"
+      = f.input :display_club, :label => "club".humanize
+      -# %puts #{@entry_form.event.event_type}
+        #delegator add training events Sep 2019
+      - if @entry_form.event.event_type=='training'
+        = f.input :display_owner_name, :label => "Student Name"
+      - else
+        = f.input :display_owner_name, :label => "Owner Name"
+      - if @entry_form.event.event_type=='training'
+        = f.input :display_contact_details, :label => "Student Contact Details"
+      - else
+        = f.input :display_contact_details, :label => "Owner Contact Details"
+      = f.input :display_team, :label => "Team"
+      = f.input :display_team_captain, :label => "Team Captain"
+      = f.input :handicap_note, :label => "handicap note".humanize, :input_html => {:size => 80}
+      = f.input :display_handicap, :label => "handicap".humanize, :hint => "ECHO, IRC certificates"
+      = f.input :display_isora_registered, :label => "ISORA Registered"
+      = f.input :display_saturday_only_lambay, :label => "Saturday Only (Lambay)"
+      = f.input :display_helm, :label => "Helm", :hint => 'Name only'
+      = f.input :display_helm_gender, :label => "Helm M/F"
+      = f.input :display_helm_contact_details, :label => "Helm Contact Details", :hint => 'Phone, Address'
+      = f.input :display_helm_dob, :label => "Helm DOB"
+      = f.input :helm_dob_note, :label => "Helm DOB Note", :input_html => {:size => 80}
+      = f.input :display_helm_club, :label => "helm_club".humanize
+      = f.input :display_helm_sailing_level, :label => "Helm sailing level achieved"
+      = f.input :display_helm_sailing_level_date, :label => "Helm sailing level achieved date"
+      = f.input :display_crew, :label => "Crew", :hint => 'Name only'
+      = f.input :display_crew_gender, :label => "Crew M/F"
+      = f.input :display_crew_contact_details, :label => "Crew Contact Details", :hint => 'Phone, Address'
+      = f.input :crew_note, :label => "crew note".humanize, :input_html => {:size => 80}
+      = f.input :display_crew_dob, :label => "crew_dob".humanize
+      = f.input :crew_dob_note, :label => "Crew DOB Note", :input_html => {:size => 80}
+      = f.input :display_crew_club, :label => "crew_club".humanize
+      = f.input :display_crew_sailing_level, :label => "Crew sailing level achieved"
+      = f.input :display_crew_sailing_level_date, :label => "Crew sailing level achieved date"
+      = f.input :fleet_note, :label => "Fleet Note", :input_html => {:size => 80}
+      = f.input :display_fleet, :label => "Fleet"
+      = f.input :rig_note_1, :label => "Rig Note 1", :input_html => {:size => 80}
+      = f.input :display_rig, :label => "Rig"
+      = f.input :rig_note_2, :label => "Rig Note 2", :input_html => {:size => 80}
+      = f.input :display_country, :label => "Country"
+      = f.input :guardian_note, :label => "Guardian Note", :input_html => {:size => 80}
+      = f.input :display_guardian, :label => "Guardian + mobile"
+      = f.input :display_helm_guardian, :label => "Helm Guardian + mobile"
+      = f.input :display_crew_guardian, :label => "Crew Guardian + mobile"
+      = f.input :display_non_spinnaker_class, :label => "non_spinnaker_class".humanize
+      = f.input :display_marina_accommodation_required, :label => "Marina Accommodation Required"
+      = f.input :display_marina_accommodation_checkbox, :label => "Marina Accommodation Required + Checkbox"
+      = f.input :display_arrival_date, :label => "Marina Accommodation Arrival Date".humanize
+
+  -#%fieldset#custom_fields
+  -#  %legend Custom Fields
+  -#  = f.fields_for :custom_fields do |cff|
+  -#    = render 'admin/custom_fields/fields', :f => cff
+  -#  %fieldset= link_to_add_fields "Add Custom Field", f, :custom_fields, 'admin/custom_fields/fields'
+  %fieldset#categories
+    %legend Categories
+    - i = 0
+    #sortable_categories
+      = f.fields_for :categories do |category_form|
+        = render :partial => 'category', :locals => {:category_form => category_form, :i => i}
+        - i += 1
+      %p= link_to 'Add category', '#', :id => 'new_category'
+      
+    
+  %fieldset#charges
+    %legend Charges
+
+    %ul
+      = f.input :charge_note, :as => :text, :input_html => {:class => 'htmleditor', :rows => 5}, :label => false
+
+      - i = 0
+      #sortable_charges
+        = f.fields_for :charges do |charge_form|
+          = render :partial => 'charge', :locals => {:charge_form => charge_form, :i => i}
+          - i += 1
+      %p= link_to 'Add Charge', '#', :id => 'new_charge'
+                 
+      = f.input :post_charge_note, :as => :text, :input_html => {:class => 'htmleditor', :rows => 5}, :label => false
+            
+  %fieldset
+    %legend Miscellaneous
+    %ul
+      = f.input :additional_note, :as => :text, :input_html => {:cols => 100}
+
+  %fieldset
+    %legend Conditions of Entry
+
+    %ul= f.input :entry_conditions, :as => :text, :input_html => {:class => 'htmleditor'}, :label => false
+
+
+  %fieldset
+    %ul= f.commit_button (@entry_form.new_record? ? 'Add entry form' : 'Update entry form')

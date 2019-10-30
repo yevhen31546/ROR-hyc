@@ -1,0 +1,20 @@
+- @page_name = 'Edit my account details'
+- content_for :breadcrumbs do
+  %li= link_to "Account", account_path
+  %li
+    %span= @page_name
+
+#main-content-inner
+  %h1= @page_name
+
+  = semantic_form_for @user, :url => account_path do |f|
+    = render 'layouts/error_messages', :target => @user
+    %ul
+      = f.input :email, :as => :string
+
+    %h2 Change password
+    %ul
+      = f.input :password, :label => 'Change password'
+      = f.input :password_confirmation
+
+      %li= f.commit_button 'Update account details'   

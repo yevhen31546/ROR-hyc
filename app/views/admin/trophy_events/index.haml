@@ -1,0 +1,40 @@
+%h1 Trophy Events
+
+%ul
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: auto;'}
+    = form_tag '', :method => :get do
+      = select_tag 'year', options_for_select(TrophyEvent.years, @year), :include_blank => false, :id => 'event_year_filter'
+      = submit_tag 'Show Events'
+
+
+%ul#actions
+  %li= link_to 'Add new trophy event', new_admin_trophy_event_path(:year => @year), :class => 'add_icon'
+  %li= link_to 'Duplicate trophy events', duplicate_admin_trophy_events_path(:year => @year), :class => 'add_icon'
+
+= form_tag update_all_admin_trophy_events_path, :method => :post do
+  = paginated_section collection do
+    %table.index
+      %tr
+        %th Event
+        %th E Type
+        - TrophyEvent::COLUMN_TYPES.each do |column_type|
+          %th= column_type.to_s.humanize
+        %th Position
+        %th
+      - @trophy_events.each do |trophy_event|
+        %tr{:class => cycle('odd', 'even')}
+          %td= trophy_event.name
+          %td= trophy_event.event_type
+          - TrophyEvent::COLUMN_TYPES.each do |column_type|
+            %td
+              = hidden_field_tag "trophy_events[#{trophy_event.id}][#{column_type}]", 0
+              = check_box_tag "trophy_events[#{trophy_event.id}][#{column_type}]", 1, trophy_event.send(column_type)
+          %td
+            = text_field_tag "trophy_events[#{trophy_event.id}][position]", trophy_event.position, :size => 2, :style => 'width: auto;'
+          %td
+            = link_to 'Edit', edit_object_path(trophy_event), :class => 'inline_edit_icon'
+            -# Copy currently only updates, doesn't create a copy
+            -# = link_to 'Copy', new_admin_trophy_winners_path(:copy_id => trophy_winners.id), :class => 'inline_copy_icon'
+            = link_to 'Delete', object_path(trophy_event), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+
+  = submit_tag 'Save'

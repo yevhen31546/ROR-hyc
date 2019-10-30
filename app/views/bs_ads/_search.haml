@@ -1,0 +1,10 @@
+.form-box
+  = form_tag bs_ads_path, :method => :get do
+    .field.type
+      = select_tag 'ad_type', options_for_select(["All Ad Types", *BsAd::AD_TYPES], @ad_type)
+    .field.category
+      = select_tag 'category', options_for_select(["All Categories", *BsAd::CATEGORIES], @category)
+    .field.date
+      = select_tag 'time_period', options_for_select(["All Past", "Past Week", "Past 2 Weeks", "Past Month"], @time_period)
+    .field.submit
+      = submit_tag 'Search'

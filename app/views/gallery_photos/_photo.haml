@@ -1,0 +1,5 @@
+- thumb_img = sanitize_gallery_thumb(gallery_photo, gallery_photo.caption)
+
+.gallery-photo
+  .gallery-photo-thumb= link_to(thumb_img, gallery_photo.photo.url(:full), :rel => 'gallery', :title => gallery_photo.caption)
+  -# %p.gallery-photo-info #{gallery_photo.created_at.to_s(:long)}

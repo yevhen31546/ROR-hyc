@@ -1,0 +1,10 @@
+- @page_name = 'Crane Hire'
+- @no_sidebar = true
+
+- content_for :breadcrumbs do
+  %li
+    = link_to "New #{@page_name}", :action => :new
+
+#main-content-inner
+  %h1 Thanks for your crane booking!
+

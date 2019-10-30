@@ -1,0 +1,26 @@
+%h1= @page_name = 'Team Members'
+
+%ul#actions
+  %li= link_to 'Add new team member', new_object_path, :class => 'add_icon'
+  %li= link_to 'Visit team page', team_members_path, :class => 'visit_icon'  
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Photo
+      %th Name
+      %th Content
+      %th Sort
+      %th Actions
+    - collection.each do |object|
+      %tr{:class => cycle('odd', 'even')}
+        %td.center
+          - thumb_img = object_thumbnail_tag(object, :photo)
+          = link_to(thumb_img, object_path(object))
+        %td #{object.name}
+        %td= truncate_html(object.content, :length => 200).html_safe        
+        %td= object.sort
+        %td(nowrap="nowrap")
+          = link_to 'Visit', team_member_path(object), :class => 'inline_visit_icon'
+          = link_to 'Edit', edit_object_path(object), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(object), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

@@ -1,0 +1,15 @@
+:textile
+  Hi,
+
+  Someone has entered #{@entry.event.title}.
+  Their details are as follows:
+
+  *Name:* #{@entry.email}
+  *Email:* #{@entry.email}
+  *Amount:* #{number_to_currency @entry.payment_item.amount}
+  *Realex Order ID:* #{@entry.payment_item.payment_id}
+  
+  #{link_to('View Entries', admin_entry_list_path(:id => @entry.event.entry_lists.first.try(:id), :only_path => false)) if @entry.event && @entry.event.entry_lists.present?}
+
+  Regards.
+

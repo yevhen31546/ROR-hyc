@@ -1,0 +1,10 @@
+- photos_per_row = 3
+= paginated_section collection do
+  - @gallery_photos.each_with_index do |gallery_photo, counter|
+
+    = render partial: 'gallery_photos/photo', locals: {gallery_photo: gallery_photo}
+
+    - if (counter + 1) % photos_per_row == 0
+      %br.clear
+  %br.clear
+  %p Tip: you can use the mousewheel or the arrow keys to scroll between images

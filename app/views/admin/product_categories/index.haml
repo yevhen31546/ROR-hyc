@@ -1,0 +1,15 @@
+%h1 #{link_to 'Products', admin_products_path} &rsaquo; Product Categories
+
+%ul#actions
+  %li= link_to 'Add new product category', new_object_path, :class => 'add_icon'
+
+%table.index
+  %tr
+    %th Name
+    %th Actions
+  - @product_categories.each do |product_category|
+    %tr{:class => cycle('odd', 'even')}
+      %td= product_category.name
+      %td(nowrap="nowrap")
+        = link_to 'Edit', edit_object_path(product_category), :class => 'inline_edit_icon'
+        = link_to 'Delete', object_path(product_category), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

@@ -1,0 +1,186 @@
+-# = debug(@selected_event)
+- multiple_select ||= false
+- if @entries.present?
+  = paginated_section @entries do
+    - table_id = (!admin ? 'entries' : nil)
+    %table.index.entries-table{:id => table_id}
+      - if @selected_entry_list.present?
+        %thead
+          %tr
+            - if admin && multiple_select
+              %th= check_box_tag 'select_all', ''
+              %th= sortable_column_link_to 'Entry No.', 'entry_number'
+
+            -# check for both fleet & sail_number
+            - if @selected_event.present? && @selected_event.event_type == 'training'
+              - has_fleet_and_sail_no = (@selected_entry_list_columns.present? && (@selected_entry_list_columns & ['fleet', 'sail_number']).length == 2)
+              - @selected_entry_list.entry_list_columns.each do |column|
+                %th
+                  - if ['fleet', 'sail_number'].include?(column.entry_attr) && has_fleet_and_sail_no
+                    = sortable_column_link_to column.name, 'combined_fleet_sail_num'
+                  - elsif ['boat_class', 'sail_number'].include?(column.entry_attr)
+                    = sortable_column_link_to column.name, 'combined_class_sail_num'
+                  - elsif ['boat_name', 'owner_name'].include?(column.entry_attr)
+                    = sortable_column_link_to "Student Name", column.entry_attr
+                  - elsif 'club_name' == column.entry_attr
+                    = sortable_column_link_to column.name, 'clubs.name'
+                  - elsif 'model' == column.entry_attr
+                    = sortable_column_link_to column.name, 'model'
+                  - elsif 'is_saturday_only_lambay' == column.entry_attr
+                    = sortable_column_link_to column.name, 'is_saturday_only_lambay'
+                  - else
+                    = column.name
+            - else
+              -# 'for owner event'
+              -# %puts #{@event.event_type}
+              -# %br/
+              -# %puts #{@selected_entry_list.entry_list_columns}
+              
+              - if @event.present? && @event.event_type == 'training'
+                - has_fleet_and_sail_no = (@selected_entry_list_columns.present? && (@selected_entry_list_columns & ['fleet', 'sail_number']).length == 2)
+                - @selected_entry_list.entry_list_columns.each do |column|
+                  %th
+                    - if ['fleet', 'sail_number'].include?(column.entry_attr) && has_fleet_and_sail_no
+                      = sortable_column_link_to column.name, 'combined_fleet_sail_num'
+                    - elsif ['boat_class', 'sail_number'].include?(column.entry_attr)
+                      = sortable_column_link_to column.name, 'combined_class_sail_num'
+                    - elsif ['boat_name', 'owner_name'].include?(column.entry_attr)
+                      = sortable_column_link_to "Student Name", column.entry_attr
+                    - elsif 'club_name' == column.entry_attr
+                      = sortable_column_link_to column.name, 'clubs.name'
+                    - elsif 'model' == column.entry_attr
+                      = sortable_column_link_to column.name, 'model'
+                    - elsif 'is_saturday_only_lambay' == column.entry_attr
+                      = sortable_column_link_to column.name, 'is_saturday_only_lambay'
+                    - else
+                      = column.name
+
+              - else 
+                - has_fleet_and_sail_no = (@selected_entry_list_columns.present? && (@selected_entry_list_columns & ['fleet', 'sail_number']).length == 2)
+                - @selected_entry_list.entry_list_columns.each do |column|
+                  %th
+                    - if ['fleet', 'sail_number'].include?(column.entry_attr) && has_fleet_and_sail_no
+                      = sortable_column_link_to column.name, 'combined_fleet_sail_num'
+                    - elsif ['boat_class', 'sail_number'].include?(column.entry_attr)
+                      = sortable_column_link_to column.name, 'combined_class_sail_num'
+                    - elsif ['boat_name', 'owner_name'].include?(column.entry_attr)
+                      = sortable_column_link_to column.name, column.entry_attr
+                    - elsif 'club_name' == column.entry_attr
+                      = sortable_column_link_to column.name, 'clubs.name'
+                    - elsif 'model' == column.entry_attr
+                      = sortable_column_link_to column.name, 'model'
+                    - elsif 'is_saturday_only_lambay' == column.entry_attr
+                      = sortable_column_link_to column.name, 'is_saturday_only_lambay'
+                    - else
+                      = column.name
+            - if admin && multiple_select
+              %th= sortable_column_link_to 'Entry Date', 'created_at'
+            - if admin
+              %th Actions
+        %tbody
+          - @entries.each do |entry|
+            %tr{:class => [cycle('odd', 'even'), entry_comment_tr_class(entry)].compact.join(' ')}
+              - if admin && multiple_select
+                %td= check_box_tag 'ids[]', entry.id, (@is_results_list && entry.entered_in_results?)
+                %td= entry.entry_number
+              - @selected_entry_list.entry_list_columns.each do |column|
+                %td{:nowrap => true}
+                  -# whats in the column can be a straight attribute :name,
+                  -# or an specific associated item to show a category or a charge
+                  -# charges__1  or  categories__5
+                  -# Rails.logger.debug column.entry_attr
+                  - if column.entry_attr =~ /__/
+                    - association, id  = column.entry_attr.split('__')
+                    - if association_collection = entry.send(association.to_sym)
+                      - if association == 'categories'
+                        - if obj = association_collection.where(:entry_form_category_id => id).first
+                          - if admin
+                            = EntryFormCategory.find(id).get_short_option(obj.value)
+                          - else
+                            = obj.value
+                        - else
+                          == -
+                      - elsif association == 'charges'
+                        - if obj = association_collection.where(:id => id).first
+                          - quantity = (entry.charges_entries.where(:entry_id => entry.id, :charge_id => id).first.try(:quantity) || 1)
+                          - if quantity > 0
+                            = number_to_currency(obj.price * quantity)
+                          - else
+                            == -
+                        - else
+                          == -
+                    - else
+                      == -
+                  - elsif column.entry_attr == 'crew_club'
+                    = entry.crew_club.try(:name) || entry.crew_club_name_extra
+                  - elsif column.entry_attr == 'helm_club'
+                    = entry.helm_club.try(:name) || entry.helm_club_name_extra
+                  - elsif column.entry_attr == 'total'
+                    = number_to_currency(entry.total)
+                  - else
+                    - val = entry.send(column.entry_attr.to_sym)
+                    - if val.kind_of?(ActiveRecord::Base)
+                      = val.name
+                    - elsif column.entry_attr == 'is_admin'
+                      = val ? 'A' : nil
+                    - elsif val.is_a?(TrueClass)
+                      Yes
+                    - elsif val.is_a?(FalseClass)
+                      -# this left intentionally blank
+                    - elsif val.is_a?(Date) || val.is_a?(DateTime) || val.is_a?(Time)
+                      = val.strftime("%d %b")
+                    - elsif val.is_a?(String) && val =~ /[\-\+\s\d+]{9,}/ && column.entry_attr =~ /phone|mobile/i # Format phone numbers nicely
+                      = format_phone_number(val)
+                    - else
+                      = val
+              - if admin && multiple_select
+                %td= entry.created_at.strftime("%d %b")
+              - if admin
+                %td(nowrap="nowrap")
+                  = link_to 'Edit', edit_admin_entry_path(entry), :class => 'inline_edit_icon'
+                  = link_to 'Delete', admin_entry_path(entry), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+
+      - else # no defined entry list
+        - if admin
+          -# default admin entries list
+          %thead
+            %tr
+              %th= check_box_tag 'select_all', ''
+              %th Ref
+              %th Name
+              %th Email
+              %th Status
+              %th Actions
+          %tbody
+            - @entries.each do |entry|
+              %tr{:class => [cycle('odd', 'even'), entry_comment_tr_class(entry)].compact.join(' ')}
+                %td= check_box_tag 'ids[]', entry.id
+                %td= entry.reference
+                %td= entry.name
+                %td= entry.email
+                %td= entry.status
+                %td(nowrap="nowrap")
+                  = link_to 'Edit', edit_admin_entry_path(entry), :class => 'inline_edit_icon'
+                  = link_to 'Delete', admin_entry_path(entry), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+        - else
+          -# default public entries list
+          %thead
+            %tr
+              %th= sortable_column_link_to 'Class', 'boat_classes.name'
+              %th= sortable_column_link_to 'Sail No.', 'sail_number'
+              %th= sortable_column_link_to 'Boat Name', 'boat_name'
+              - if @event.event_type == 'training'
+                %th= sortable_column_link_to 'Student Name', 'owner_name'
+              - else
+                %th= sortable_column_link_to 'Owner Name(s)', 'owner_name'
+              %th= sortable_column_link_to 'Club', 'clubs.name'
+          %tbody
+            - @entries.each do |entry|
+              %tr{:class => [cycle('odd', 'even'), entry_comment_tr_class(entry)].compact.join(' ')}
+                %td= entry.boat_class.try(:name)
+                %td= entry.sail_number_full || '-'
+                %td= entry.boat_name
+                %td= entry.owner_name.presence || entry.name
+                %td= entry.club_initials
+- else
+  %p No one has entered yet.

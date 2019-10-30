@@ -1,0 +1,30 @@
+%h1 Pages
+%ul#actions
+  %li= link_to 'Add new page', new_object_path, :class => 'add_icon'
+  %li= link_to 'Visit homepage', :root, :class => 'visit_icon'
+
+= form_tag '', :method => 'GET' do
+  %p
+    = text_field_tag 'query', @query, :class => 'inline_input'
+    = submit_tag 'search', :class => 'btn'
+
+%br
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Title
+      %th URL
+      %th Access
+      %th
+    - @pages.each do |page|
+      %tr{:class => cycle('odd', 'even')}
+        %td= link_to page.title, edit_object_path(page)
+        %td= link_to page.url, page.url
+        %td= page.roles.map(&:name).to_sentence
+        %td
+          = link_to 'Visit', page.url, :class => 'inline_visit_icon'
+          = link_to 'Edit', edit_object_path(page), :class => 'inline_edit_icon'
+          -# Copy currently only updates, doesn't create a copy
+          -# = link_to 'Copy', new_admin_page_path(:copy_id => page.id), :class => 'inline_copy_icon'
+          = link_to 'Delete', object_path(page), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

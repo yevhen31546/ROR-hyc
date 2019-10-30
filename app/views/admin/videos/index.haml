@@ -1,0 +1,19 @@
+%h1 Videos
+
+%ul#actions
+  %li= link_to 'Add new video', new_object_path, :class => 'add_icon'
+  %li= link_to 'Visit videos page', videos_path, :class => 'visit_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Title
+      %th URL
+      %th Actions
+    - @videos.each do |video|
+      %tr{:class => cycle('odd', 'even')}  
+        %td= video.title
+        %td= truncate(video.url, :length => 80)
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(video), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(video), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

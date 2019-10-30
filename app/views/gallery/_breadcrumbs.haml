@@ -1,0 +1,25 @@
+- content_for :breadcrumbs do
+  - if !@gallery_album && !@gallery_category
+    %li
+      %span= 'Gallery'
+  - else
+    %li= link_to 'Gallery', gallery_categories_path
+
+  - ancestors = []
+  - if @gallery_category
+    - ancestors << @gallery_category.ancestors
+  - if @gallery_album
+    - ancestors << @gallery_album.gallery_category
+    - ancestors << @gallery_album.gallery_category.ancestors
+
+  - ancestors.flatten.reverse.each do |gallery_thing|
+    - if gallery_thing.is_a?(GalleryCategory)
+      - target = gallery_category_path(gallery_thing)
+      %li= link_to gallery_thing.name, target
+    - elsif gallery_thing.is_a?(GalleryAlbum)
+      - target = gallery_album_gallery_photos_path(gallery_thing)
+      %li= link_to gallery_thing.name, target
+
+  - if (@gallery_album || @gallery_category)
+    %li
+      %span= @page_name

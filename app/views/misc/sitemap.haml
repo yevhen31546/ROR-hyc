@@ -1,0 +1,76 @@
+- @no_sidebar = true
+%h1= @page_name = 'Sitemap'
+
+- content_for :breadcrumbs do
+  %li
+    %span Sitemap
+
+#sitemap
+  .col
+    = link_to 'Home', :root
+    %ul
+      %li
+        = link_to 'News', news_items_path
+        == - General news about Howth Yacht Club
+      %li
+        = link_to 'Upcoming Open Events', :controller => 'events', :action => :index, :event_type => 'open'
+        == - List of events and entry details
+      %li= link_to 'Social Events', social_events_path
+      -#%li
+      -#  = link_to 'Members Area', account_path
+      -#  - if current_user && current_user.is_admin?
+      -#    -#%ul
+      -#      -#%li= link_to 'Members Directory', '#'
+      -#      -#%li= link_to 'Contact Committee', '#'
+      -#      -#%li= link_to 'Forum', forem.forums_path
+      %li= link_to 'Trophy Winners', trophy_winners_path
+      %li= link_to 'Buy & Sell', bs_ads_path
+      %li= link_to 'Gallery', gallery_categories_path
+      %li= link_to 'Contacts', contacts_path
+      %li= link_to 'Contact Us', contact_us_path
+
+  .col
+    = link_to 'Racing', '/club-racing'
+    %ul
+      %li
+        = link_to 'Crew Finder', crew_finder_ads_path
+        == - If you are Looking for crew crew members
+      -#%li
+      -#  = link_to 'Ribs & Rescue', '#'
+      -#  == - The HYC Rib rescue and training service with details on how to apply
+
+  .col
+    = link_to 'News', news_items_path
+    %ul
+      %li= link_to 'Junior Sailing', junior_path
+      %li= link_to 'Cruising', cruising_path
+      /   == - Reports from recent cruises
+      %li
+        = link_to 'Social', social_path
+        == - News on social events
+
+
+  .col
+    = link_to "About Our Club", page_url("about")
+    %ul
+      %li= link_to "Howth Area", page_url("howth-area")
+      %li= link_to "Services", page_url("services")
+      %li= link_to "Hospitality", page_url("Hospitality")
+      %li= link_to "Club House", page_url("club-house")
+      %li= link_to "Howth 17", page_url("howth-17")
+      %li= link_to "Club Insignia", page_url("club-insignia")
+      %li= link_to "Marina", page_url("marina")
+
+
+
+    -#= render_navbar(:main).gsub(/ class='navbar sf-menu' id='navbar-main'/, '')
+  -#.col
+  -#  %ul
+  -#    - @blog_posts.each do |blog_post|
+  -#      %li
+  -#        = link_to blog_post.title, blog_post
+  -#        \- #{blog_post.created_at.strftime('%D')}
+  -#.col
+  -#  %ul
+  -#    - @resources.each do |resource|
+  -#      %li= link_to resource.name, resource.asset.url(:original), :id => "resource-#{resource.id}"-#

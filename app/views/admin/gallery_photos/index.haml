@@ -1,0 +1,78 @@
+- content_for :head do
+  = javascript_include_tag 'admin/gallery'
+  = stylesheet_link_tag 'jquery.plupload.queue'
+
+- unless @gallery_album.nil?
+  %h1 #{link_to 'Gallery', admin_gallery_albums_path} &rsaquo; Photos in '#{@gallery_album.title}'
+
+- else
+  %h1 #{link_to 'Gallery', admin_gallery_albums_path} &rsaquo; All photos
+
+%ul#actions
+  %li= link_to 'Add photo', new_object_path, :class => 'add_icon'
+  - unless @gallery_album.nil?
+    -#%li= link_to 'Upload Multiple', upload_admin_gallery_album_gallery_photos_path(:gallery_album_id => @gallery_album.id, :iframe => true), :class => 'iframe', :id => 'select_photos', :class => 'add_icon'
+    %li= link_to 'Edit this album', edit_admin_gallery_album_path(@gallery_album), :class => 'edit_icon'
+    %li= link_to 'Visit album page', gallery_album_gallery_photos_path(@gallery_album), :class => 'visit_icon'
+
+%div
+  %label What type of photos are these?
+  = select_tag 'filter', options_for_select([['-', '']] + GalleryPhoto.available_filters)
+
+%div#uploader{:style => 'width: 500px; height: 400px;'}
+
+:javascript
+  $(document).ready(function(){
+    $("#uploader").pluploadQueue({
+      runtimes: 'html5,flash,silverlight',
+      url: '#{upload_admin_gallery_album_gallery_photos_path(@gallery_album)}',
+      multiple_queues: true,
+      multipart_params: {
+        'gallery_album_id': '#{@gallery_album.id}',
+        '#{request_forgery_protection_token}': '#{form_authenticity_token}',
+        '#{request.session_options[:key]}': encodeURIComponent('#{ u cookies[request.session_options[:key]]}'),
+        'filter': ''
+      },
+      init : {
+        BeforeUpload: function(up, file) {
+          // get the selected filter value to assign to this photo
+          var params = up.getOption('multipart_params');
+          var filter_val = $('#filter').val();
+          if (filter_val) {
+            params['filter'] = filter_val;
+            up.setOption('multipart_params', params);
+          }
+        },
+        FileUploaded: function(up, file, info) {
+          $('table.index tbody').load('#{admin_gallery_album_gallery_photos_path(@gallery_album)}');
+        }
+      }
+    });
+  });
+
+%div{style: 'float: right;'}
+  = form_tag '', :method => :get do
+    Filter Photos By
+    = select_tag 'filter_list', options_for_select([['All', '']]+GalleryPhoto.available_filters, params[:filter_list])
+    = button_tag 'Filter'
+
+= form_tag multiple_admin_gallery_album_gallery_photos_path, :method => :post do
+
+  %div
+    = select_tag 'filter', options_for_select([['Select filter change', '']]+GalleryPhoto.available_filters)
+    = submit_tag 'Save All'
+
+  = paginated_section collection do
+    %table.index
+      %thead
+        %tr
+          %th= check_box_tag 'select_all', ''
+          %th Photo
+          %th Caption
+          %th Filter
+          %th Position
+          %th Date
+          %th Actions
+      %tbody= render :partial => 'photo', :collection => @gallery_photos, :as => :gallery_photo
+  = submit_tag 'Save All'
+

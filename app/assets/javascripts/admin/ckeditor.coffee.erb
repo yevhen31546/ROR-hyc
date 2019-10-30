@@ -1,0 +1,25 @@
+jQuery(document).ready ->
+  if jQuery(".htmleditor").length > 0
+    CKEDITOR.editorConfig = (config) ->
+      config.width = 653
+      config.resize_minWidth = 400
+      config.height = 400
+      config.pasteFromWordIgnoreFontFace = true
+      config.pasteFromWordRemoveStyle = true
+      config.toolbarCanCollapse = false
+      config.undoStackSize = 100
+      config.scayt_autoStartup = true  if navigator.appVersion.match(/MSIE (\d\.\d)/)
+      config.disableNativeSpellChecker = false
+      config.contentsCss = '<%= stylesheet_path('admin/ckeditor_contents_style') %>'
+      config.keystrokes = [ [ CKEDITOR.CTRL + 90, "undo" ], [ CKEDITOR.CTRL + 89, "redo" ], [ CKEDITOR.CTRL + CKEDITOR.SHIFT + 90, "redo" ], [ CKEDITOR.CTRL + 66, "bold" ], [ CKEDITOR.CTRL + 73, "italic" ] ]
+      config.toolbar = [ [ "Save" ], [ "Cut", "Copy", "Paste", "PasteText" ], [ "Undo", "Redo" ], [ "Find", "Replace" ], [ "RemoveFormat" ], [ "Link", "Unlink" ], [ "Image", "MediaEmbed", "Table", "HorizontalRule", "SpecialChar" ], [ "SpellChecker", "Scayt" ], [ "Preview" ], [ "Maximize" ], "/", [ "Format", "FontSize" ], [ "Bold", "Italic", "Underline", "Strike" ], [ "TextColor" ], [ "Subscript", "Superscript" ], [ "NumberedList", "BulletedList" ], [ "JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock" ], [ "Outdent", "Indent", "Blockquote" ], [ "Source" ] ]
+      config.extraPlugins = "MediaEmbed"
+      config.filebrowserBrowseUrl = "/admin/resources?layout=false"
+      config.filebrowserImageBrowseUrl = "/admin/images?layout=false"
+      config.filebrowserWindowFeatures = "resizable=yes,scrollbars=yes"
+      config.filebrowserWindowWidth = 800
+      config.filebrowserWindowHeight = 500
+
+    CKEDITOR._scaytParams = sLang: "en_GB"
+
+    CKEDITOR.replaceAll('htmleditor')

@@ -1,0 +1,44 @@
+!!!
+%html(lang='en')
+  %head
+    %meta(charset='UTF-8')
+    %title
+      Admin area - #{get_site_name}
+      - if @page_name
+        = '- '+@page_name
+    = csrf_meta_tag
+
+    = stylesheet_link_tag 'admin/base'
+    - unless controller_name == 'dashboard'
+      = stylesheet_link_tag 'admin/followon'
+    - for sheet in @stylesheets.to_a
+      = stylesheet_link_tag sheet
+
+    = javascript_include_tag 'admin/base'
+    - for javascript in @javascripts.to_a
+      = javascript_include_tag javascript
+    - unless controller_name == 'dashboard'
+      = javascript_include_tag '/ckeditor/ckeditor', 'admin/followon'
+    = yield :head
+  %body
+    %a#top
+    = render 'layouts/old_browser'
+    #primary_wrapper
+      #secondary_wrapper
+        #header
+          #user_bar
+            = link_to "&larr; Return to site".html_safe, :root, {:id => 'return_to_site'}
+            -# = link_to 'Account', {:controller => '/account', :action => 'edit'}, {:id => 'my_account_link'}
+            = link_to 'Logout', logout_path, {:id => 'logout_link'}
+          #logo= link_to image_tag('logo.png', :alt => get_site_name, :width => 80), admin_path, {:class => 'admin-header'}
+          #navbar
+            - if current_module && (current_module.children.present? || current_module.parent.present?)
+              = link_to "Up a level &uarr;".html_safe, '/admin', :style => 'position: absolute; top: -36px; left: 120px; font-size: 1.2em; text-decoration: none; font-weight: bold;'
+            = render 'admin/modules'
+
+        #main_content
+          = render 'layouts/flash_messages'
+          #main_content_inner= yield
+        #footer
+          %span#copyright &copy; #{get_site_name} #{Time.now.year}.
+          %span#credits #{link_to 'serveradmin', 'http://www.vinyl-matt.com'} &amp; #{link_to 'hosting', 'http://www.vinyl-matt.com'} by vinylmatt

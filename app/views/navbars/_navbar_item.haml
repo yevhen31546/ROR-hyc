@@ -1,0 +1,7 @@
+-# this resursively renders a navbar item and its children
+- class_name = current_page?(navbar_item.link) ? 'current' : ''
+- class_name += " #{navbar_item.css_class}"  if navbar_item.css_class.present?
+%li{ :class => class_name}
+  = navbar_link navbar_item.name, navbar_item.link, :target => navbar_item.target.presence
+  - if navbar_item.reload.children.present?
+    %ul= render :partial => 'navbars/navbar_item', :collection => navbar_item.children, :locals => {:navbar => navbar}

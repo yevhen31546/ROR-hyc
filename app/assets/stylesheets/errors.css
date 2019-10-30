@@ -1,0 +1,36 @@
+form.formtastic .inline-errors { display: none; }
+form.formtastic li.error input, form.formtastic li.error textarea, form.formtastic li.error select { background: #fff4f4; border-color: #ff0000; }
+
+.fieldWithErrors input, .fieldWithErrors textarea, .fieldWithErrors select {
+  border: 1px solid red !important;
+} 
+.fieldWithErrors {
+  display: inline;
+}
+
+div.errorExplanation {
+  width: 266px;
+  margin: 20px 0;
+  background-color: #f4d3d2;
+  color: #620606;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 12px;
+  padding: 11px 20px 5px 20px;
+  border: 1px solid #ff2000;
+}
+
+div.errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0;
+  margin: 0;
+  color: #620606;
+  font-family: Arial, sans-serif;
+}
+
+div.errorExplanation ul li {
+  list-style: square !important;
+  margin: 4px 15px !important;
+}

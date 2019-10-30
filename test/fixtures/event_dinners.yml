@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  event_id: 1
+  event_date: 2017-09-05
+  ticket_price: 9.99
+  comments: MyText
+
+two:
+  event_id: 1
+  event_date: 2017-09-05
+  ticket_price: 9.99
+  comments: MyText

@@ -1,0 +1,14 @@
+- @page_name = @news_item.title
+- @page_description = @news_item.title
+.show_news_item
+  %h1= @news_item.title
+
+  .details
+    Posted on
+    = @news_item.created_at.to_s
+
+  .content= @news_item.content
+
+  - if is_admin?
+    %p= link_to 'Edit', edit_object_path(@news_item)
+    %p= link_to 'Delete', object_path(@news_item), :confirm => 'Are you sure?', :method => :delete

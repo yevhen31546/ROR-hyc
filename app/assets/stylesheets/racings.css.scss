@@ -1,0 +1,26 @@
+// Place all the styles related to the racings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#main-content-inner.racings {
+
+  .form-box {
+    .months select {width: 150px;}
+    .filter input {width: 150px;}
+  }
+
+  .search-results {
+    font-size: 11px;
+
+    th { white-space: nowrap; }
+
+    td {
+      text-align: center;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    tr.sunday { background: #ffcccc; }
+  }
+
+}

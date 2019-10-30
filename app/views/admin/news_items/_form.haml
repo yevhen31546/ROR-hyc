@@ -1,0 +1,20 @@
+= semantic_form_for [:admin, @news_item], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :title, :required => true
+    = f.input :image
+    - if @news_item.image.exists?
+      %li(style='line-height: 48px; vertical-align: top')
+        %label
+        = image_tag @news_item.image.url(:thumb)
+        = f.hidden_field :image_delete
+        = link_to_function 'Delete current image', "jQuery(this).parent().hide(); jQuery('#news_item_image_delete').val(1);", :class => 'inline_delete_icon'
+    = f.input :created_at, :label => 'Date', :as => :datepicker, :required => true
+    = f.input :news_category
+    = f.input :ordering, :label => 'Order', :length => 2
+    = f.input :publish_at
+    = f.input :featured
+    = f.input :is_junior
+
+    = f.input :content, :as => :text, :input_html => {:class => 'htmleditor'}
+    = f.commit_button (f.object.new_record? ? 'Add news item' : 'Edit news item')

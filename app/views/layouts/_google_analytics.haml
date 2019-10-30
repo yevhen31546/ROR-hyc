@@ -1,0 +1,11 @@
+- if Rails.env.production? && !setting[:google_analytics_id].blank? && setting[:google_analytics_id] != 'UA-XXXXX-X'
+  - # To add support for subdomains:
+  - # _gaq.push(['_setDomainName', '.example.com']);
+  :erb
+    <script type='text/javascript'>
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '<%= setting[:google_analytics_id] %>']);
+      _gaq.push(['_trackPageview']);
+      _gaq.push(['_trackPageLoadTime']);      
+      (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();
+    </script>

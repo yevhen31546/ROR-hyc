@@ -1,0 +1,24 @@
+<div id='main-content-inner'>
+  <h2>3D-Secure Authentication with your Bank</h2>
+
+  <div style='float: right; margin-left: 10px;'>
+    <%= image_tag '3dsecure.png', :alt => "Verified by Visa and MasterCard SecureCode" %>
+    <br/>
+  </div>
+
+  <p> To increase the security of Internet transactions, Visa and Mastercard have introduced 3D-Secure (like an online version of Chip and PIN). 
+  <br/>
+  <br/>
+  You have chosen to use a card that is part of the 3D-Secure scheme, so you will need to authenticate yourself with your bank in the section below.
+  </p>
+  <div id="the_form">
+    <div align="center">
+      <form action='<%= @payment_item.acsurl %>' method='post'>
+        <input type='hidden' name='PaReq' value='<%= @payment_item.pareq %>'/>
+        <input type='hidden' name='TermUrl' value='<%= complete_3d_secure_event_entry_url(@entry.id, :event_id => @entry.event.id, :protocol => 'https') %>'/>
+        <input type='hidden' name='MD' value='<%= @payment_item.encrypt_md %>'/>
+        <input type='submit' value="Click to begin 3D Secure Verification"/>
+      </form>
+    </div>
+  </div>
+</div>

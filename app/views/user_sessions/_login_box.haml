@@ -1,0 +1,4 @@
+= form_for UserSession.new, :url => login_path, :html => { :id => nil } do |f|
+  %p#username_field= f.text_field :login, :size => 16, :placeholder => 'Username', :id => nil
+  %p#password_field= f.password_field :password, :size => 16, :placeholder => 'Password', :id => nil
+  %p= submit_tag 'Login'

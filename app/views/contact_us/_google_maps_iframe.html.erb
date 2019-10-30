@@ -1,0 +1,16 @@
+<%
+  # see http://www.google.com/webelements/ , for coordinates use @-123.12345,12.34567
+  # Get the latitude/longitude via http://www.getlatlon.com/
+
+  require 'uri'
+  def contact_us_map_url
+    "http://www.google.com/uds/modules/elements/mapselement/iframe.html?maptype=roadmap&amp;"+
+      "latlng=#{URI.escape(setting[:contact_latitude]+','+setting[:contact_longitude])}&amp;" +
+      "mlatlng=#{URI.escape(setting[:contact_latitude]+','+setting[:contact_longitude])}&amp;" +
+      "maddress1=#{URI.escape(setting[:contact_street_address])}&amp;" +
+      "maddress2=#{URI.escape(setting[:contact_extended_address])}&amp;" +
+      "zoom=15&amp;mtitle=#{URI.escape(setting[:contact_address_org])}"
+  end
+%>
+
+<iframe frameborder="0" marginwidth="0" marginheight="0" style="border:0;margin:0;width:400px;height:300px;"  src="<%= contact_us_map_url %>" scrolling="no"></iframe>

@@ -1,0 +1,30 @@
+= semantic_form_for [:admin, @event_resource], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %fieldset
+    %ul
+      = f.input :event_id, :as => :hidden
+      = f.input :resource_type, :collection => options_for_select(EventResource::RESOURCE_TYPES, f.object.resource_type), :include_blank => false
+      = f.input :occurrence, :collection => options_for_select(['pre', 'post'], f.object.occurrence), :label => "Occurs", :include_blank => false
+      %li
+        = label_tag 'style', 'Style'
+        %ul
+          %li
+            = f.radio_button :button_style, '' 
+            %span no style
+
+          - EventResource::BUTTON_STYLES.each do |button_style, button_style_name|
+            %li
+              = f.radio_button :button_style, button_style.to_s
+              %span{:class => "event-resources-button-style event-resources-button-style-#{button_style.to_s.gsub(/_/, '-')}"}= button_style_name
+        -#= f.
+    %ul#resource_document.resource_type.hide
+      = f.input :name, :input_html => {:style => 'width: 400px;'}
+      = f.input :resource
+    %ul#resource_url.resource_type.hide
+      = f.input :name, :input_html => {:style => 'width: 400px;'}
+      = f.input :url, :input_html => {:style => 'width: 400px;'}
+      = f.input :url_target, :collection => options_for_select(['_self', '_blank'], f.object.url_target)
+    %ul#resource_comment.resource_type.hide
+      = f.input :comment
+
+    %p= f.submit 'Add'

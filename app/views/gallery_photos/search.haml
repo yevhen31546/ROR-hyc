@@ -1,0 +1,29 @@
+- @page_name = "Gallery Search - #{@query}"
+
+= render :partial => 'gallery/breadcrumbs'
+
+#main-content-inner.no_sidebar
+
+  - if @query.present?
+    %p
+      Searching photos
+      - if @gallery_category.present?
+        == in '#{@gallery_category.name}'
+
+      - if @gallery_album.present?
+        == in '#{@gallery_album.title}'
+
+      for '#{@query}'
+
+
+
+  - photos_per_row = 4
+  = paginated_section @gallery_photos do
+    - @gallery_photos.each_with_index do |gallery_photo, counter|
+
+      = render partial: 'gallery_photos/photo', locals: {gallery_photo: gallery_photo}
+
+      - if (counter + 1) % photos_per_row == 0
+        %br.clear
+    %br.clear
+    %p Tip: you can use the mousewheel or the arrow keys to scroll between images

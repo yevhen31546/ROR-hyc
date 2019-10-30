@@ -1,0 +1,8 @@
+%h1= @page_name = 'Blog' 
+
+= paginated_section collection do  
+  .blog-post
+    = render :partial => 'blog_post', :collection => collection
+
+- if is_admin?
+  %p= link_to 'New blog post', new_admin_blog_post_path

@@ -1,0 +1,33 @@
+= semantic_form_for([:admin, @page]) do |f|
+  = render 'layouts/error_messages', :target => object
+  %fieldset
+    %ul
+      = f.input :title, :required => true
+      = f.input :url, :as => :string, :hint => 'e.g. /page-name . Warning: Changing this will break all links to this page'
+      = f.input :content, :as => :text, :input_html => {:class => 'htmleditor'}
+      - if f.object.new_record?
+        = f.input :add_to_main_navbar, :as => :boolean
+      = f.commit_button (f.object.new_record? ? 'Save page' : 'Update page')
+
+
+  %fieldset#advanced_options
+    %legend Advanced options
+    %ul
+      = f.input :extended_title, :label => 'Extended title', :hint => 'This will display on the page'
+      = f.input :code, :hint => 'Warning: Changing this might cause a page to stop working'
+      = f.input :layout, :as => :select, :collection => available_layouts, :include_blank => false
+
+      - if is_admin?
+        = f.input :roles, :as => :check_boxes, :collection => Role.non_admins, :multiple => true, :include_blank => false, :label => "Access Control"
+
+  %fieldset#seo_options
+    %legend Search Engine Optimisation
+    %ul
+      = f.input :seo_title, :label => 'META title', :input_html => {:size => 120}, :hint => 'SEO: A good title can benefit search ranking'
+      = f.input :seo_description, :label => 'META description', :as => :text, :input_html => {:cols => 110}
+      = f.input :robots, :label => 'Robots', :input_html => {:size => 110}
+      = f.input :canonical, :label => 'Canonical', :input_html => {:size => 110}
+
+
+  %fieldset
+    %ul= f.commit_button f.object.new_record? ? 'Save page' : 'Update page', :button_html => { :id => nil }

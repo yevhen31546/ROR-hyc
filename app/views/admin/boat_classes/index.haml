@@ -1,0 +1,18 @@
+%h1 Boat Classes
+
+%ul#actions
+  %li= link_to 'Add new boat class', new_object_path, :class => 'add_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Category
+      %th Actions
+    - @boat_classes.each do |boat_class|
+      %tr{:class => cycle('odd', 'even')}
+        %td= boat_class.name
+        %td= boat_class.boat_category.name
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(boat_class), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(boat_class), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

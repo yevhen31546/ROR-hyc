@@ -1,0 +1,12 @@
+%tr{:class => cycle('odd', 'even')}
+  %td
+    - if gallery_category.parent
+      = '-' * level
+    = gallery_category.name
+  %td(nowrap="nowrap")
+    = link_to 'Edit', edit_object_path(gallery_category), :class => 'inline_edit_icon'
+    = link_to 'Delete', object_path(gallery_category), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+- if gallery_category.children.present?
+  - level += 1
+  - gallery_category.children.each do |gallery_category|
+    = render :partial => 'tr', locals: {gallery_category: gallery_category, level: level}

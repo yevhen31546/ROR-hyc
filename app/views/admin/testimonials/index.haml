@@ -1,0 +1,21 @@
+%h1 Testimonials
+
+%ul#actions
+  %li= link_to 'Add new testimonial', new_object_path, :class => 'add_icon'
+  %li= link_to 'Visit testimonials page', testimonials_path, :class => 'visit_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th(nowrap="nowrap") From
+      %th Quote
+      %th Actions
+    - @testimonials.each do |testimonial|
+      %tr{:class => cycle('odd', 'even')}  
+        %td= testimonial.name
+        %td= testimonial.from
+        %td= truncate_html(testimonial.quote, :length => 200).html_safe
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(testimonial), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(testimonial), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

@@ -1,0 +1,6 @@
+= semantic_form_for [:admin, @tide] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :tide_at, :as => :string, :input_html => {:class => 'ui-datetimepicker'}
+    = f.input :height
+    = f.commit_button (f.object.new_record? ? 'Add tide' : 'Edit tide')

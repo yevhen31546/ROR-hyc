@@ -1,0 +1,45 @@
+%h1 Crew Finder Ads
+%ul#actions
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: 500px;'}
+    = form_tag '', :method => :get do
+      = select_tag 'ad_type', options_for_select(['all', 'available', 'wanted'], @selected_ad_type), :include_blank => false
+      = submit_tag 'Filter'
+
+  %li= link_to 'Export', export_admin_crew_finder_ads_path(format: :csv), :class => 'download_icon'
+
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Ad Type
+      - if ['all', 'available'].include?(@selected_ad_type)
+        %th Age
+        %th Interested in
+        %th Availability
+        %th Preferred Position(s)
+        %th Sailing Experience
+      - if ['all', 'wanted'].include?(@selected_ad_type)
+        %th Description
+      %th Phone
+      %th Email
+      %th Date Posted
+      %th
+    - @crew_finder_ads.each do |crew_finder_ad|
+      %tr{:class => cycle('odd', 'even')}
+        %td= crew_finder_ad.contact_name
+        %td= crew_finder_ad.ad_type.humanize
+        - if ['all', 'available'].include?(@selected_ad_type)
+          %td= crew_finder_ad.age
+          %td= crew_finder_ad.interested_in
+          %td= crew_finder_ad.availability
+          %td= crew_finder_ad.preferred_position
+          %td= crew_finder_ad.experience
+        - if ['all', 'wanted'].include?(@selected_ad_type)
+          %td= truncate_html(nl2br(crew_finder_ad.description), :limit => 100)
+        %td= crew_finder_ad.contact_phone
+        %td= crew_finder_ad.contact_email
+        %td= crew_finder_ad.created_at
+        %td
+          = link_to 'Edit', edit_object_path(crew_finder_ad), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(crew_finder_ad), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

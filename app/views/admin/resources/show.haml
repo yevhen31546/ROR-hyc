@@ -1,0 +1,24 @@
+%p
+  %strong Name:
+  = h @resource.name
+%p
+  %strong URL:
+  = h @resource.asset.url
+%p
+  %strong File name:
+  =h @resource.asset_file_name
+%p
+  %strong Original file size:
+  =h @resource.asset_file_size
+%p
+  %strong Content type:
+  =h @resource.asset_content_type
+%p
+  %strong Updated at:
+  =h @resource.asset_updated_at
+
+= link_to 'Edit', edit_object_path
+|
+= link_to 'Delete', object_path(@resource), :confirm => 'Are you sure?', :method => :delete
+|
+= link_to 'Back', collection_path

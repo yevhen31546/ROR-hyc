@@ -1,0 +1,20 @@
+.tweet { color: #085258; }
+.tweet .tweet_list a { color: #0C717A; }
+.tweet .tweet_time a { color: #999; }
+
+.tweet .tweet_list {
+  -webkit-border-radius: .5em;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+.tweet .tweet_list li {
+  overflow: auto;
+  height: auto !important;
+  padding: .5em;
+  border-bottom: 1px solid #cccccc;
+}
+.tweet .tweet_even { background-color: #fff; }
+.tweet .tweet_avatar { padding-right: .5em; float: left; }
+.tweet .tweet_avatar img { vertical-align: middle; }

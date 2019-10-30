@@ -1,0 +1,21 @@
+- if @gallery_photo.photo && !@gallery_photo.new_record?
+  - if @gallery_photo.photo.original_filename.match(/(\.gif|\.png|\.jpe?g)$/i)
+    - thumb_img = image_tag(@gallery_photo.photo.url(:thumb))
+  - else
+    - thumb_img = image_tag('admin/pdf_icon.png')
+  %div.thumbnail= thumb_img
+
+- if @gallery_photo.new_record?
+  - form_url = (@gallery_album.nil? ? admin_gallery_photos_path : admin_gallery_album_gallery_photos_path(@gallery_album))
+- else
+  - form_url = (@gallery_album.nil? ? admin_gallery_photo_path(@gallery_photo) : admin_gallery_album_gallery_photo_path(@gallery_album, @gallery_photo))
+
+= semantic_form_for @gallery_photo, :url => form_url, :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :photo, :required => true
+    = f.input :filter, :collection => GalleryPhoto.available_filters
+    = f.input :caption, :as => 'text', :input_html => {:cols => 60, :rows => 5}
+    = f.input :gallery_album, :as => :select, :collection => GalleryAlbum.all, :include_blank => false
+
+    = f.commit_button (f.object.new_record? ? 'Add photo' : 'Edit photo')

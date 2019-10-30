@@ -1,0 +1,77 @@
+form.formtastic.crane_hire_booking {
+  width: 100%;
+
+  fieldset {
+    border: 0;
+  }
+
+  > fieldset {
+    border-bottom: 1px solid #ccc;
+  }
+
+  label {
+    width: auto;
+    min-width: 220px;
+  }
+
+  legend.label {
+    font-size: inherit;
+  }
+}
+
+.crane_hire_pricing_table {
+  width: 100%;
+}
+
+.ch_crane_price_name {
+  width: 200px;
+
+  label {
+    font-weight: normal !important;
+  }
+}
+
+.ch_crane_price_checkbox_td {
+  width: 30px;
+}
+
+.crane-hire-time-slot-label {
+  display: inline-block;
+  width: 80px !important;
+  min-width: 0 !important;
+  font-size: 11px;
+  color: #404559;
+  background: white;
+  border-radius: 5px;
+  padding: 2px;
+  text-align: center;
+  margin: 0 8px 12px 0;
+  border: 1px solid #404559;
+  cursor: pointer;
+}
+
+.crane-hire-time-slot-input {
+  display: none;
+}
+
+.crane-hire-time-slot-input:checked + .crane-hire-time-slot-label {
+  background: #404559;
+  color: white;
+}
+
+.crane-hire-time-slot-input:disabled + .crane-hire-time-slot-label {
+  background: #e0e0e4;
+  color: #666;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.crane-hire-time-slot-label input {
+  display: none;
+}
+
+.crane-hire-total-price {
+  float: right;
+  font-weight: bold;
+  font-size: 18px;
+}

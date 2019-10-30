@@ -1,0 +1,54 @@
+- @page_name = 'Sailing Calendar'
+
+- content_for :breadcrumbs do
+  %li
+    %span Racings
+
+- content_for :sidebar do
+  %li= link_to 'Racings', :action => :index
+
+#main-content-inner.racings
+  %h1 Sailing Calender
+
+  .form-box
+    = form_tag '', :method => :get do
+      .field.months
+        = label_tag 'month', 'Month'
+        = select_tag 'month', options_for_select(@months[1..-1], @months[@month])
+
+      .field.filter
+        = label_tag 'filter', 'Search'
+        = text_field_tag :filter, @filter
+
+      %br
+
+      .field
+        %p Select Month above or do a Search
+
+      .field.submit
+        = submit_tag 'Filter'
+
+  %hr
+
+    %table.search-results
+      %thead
+        %th Day
+        %th Date
+        %th Race Officer
+        %th Assistant R. O.
+        %th Boat Assisting
+        %th Classes Racing
+        %th Open Events at HYC
+      %tbody
+        - 1.upto Time.now.end_of_month.day do |i|
+          - class_name = "sunday" if Date::DAYNAMES[Time.new(@year, @month, "#{i}").wday] == "Sunday"
+          %tr{:class => class_name.to_s}
+            %td= Date::DAYNAMES[Time.new(@year, @month, "#{i}").wday][0..2]
+            %td= "#{i}/#{@month}/#{@year}"
+            %td= @racings["#{i}/#{@month}/#{@year}"].try :race_officer
+            %td= @racings["#{i}/#{@month}/#{@year}"].try :assistant_race_officer
+            %td= @racings["#{i}/#{@month}/#{@year}"].try :boat_assisting
+            %td= @racings["#{i}/#{@month}/#{@year}"].try :classes_racing
+            %td= @racings["#{i}/#{@month}/#{@year}"].try :open_events_at_hyc
+
+

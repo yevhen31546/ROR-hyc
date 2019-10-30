@@ -1,0 +1,11 @@
+- @page_name ||= @gallery_category.try(:name).presence || "Gallery"
+
+= render :partial => 'gallery/breadcrumbs'
+
+#main-content-inner.no_sidebar
+  = render :partial => 'gallery/search_form'
+
+  %h1= @page_name
+
+  = render :partial => 'gallery_categories/top_level'
+

@@ -1,0 +1,30 @@
+%h1 Users
+
+%ul#actions
+  %li= link_to 'Add new user', new_object_path, :class => 'add_icon'
+
+= form_tag '', :method => 'GET' do
+  = text_field_tag 'query', @query
+  = submit_tag 'search'
+
+= paginated_section @users do
+  %table.index
+    %tr
+      %th Email
+      %th Username
+      %th Role
+      %th Login Count
+      %th Current Login
+      %th Created
+      %th Actions
+    - @users.each do |user|
+      %tr{:class => cycle('odd', 'even')}
+        %td= user.email
+        %td= user.login
+        %td= user.role.name
+        %td= user.login_count
+        %td= user.current_login_at || '-'
+        %td(nowrap="nowrap")= user.created_at
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(user), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(user), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

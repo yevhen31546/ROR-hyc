@@ -1,0 +1,11 @@
+%ul{:id => "charge_#{i}", :class => 'charge', :data => {:id => charge_form.object.try(:id)}}
+  .handle
+  = charge_form.input :charge_type, :as => :select, :collection => Charge::TYPES, :include_blank => false
+  = charge_form.input :account_code, :label => "Jonas Account Reference"
+  = charge_form.input :heading, :hint => "Add a label to a group of options. E.g. Lunch Options", :input_html => {:size => 80}
+  = charge_form.input :group_name, :hint => "Group radio button options together. E.g. fee_options", :input_html => {:size => 80}
+  = charge_form.input :name, :input_html => {:class => 'text-hint', :size => 80}
+  = charge_form.input :price, :input_html => {:class => 'text-hint'}, :required => true
+  = charge_form.input :date, :as => :datepicker, :hint => "When Discounts or Late Fee 'Charge type' is selected. dd/MMM/YYYY"
+  = charge_form.input :is_hidden, :label => "Hidden?"
+  = charge_form.input :_destroy, :as => :boolean

@@ -1,0 +1,32 @@
+%h1 Resources
+
+%ul#actions
+  %li= link_to 'Add new resource', new_admin_resource_path(:layout => params[:layout]), :class => 'add_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th
+      %th Name
+      %th Filename
+      %th Content Type
+      %th Updated
+      %th Actions
+    - @resources.each do |resource|
+      %tr{:class => cycle('odd', 'even')}
+        %td.center
+          - thumb_img = object_thumbnail_tag(resource, :asset)
+          = link_to(thumb_img, object_path(resource))
+        %td= link_to resource.name, object_path(resource)
+        %td= resource.asset_file_name
+        %td= resource.asset_content_type
+        %td(nowrap="nowrap")= resource.asset_updated_at
+        %td(nowrap="nowrap")
+          - if @layout_false
+            = link_to_function 'Insert Resource', "window.opener.CKEDITOR.tools.callFunction(#{params['CKEditorFuncNum']}, '#{resource.asset.url(:original)}'); window.close(); return false;", :class => 'inline_insert_image_icon'
+          - else
+            = link_to 'Show', object_path(resource), :class => 'inline_show_icon'
+            = link_to 'Download', resource.asset.url, :class => 'inline_download_icon'
+            = link_to 'Edit', edit_object_path(resource), :class => 'inline_edit_icon'
+            = link_to 'Delete', object_path(resource), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+  %br/

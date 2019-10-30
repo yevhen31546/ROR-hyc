@@ -1,0 +1,24 @@
+- @page_name = "Race Results"
+- @page_description = "Results from the open and club racing events at Howth Yacht Club"
+
+#results_frontend_wrapper
+  = link_to "Trophy Winners<br/>(club & open events)".html_safe, trophy_winners_path, :id => 'trophy_winners_link'
+
+  = form_tag '', :id => 'results_frontend', :method => :get do
+    %ul
+      %li
+        = label_tag 'year', 'Step 1: Year'
+        = select_tag 'year', options_for_select(@years, @year), :include_blank => true, :id => 'event_year_filter_alt'
+      %li
+        = label_tag 'event_type', 'Step 2: Event Type'
+        = select_tag 'event_type', options_for_select([['Open Events', 'open'], ['Club Racing', 'club']], @event_type), :include_blank => true, :id => 'event_type_filter'
+      %li
+        = label_tag 'event_title', "Step 3: Event"
+        = select_tag 'event_title', render(:partial => 'results/event_options', :locals => {:result_event_titles => @result_event_titles, :event_title => @event_title})
+      %li
+        = label_tag 'result_class_name', "Step 4: Class"
+        = select_tag 'result_class_name', render(:partial => 'results/class_options', :locals => {:result_classes => @result_classes, :class_name => @class_name})
+      %li= submit_tag 'Get Result'
+
+  - if @result.present?
+    %iframe{:src => iframe_result_path(@result), :seamless => 'seamless', :style => 'border: none; width: 100%; height: 7500px;', :scrolling => 'no'}

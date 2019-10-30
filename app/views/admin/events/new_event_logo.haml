@@ -1,0 +1,6 @@
+- i = 0
+= semantic_form_for @event, :url => '' do |f|
+  = f.semantic_fields_for :event_logos do |event_logo_form|
+    - if i.to_i == @target_i.to_i
+      = render :partial => 'event_logo', :locals => {:event_logo_form => event_logo_form, :event => @event, :i => i}
+    - i += 1

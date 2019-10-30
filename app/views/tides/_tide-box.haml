@@ -1,0 +1,13 @@
+.tides
+
+  #tides-form
+    .date-box
+      %label From
+      %input{:type => "text", :class => "datepicker", :id => "tide-interval-start", :value => @tides_from.strftime("%d/%b/%Y")}
+
+    .date-box
+      %label To
+      %input{:type => "text", :class => "datepicker", :id => "tide-interval-end", :value => @tides_to.strftime("%d/%b/%Y")}
+
+  #tides-information
+    = render :partial => "tides/table"

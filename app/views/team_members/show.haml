@@ -1,0 +1,24 @@
+#sidebar
+  = render 'team_members/team_members_box'
+
+#team-member
+  %h1= @team_member.name
+  - if @team_member.role.present?
+    %h2 #{@team_member.role}
+
+  - if @team_member.photo.present? && @team_member.photo.exists?      
+    .photo= image_tag @team_member.photo.url(:normal), :alt => ''
+
+    .details
+      .contact-details
+        - if @team_member.department.present?
+          %p #{@team_member.department}
+        - if @team_member.phone.present?
+          %p t: #{@team_member.phone}
+        - if @team_member.mobile.present?
+          %p m: #{@team_member.mobile}
+        - if @team_member.email.present?
+          %p e: #{auto_link @team_member.email}
+      .content= @team_member.content.html_safe
+
+%p= link_to '< Back to team', team_members_path

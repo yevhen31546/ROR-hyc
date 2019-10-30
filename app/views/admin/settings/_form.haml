@@ -1,0 +1,8 @@
+= semantic_form_for [:admin, @setting] do |f|
+  = render 'layouts/error_messages', :target => @setting
+  %ul
+    = f.input :key, :input_html => {:size => 100}
+    = f.input :value_type, :as => :select, :collection => Setting::VALUE_TYPES, :include_blank => false
+    = f.input :label, :input_html => {:size => 100}
+    = f.input :value, :input_html => {:size => 100}
+    = f.commit_button (f.object.new_record? ? 'Add Setting' : 'Update Setting')

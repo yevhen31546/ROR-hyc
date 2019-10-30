@@ -1,0 +1,47 @@
+- @page_name = page_seo_title('contact')
+- @page_description = page_seo_description('contact')
+
+- content_for :breadcrumbs do
+  %li
+    %span Contact Us
+
+- content_for :sidebar do
+  = render :partial => 'contact_us/sidebar'
+
+%h1 Contact Us
+
+%div{:style => "overflow: hidden;"}
+  - # contact details using the the hCard microformat
+  = render 'contact_us/hcard'
+
+  #map-holder
+    #map-canvas= render 'contact_us/google_maps_api'
+
+-#%table#club_contacts
+-#  - @club_contacts.each do |location, name, phone, email|
+-#    %tr
+-#      %td.location= location
+-#      %td.name= name
+-#      %td.phone= phone
+-#      %td.email= mail_to email
+
+= page_content 'contact'
+
+-#%h5 International Calls to Dublin:
+-#%p (Your Area Code) + 353 + 1 + (Local Number)
+-#
+-#%h5 Club Office Hours
+-#%p Monday to Friday 0930 - 1300 and 1400 - 1700
+-#
+-#%h5 Marina Office
+-#%p Maintains a listening watch on Ch M (37A) and Ch 80 between 9am and 9.30pm.
+-#
+-#%h5 Results
+-#%p
+-#  %stong Phone:
+-#  Dial 839 2714, wait for the dial tone, then dial 224.
+-#  If the phone is not answered, you can leave a recorded message.
+-#  %br
+-#  %strong Email:
+-#  = mail_to 'results@hyc.ie'
+

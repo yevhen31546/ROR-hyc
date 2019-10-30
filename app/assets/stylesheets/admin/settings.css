@@ -1,0 +1,26 @@
+table.settings td.value input, table.settings td.value textarea {
+  background-color: transparent;
+  border: 1px solid transparent;
+  width: 90%;
+  overflow: auto;
+}
+
+table.settings td.value input:hover, table.settings td.value textarea:hover {
+  border: 1px solid #777;
+  background-color: white;
+}
+
+table.settings td.value input:focus, table.settings td.value textarea:focus {
+  border: 1px solid black;
+  background-color: white;
+}
+
+td.key .actual_key, td.key .actual_key a {
+  margin: 0;
+  font-size: 10px;
+  color: #999;
+}
+
+table.settings a.setting_delete {
+  float: right;
+}

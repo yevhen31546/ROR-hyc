@@ -1,0 +1,23 @@
+%h1 Product
+
+%ul#actions
+  %li= link_to 'Add product', new_object_path, :class => 'add_icon'
+  %li= link_to 'Manage product categories', admin_product_categories_path, :class => 'edit_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Category
+      %th Name
+      %th Position
+      %th Date
+      %th Actions
+    - @products.each do |product|
+      %tr{:class => cycle('odd', 'even')}
+        %td= product.product_category.name
+        %td= product.name
+        %td(nowrap="nowrap")= product.position.to_s
+        %td(nowrap="nowrap")= product.created_at.to_s
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(product), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(product), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

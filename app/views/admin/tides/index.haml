@@ -1,0 +1,32 @@
+%h1 Tides
+
+%ul#actions
+  %li= link_to 'Add new tide', new_object_path, :class => 'add_icon'
+  %li= link_to 'Add multiple tides', add_multiple_admin_tides_path, :class => 'add_icon'
+
+%p
+  = form_tag url_for(controller: 'admin/tides', action: :delete_by_year), :method => :post do
+    = select_tag 'year', options_for_select(Tide.years)
+    = submit_tag 'Delete Year', :confirm => 'Are you sure?'
+
+
+= paginated_section collection do
+  = form_tag url_for(controller: 'admin/tides', action: :delete_multiple), :method => :post do
+    = submit_tag 'Delete selected records', :onclick => "javascript: return confirm('Are you sure you want to delete the selected records?');"
+
+    %table.index
+      %tr
+        %th= check_box_tag 'select_all', ''
+        %th Tide At
+        %th Height
+        %th Actions
+      - @tides.each do |tide|
+        %tr{:class => cycle('odd', 'even')}
+          %td= check_box_tag 'ids[]', tide.id
+          %td= tide.tide_at
+          %td= tide.height
+          %td(nowrap="nowrap")
+            = link_to 'Edit', edit_object_path(tide), :class => 'inline_edit_icon'
+            = link_to 'Delete', object_path(tide), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+
+    = submit_tag 'Delete selected records', :onclick => "javascript: return confirm('Are you sure you want to delete the selected records?');"

@@ -1,0 +1,8 @@
+- i = 0
+= semantic_form_for @entry, :url => '' do |f|
+  = f.semantic_fields_for :crew_members do |crew_member_form|
+    - i += 1
+    - if i.to_i == @target_i.to_i
+      = render :partial => 'crew_member', :locals => {:crew_member_form => crew_member_form, :entry_form => @entry.entry_form, :i => i}    
+  %hr
+  

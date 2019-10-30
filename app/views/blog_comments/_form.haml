@@ -1,0 +1,6 @@
+= render 'layouts/error_messages', :target => object
+%ul
+  = f.input :blog_post_id, :as => :hidden
+  = f.input :author, :label => 'Name'
+  = f.input :email, :as => :string
+  = f.input :comment, :as => :text, :input_html => {:cols => 60, :rows => 5}

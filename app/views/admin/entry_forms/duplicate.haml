@@ -1,0 +1,9 @@
+%h1 #{link_to 'Entry Forms', :action => 'index'} &rsaquo; Duplicating '#{@entry_form.name}' form
+
+= form_tag '', :method => :post do
+  %p
+    = label_tag :event_id, "Event"
+    = select_tag 'year', options_for_select(Event.years, @year), :include_blank => false, :id => 'event_year_filter', :data => {:with_forms => false}
+    = select_tag :event_id, options_from_collection_for_select(@events, :id, (@year ? :title : :title_with_year))
+
+  = submit_tag 'Duplicate'

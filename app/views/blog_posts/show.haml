@@ -1,0 +1,19 @@
+- @page_name = @blog_post.title
+- @page_description = @blog_post.title
+
+.blog-post
+  = render :partial => 'blog_post', :object => @blog_post
+  
+  %a(name='comments')
+  %h3 Comments
+  .comments
+    - if !@blog_post.blog_comments.approved.empty?
+      = render :partial => 'blog_comments/blog_comment', :collection => @blog_post.blog_comments.approved
+    - else
+      %p No comments yet.
+
+  #blog-comments-form
+    %h3 Post a Comment
+    = semantic_form_for(BlogComment.new(:blog_post_id => @blog_post.id)) do |f|
+      = render :partial => 'blog_comments/form', :locals => { :f => f }
+      %p= submit_tag 'Submit comment'

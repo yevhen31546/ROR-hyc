@@ -1,0 +1,8 @@
+#team-members-box
+  - TeamMember.all.each do |team_member|
+    = team_member.name
+    = team_member.role    
+    .image
+      - if !team_member.photo.blank? && team_member.photo.exists?
+        = image_tag team_member.photo.url(:thumb), :alt => ''
+      %p= link_to 'More >', team_member, :class => 'read_more'

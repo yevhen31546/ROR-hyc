@@ -1,0 +1,28 @@
+-# %puts #{@number_of_entries}
+%h1 Entries
+
+%ul#actions
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: auto;'}
+    = form_tag '', :method => :get do
+      = select_tag 'year', options_for_select(Event.years, @year), :include_blank => false, :id => 'event_year_filter'
+      = select_tag :event_id, render(:partial => 'admin/events/options', :locals => {:events => @events, :selected_event => @selected_event}), :id => 'entry_list_event_filter'
+      = submit_tag 'Show Entries'
+    - if @selected_event
+      - if @number_of_entries
+        %li= link_to 'Add new entry', '#', :class => 'add_icon', :id => 'disable_add_new_entry'
+      - else
+        %li= link_to 'Add new entry', new_admin_entry_path(:event_id => @selected_event), :class => 'add_icon'
+
+- if @entries
+  -#= form_tag url_for(:action => :index), :method => :get, :id => 'filter_form', :class => 'filter_form' do
+  -#  %p
+  -#    = select_tag 'filter[status]', options_for_select([['By status', '']] + Entry::STATUSES, @filter_options[:status])
+  -#    = submit_tag 'filter'
+
+  = form_tag multiple_admin_entries_path, :method => :post, :id => 'entry_multiple_form' do
+    %h2{:style => 'text-align: center; line-height: 29px; position: relative;'}= @selected_entry_list.name
+    = hidden_field_tag 'multiple_action',"Delete"
+    = submit_tag 'Delete selected records', :onclick => "javascript: return confirm('Are you sure you want to delete the selected records?');"
+    = render :partial => 'admin/entries/index', :locals => {:admin => true, :multiple_select => true}
+- elsif @selected_event
+  %p No Entry List Admin have been created for this event

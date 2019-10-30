@@ -1,0 +1,8 @@
+= semantic_form_for [:admin, @navbar] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :code, :required => true, :hint => "Keep this simple. You should not change this after the navbar has been created"
+    = f.input :name, :required => true, :hint => "You can change this as much as you like. It won't be seen publicly."
+
+    = f.commit_button :label => (f.object.new_record? ? 'Create' : 'Save')
+    = link_to 'Cancel', admin_navbars_path, :class => 'cancel'

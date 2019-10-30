@@ -1,0 +1,44 @@
+%h1
+  Trophy Winners
+  - if @trophy_event
+    for #{@trophy_event.name} (#{@trophy_event.year})
+
+%ul
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: auto;'}
+    = form_tag '', :method => :get do
+      = select_tag :year, options_for_select(['Select year'] + @years, @year), :include_blank => false, :id => 'trophy_event_year_filter'
+      = select_tag :event_type, options_for_select(['Select Event Type'] + @event_types, @event_type), :include_blank => false, :id => 'trophy_event_type_filter'
+      = select_tag :trophy_event_id, render(:partial => 'admin/trophy_events/options'), :id => 'trophy_event_filter'
+      = submit_tag 'Show Entries'
+
+- if @trophy_event
+  %ul#actions
+    %li= link_to "Add new trophy winner for #{@trophy_event.name}", new_admin_trophy_winner_path(:trophy_event_id => @trophy_event.id), :class => 'add_icon'
+    %li= link_to "Duplicate trophies in #{@trophy_event.name} / #{@trophy_event.year}", duplicate_admin_trophy_winners_path(:trophy_event_id => @trophy_event.id) , :class => 'add_icon'
+
+- if @trophy_winners.present?
+  = form_tag update_all_admin_trophy_winners_path, :method => :post do
+    = paginated_section @trophy_winners do
+      %table.index
+        %tr
+          %th Trophy
+          %th Category
+          - @trophy_event.columns.each do |column_type|
+            %th= column_type.to_s.humanize
+          %th Position
+          %th Actions
+        - @trophy_winners.each do |trophy_winner|
+          %tr{:class => cycle('odd', 'even')}
+            %td= trophy_winner.trophy
+            %td= trophy_winner.category
+            - trophy_winner.trophy_event.columns.each do |column_type|
+              %td= trophy_winner.send(column_type)
+            %td= text_field_tag "trophy_winners[#{trophy_winner.id}][position]", trophy_winner.position, :size => 2, :style => 'width: auto;'
+            %td
+              = link_to 'Edit', edit_object_path(trophy_winner), :class => 'inline_edit_icon'
+              -# Copy currently only updates, doesn't create a copy
+              -# = link_to 'Copy', new_admin_trophy_winners_path(:copy_id => trophy_winners.id), :class => 'inline_copy_icon'
+              = link_to 'Delete', object_path(trophy_winner), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+    = submit_tag 'Save'
+- else
+  %p No trophies for this event

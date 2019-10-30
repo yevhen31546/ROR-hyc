@@ -1,0 +1,9 @@
+= semantic_form_for [:admin, @blog_comment] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :author, :label => 'Name'
+    = f.input :email, :as => :string
+    = f.input :comment, :label => 'Comment', :as => :text, :input_html => {:cols => 60, :rows => 5} 
+    = f.input :status, :as => :select, :collection => ['approved', 'unapproved'], :include_blank => false
+      
+    = f.commit_button (f.object.new_record? ? 'Add blog comment' : 'Edit blog comment')

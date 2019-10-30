@@ -1,0 +1,15 @@
+%tr{:class => cycle('odd', 'even')}
+  %td= check_box_tag 'ids[]', gallery_photo.id
+  %td.center
+    - thumb_img = object_thumbnail_tag(gallery_photo, :photo)
+    = link_to(thumb_img, object_path(gallery_photo))
+  %td= text_area_tag "photos["+gallery_photo.id.to_s+"][caption]", gallery_photo.caption.html_safe, :cols => 40, :rows => 4
+  %td(nowrap="nowrap")
+    = select_tag "photos["+gallery_photo.id.to_s+"][filter]", options_for_select(['']+GalleryPhoto.available_filters, gallery_photo.filter)
+  %td(nowrap="nowrap")= text_field_tag "photos["+gallery_photo.id.to_s+"][sort]", gallery_photo.sort, size: 3, :style => 'width: 40px;'
+  %td(nowrap="nowrap")= gallery_photo.created_at.to_s
+  %td(nowrap="nowrap")
+    = link_to 'Edit', edit_object_path(gallery_photo), :class => 'inline_edit_icon'
+    - unless @gallery_album.nil?
+      = link_to 'Use as cover', use_as_cover_admin_gallery_album_gallery_photo_path(@gallery_album, gallery_photo), :class => 'inline_edit_image_icon', :confirm => 'Would you like to use this photo as the cover for the album?'
+    = link_to 'Delete', object_path(gallery_photo), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

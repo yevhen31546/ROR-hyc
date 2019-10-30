@@ -1,0 +1,18 @@
+%h1 Navigation
+
+#current-navbar-id{:"data-navbar-id" => @navbar.id}
+
+%ul#actions
+  %li= link_to 'Add navbar item', new_admin_navbar_navbar_item_path(:navbar_id => @navbar.id), :class => 'add_icon add_navbar_item'
+  - if Navbar.count > 1
+    - Navbar.find(:all).each do |navbar|
+      %li= link_to "Edit #{navbar.name}", { :action => 'edit', :id => navbar.id }, :class => 'edit_icon'
+
+.navbar_wrapper= render 'navbar'
+.navbar_form_wrapper
+  .navbar_form.new_navbar_item{:id => "navbar-form-#{@navbar.id}"}
+    - @navbar_item = NavbarItem.new
+    - @navbar_item.navbar_id = @navbar.id
+    %h2 Adding navbar item
+    = render 'admin/navbar_items/form'
+  .navbar_form.edit_navbar_item{:id => "navbar-form-#{@navbar.id}"}

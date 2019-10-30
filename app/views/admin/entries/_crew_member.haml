@@ -1,0 +1,12 @@
+%ul{:id => "crew_member_#{i}", :class => 'crew_member'}
+  = crew_member_form.input :name, :input_html => {:class => 'text-hint'}
+  %li
+    = label_tag :dob, "Date of Birth"
+    = crew_member_form.date_select :dob, :start_year => 1900, :end_year => Date.today.year - 5, :use_short_month => true, :add_month_numbers => true
+  = crew_member_form.input :club, :as => :select, :collection => entry_form.clubs
+  = crew_member_form.input :club_name_extra, :label => 'Club Name if not listed'
+  = crew_member_form.input :is_helm, :as => :boolean, :label => "Is this person the helm?"
+  = crew_member_form.input :phone
+  = crew_member_form.input :guardian_name
+  = crew_member_form.input :guardian_phone
+%hr

@@ -1,0 +1,83 @@
+@import "admin/tabular"; 
+@import "admin/pagination"; 
+@import "admin/forms";
+@import "jquery.plupload.queue";
+
+/* CSS reset (adapted from Blueprint CSS 0.81) */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+/* Tables still need 'cellspacing="0"' in the markup. */
+table { border-collapse: collapse; border-spacing: 0; }
+caption, th, td { text-align: left; font-weight: normal; }
+table, td, th { vertical-align: middle; }
+/* Remove possible quote marks (") from <q>, <blockquote>. */
+blockquote:before, blockquote:after, q:before, q:after { content: ""; }
+blockquote, q { quotes: "" ""; }
+/* Remove border on linked images. */
+a img { border: none; }
+a:focus { outline: none; }
+
+ul li, ol li, img { vertical-align: bottom; } /* IE6-7 margin bugfix */
+/* end CSS reset */
+
+h1, h2, h3, h4, h5, h6, p { margin: 6px 0 0 0; }
+
+li { list-style-type: none; }
+
+/* Main application stylesheet */
+/* general tag styles */
+body {
+  line-height: 1.5;
+  font-size: 12px;
+  font-family: tahoma, verdana, sans-serif;
+  color: #000;
+  background: #f1f1f1;
+}
+
+textarea {
+  font-size: 12px;
+  font-family: tahoma, verdana, sans-serif;
+}
+
+li, dd, blockquote { margin-left: 20px; }
+
+h1,h2,h3,h4,h5,h6 { font-size: 1em; font-weight: bold; color: #000000; line-height: 1; margin-bottom: 0.5em; }
+h1 { 
+  font-family: "Trebuchet MS",Arial,sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  border-bottom: 2px solid #e7e7e7;
+  text-indent: 0.1em;
+  color: #FF6F00;
+  text-transform: lowercase;
+}
+
+h2 {
+  font-family: "Trebuchet MS",Arial,sans-serif;
+  font-size: 14px;
+  font-size: 1.3em; color: #127BB2;
+  text-transform: lowercase;
+}
+
+td { vertical-align: top; text-align: left; }
+th { vertical-align: top; text-align: left; font-weight: bold; }
+
+a { color: #000; }
+a:visited { color: #000; }
+a:hover { color: #000; text-decoration: underline; }
+
+/* useful general styles */
+.bold { font-weight: bold; }
+.left { float: left; }
+.clear { clear: both; }
+.center  { text-align: center; }
+.rtl { text-align: right; direction: rtl; }
+ol.alpha { list-style-type: lower-alpha; }

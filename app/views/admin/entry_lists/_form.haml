@@ -1,0 +1,53 @@
+= semantic_form_for [:admin, @entry_list] do |f|
+  = render 'layouts/error_messages', :target => f.object
+
+  = f.hidden_field :event_id
+
+  %fieldset
+    %ul
+      = f.input :name, :hint => "Use 'Entry List Public' for public entry list, 'Entry List Admin' for admin lists"
+
+    %table.index{:style => 'width: auto;'}
+      %tr
+        %th Order L - R
+        %th Header
+        %th{:nowrap => true}
+      - entry_list_default_columns.each do |attribute, name|
+        - existing_entry_list_column = f.object.column_for(attribute)
+        %tr
+          %td
+            = hidden_field_tag 'entry_list[entry_list_columns_attributes][][id]', existing_entry_list_column.try(:id)
+            = hidden_field_tag 'entry_list[entry_list_columns_attributes][][entry_attr]', attribute
+            = text_field_tag 'entry_list[entry_list_columns_attributes][][position]', existing_entry_list_column.try(:position), :size => 3, :style => "width: 80px;"
+          %td= text_field_tag 'entry_list[entry_list_columns_attributes][][name]', existing_entry_list_column.try(:name) || name, :style => "width: 220px;"
+          %td{:nowrap => true}= name
+
+      - # show list of categories
+      - if f.object.event.entry_form && f.object.event.entry_form.categories.present?
+        - f.object.event.entry_form.categories.each do |category|
+          - attribute = "categories__#{category.id}"
+          - existing_entry_list_column = f.object.column_for(attribute)
+          %tr
+            %td
+              = hidden_field_tag 'entry_list[entry_list_columns_attributes][][id]', existing_entry_list_column.try(:id)
+              = hidden_field_tag 'entry_list[entry_list_columns_attributes][][entry_attr]', attribute
+              = text_field_tag 'entry_list[entry_list_columns_attributes][][position]', existing_entry_list_column.try(:position), :size => 3, :style => "width: 80px;"
+            %td= text_field_tag 'entry_list[entry_list_columns_attributes][][name]', existing_entry_list_column.try(:name) || category.name, :style => "width: 220px;"
+            %td= category.name
+
+      - # show list of charges
+      - if f.object.event.entry_form && f.object.event.entry_form.charges.present?
+        - f.object.event.entry_form.charges.each do |charge|
+          - attribute = "charges__#{charge.id}"
+          - existing_entry_list_column = f.object.column_for(attribute)
+          %tr
+            %td
+              = hidden_field_tag 'entry_list[entry_list_columns_attributes][][id]', existing_entry_list_column.try(:id)
+              = hidden_field_tag 'entry_list[entry_list_columns_attributes][][entry_attr]', attribute
+              = text_field_tag 'entry_list[entry_list_columns_attributes][][position]', existing_entry_list_column.try(:position), :size => 3, :style => "width: 80px;"
+            %td= text_field_tag 'entry_list[entry_list_columns_attributes][][name]', existing_entry_list_column.try(:name) || charge.name, :style => "width: 220px;"
+            %td= charge.name
+
+
+  %fieldset
+    %ul= f.commit_button (@entry_list.new_record? ? 'Add entry list' : 'Update entry list')

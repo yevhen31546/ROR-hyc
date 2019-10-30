@@ -1,0 +1,30 @@
+- @page_name = 'Dinner List for ' + @event.title_with_year
+- @no_sidebar = true
+
+- content_for :breadcrumbs do
+  %li
+    %span #{@page_name}
+
+%h1= @page_name
+
+- if @event_dinner
+  - if @event_dinner_bookings.present?
+    %table.event_dinner_bookings{:cellspacing => 10}
+      %thead
+        %tr
+          %th Name
+          %th= @event_dinner.table_name_type.humanize + ' Name'
+          %th Tickets
+      %tbody
+        - @event_dinner_bookings.each do |event_dinner_booking|
+          %tr
+            %td= event_dinner_booking.name
+            %td= event_dinner_booking.table_name
+            %td= event_dinner_booking.quantity
+  - else
+    %p
+      No Tickets Booked yet.
+      %br
+      = link_to 'Purchase Tickets', new_event_event_dinner_booking_path(event_id: @event.id)
+- else
+  %p No Dinner For this event

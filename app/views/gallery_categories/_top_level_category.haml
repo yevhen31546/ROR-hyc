@@ -1,0 +1,12 @@
+- thumb_img = sanitize_gallery_thumb(gallery_category.cover_photo, gallery_category.name)
+- target = gallery_category_path(gallery_category)
+%h2.gallery-category-title= link_to gallery_category.name, target
+
+- if gallery_category.children.present?
+  .gallery-top-level-category-preview.group
+    - if i == 0
+      - per_row = 4
+
+      - gallery_category.children.each_with_index do |gallery_category, counter|
+        - is_first_in_row = (counter % per_row == 0)
+        = render :partial => 'gallery_categories/category', locals: {gallery_category: gallery_category, is_first_in_row: is_first_in_row}

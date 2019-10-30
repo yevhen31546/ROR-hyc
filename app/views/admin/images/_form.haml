@@ -1,0 +1,18 @@
+- if @image.asset && !@image.new_record?
+  - if @image.asset.original_filename.match(/(\.gif|\.png|\.jpe?g)$/)
+    - thumb_img = image_tag(@image.asset.url(:thumb))
+  - else
+    - thumb_img = image_tag('pdf_icon.png')
+  %div.thumbnail= thumb_img
+
+= semantic_form_for [:admin, @image], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :name, :required => true
+    = f.input :width
+    = f.input :height
+    = f.input :category
+    = f.input :asset, :required => true
+    = f.input :layout, :as => :hidden, :value => (@layout_false ? 'false' : nil)
+
+    = f.commit_button (f.object.new_record? ? 'Add image' : 'Edit image')

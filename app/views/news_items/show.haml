@@ -1,0 +1,19 @@
+- @page_name = @object.title
+- @page_description = @object.title
+
+- content_for :breadcrumbs do
+  - if @object.is_junior?
+    %li= link_to 'Junior Sailing', junior_path
+  - elsif @object.is_cruising?
+    %li= link_to 'Cruising', cruising_path
+  - else
+    %li= link_to 'News', news_items_path
+  %li
+    %span= @page_name
+
+- content_for :sidebar do
+  = render :partial => 'news_items/news_categories'
+
+#main-content-inner
+  .news-item
+    = render :partial => 'news_item', :object => @object

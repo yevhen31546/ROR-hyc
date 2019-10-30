@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  ad_type: MyString
+  category: MyString
+  location: MyString
+  description: MyText
+  price: 9.99
+  currency: MyString
+  contact_name: MyString
+  contact_phone: MyString
+  contact_email: MyString
+  status: MyString
+  ip_address: MyString
+
+two:
+  name: MyString
+  ad_type: MyString
+  category: MyString
+  location: MyString
+  description: MyText
+  price: 9.99
+  currency: MyString
+  contact_name: MyString
+  contact_phone: MyString
+  contact_email: MyString
+  status: MyString
+  ip_address: MyString

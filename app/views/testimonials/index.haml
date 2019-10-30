@@ -1,0 +1,15 @@
+%h1= @page_name = 'Testimonials'
+
+- if !@testimonials.empty?
+  - @testimonials.each do |t|
+    .testimonial
+      .short
+        &ldquo;#{truncate_html(t.quote, :length => 200).html_safe}&rdquo;
+        - if truncate_html(t.quote, :length => 200) != t.quote
+          =link_to_function 'Read more', "jQuery(this).parent().hide(); jQuery(this).parent().next().show('slow'); "
+      .full(style='display:none')
+        &ldquo;#{t.quote.html_safe}&rdquo;
+      %h2(style='text-align:right; font-style: italic') -- #{t.name}#{(t.from.blank? ? '' : ", #{t.from}")}
+      %hr
+- else
+  %p None yet.

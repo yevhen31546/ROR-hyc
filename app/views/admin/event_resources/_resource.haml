@@ -1,0 +1,16 @@
+%tr.resource{:data => {:id => resource.id}}
+  %td.handle [drag]
+  %td
+    - if resource.resource_type == 'document'
+      = resource.name
+      = link_to resource.resource.url(:original), :target => '_blank' do
+        = object_thumbnail_tag(resource, :resource)
+    - elsif resource.resource_type == 'comment'
+      = simple_format resource.comment
+    - elsif resource.resource_type == 'url'
+      = link_to resource.name, resource.url, :target => resource.url_target
+  %td
+    = link_to 'edit', edit_admin_event_resource_path(resource), :class => 'inline_edit_icon'
+    = link_to 'delete', admin_event_resource_path(resource), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+
+

@@ -1,0 +1,12 @@
+- news_items = NewsItem.whereNewsItem.where(:section => ['News', 'Press Room', 'News & Press Room']).order('created_at DESC').limit(3)
+
+%h2 Latest news items
+%ul
+  - news_items.each do |news_item|
+    %li
+      .image
+        - if news_item.image.exists?
+          = image_tag news_item.image.url(:thumb), :alt => news_item.title
+      .snippet
+        = truncate_html news_item.title, :length => 120
+        %p= link_to 'More >', news_item, :class => 'read_more'

@@ -1,0 +1,14 @@
+- @page_name = @gallery_album.title
+- @page_description = @gallery_album.title
+.show_gallery_album
+  %h1= @gallery_album.title
+
+  .details
+    Posted on
+    = @gallery_album.created_at.to_s
+
+  .content= @gallery_album.content.html_safe
+
+  - if is_admin?
+    %p= link_to 'Edit', edit_object_path(@gallery_album)
+    %p= link_to 'Delete', object_path(@gallery_album), :confirm => 'Are you sure?', :method => :delete

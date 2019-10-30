@@ -1,0 +1,15 @@
+//= require jquery_ujs
+//= require admin/ckeditor
+//= require admin/jsTree/_lib/jquery.hotkeys
+//= require admin/jsTree/_lib/jquery.cookie
+//= require admin/jsTree/jquery.jstree
+//= require admin/jquery.datePicker.date
+//= require admin/jquery.datePicker
+//= require admin/navbars
+//= require events
+//= require jquery.easing.1.3
+//= require jquery.mousewheel-3.0.4
+//= require jquery.fancybox-1.3.4
+//= require admin/custom_fields
+//= require moment.min
+//= require crane_hire

@@ -1,0 +1,5 @@
+.show_module
+  %h1= @object.name
+
+  %p= link_to 'Edit', edit_object_path(@object)
+  %p= link_to 'Delete', object_path(@object), :confirm => 'Are you sure?', :method => :delete

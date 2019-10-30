@@ -1,0 +1,5 @@
+%h1
+  #{link_to 'Event Dinner Bookings', :action => 'index', :event_dinner_id => @event_dinner_booking.event_dinner_id}
+  &rsaquo; Editing '#{@event_dinner_booking.name}'
+
+= render 'event_dinner_bookings/form'

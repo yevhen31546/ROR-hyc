@@ -1,0 +1,7 @@
+%h1
+  #{link_to 'News', admin_news_items_path} 
+  &rsaquo; #{link_to 'News Categories', admin_news_categories_path}
+  &rsaquo; Editing '#{@news_category.name}'
+
+#main
+  = render 'form'

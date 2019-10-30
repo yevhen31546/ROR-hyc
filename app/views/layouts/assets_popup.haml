@@ -1,0 +1,14 @@
+!!!
+%html(lang='en')
+  %head
+    %meta(charset='UTF-8')
+    = csrf_meta_tag
+    = stylesheet_link_tag 'admin/assets_popup'
+    = javascript_include_tag 'admin/assets_popup'
+  %body
+    %a#top
+    #primary_wrapper
+      #secondary_wrapper
+        #main_content
+          = render 'layouts/flash_messages'              
+          #main_content_inner= yield

@@ -1,0 +1,9 @@
+= semantic_form_for([:admin, @club]) do |f|
+  = render 'layouts/error_messages', :target => object
+  %fieldset
+    %ul
+      = f.input :name
+      = f.input :initials
+      
+  %fieldset
+    %ul= f.commit_button f.object.new_record? ? 'Save club' : 'Update club', :button_html => { :id => nil }

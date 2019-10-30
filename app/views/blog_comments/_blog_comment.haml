@@ -1,0 +1,12 @@
+.comment
+  %a{:name => "comment-#{blog_comment.id}"}
+  .comment-date= blog_comment.created_at.to_s(:long)
+  .comment-info <b>#{blog_comment.author}</b> said:
+  .comment-comment= nl2br(blog_comment.comment.html_safe)
+  - if is_admin? && !blog_comment.approved?
+    %p
+      = form_for blog_comment do |f|
+        = f.hidden_field :status, :value => 'approved'
+        = f.submit 'Approve'
+
+    %p= link_to 'Delete', blog_comment, :method => :delete, :confirm => 'Are you sure?'

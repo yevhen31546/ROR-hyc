@@ -1,0 +1,29 @@
+html.print-layout,
+body.print-layout {
+  background: none;
+}
+
+@media print {
+  #footer, #sidebar, .sf-menu, #search-box, #contact-form, #blog-comments-form, input[type=submit], #copyright-credits, #social-media-buttons { display: none; }
+
+  a img { border: none; }
+
+  body, #primary-wrapper, #secondary-wrapper, #main-content, #main-content-inner, #header {
+    display: block !important;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    color: black;
+    font-size: 11pt !important;
+    position: static;
+    border: none;
+  }
+
+  #footer {
+    margin-top: 5pt;
+    padding-top: 3pt;
+    border-top: 0.5pt solid #cccccc;
+    font-size: 9pt !important;
+  }
+}

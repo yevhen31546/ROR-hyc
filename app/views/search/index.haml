@@ -1,0 +1,18 @@
+- @no_sidebar = true
+%h1= @page_name = 'Search'
+  
+- content_for :breadcrumbs do
+  %li
+    %span Search Results for #{@query}
+
+- if @query.present?
+  Search Results for "#{@query}"
+
+  #search_results
+    = paginated_section @results do      
+      %ol= render :partial => 'search/result', :collection => @results
+
+- else
+  = form_tag '/search', :method => :get do
+    %input#search-input{ :type => 'text', :name => 'query', :placeholder => 'Search', :value => @query}>
+    = image_submit_tag 'icons/search.png', :alt => 'Search', :id => 'search-go'

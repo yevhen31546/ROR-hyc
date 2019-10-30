@@ -1,0 +1,27 @@
+= semantic_form_for [:admin, @result], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :event_type
+    = f.input :year
+    = f.input :event_title, input_html: {length: 28, maxlength: 28}
+    = f.input :class_name
+    = f.input :ftp_path, input_html: {length: 100}, label: "FTP Path", hint: "E.g. /reshyc/2013/open/autumnleague/class2_irc.htm"
+    -#= f.input :result, :hint => (object.result_file_name  if object.result.exists?)
+    /
+      = f.input :event_logo, :label => "Event logo (right)", :hint => (object.event_logo_file_name if object.event_logo.exists?)
+      - if object.event_logo.exists?
+        %li(style='line-height: 48px; vertical-align: top')
+          %label
+          = image_tag object.event_logo.url
+          = f.hidden_field :event_logo_delete
+          = link_to_function 'Delete current image', "jQuery(this).parent().hide(); jQuery('#result_event_logo_delete').val(1);", :class => 'inline_delete_icon'
+    /
+      = f.input :venue_logo, :label => "Venue logo (left)", :hint => (object.venue_logo_file_name if object.venue_logo.exists?)
+      - if object.venue_logo.exists?
+        %li(style='line-height: 48px; vertical-align: top')
+          %label
+          = image_tag object.venue_logo.url
+          = f.hidden_field :venue_logo_delete
+          = link_to_function 'Delete current image', "jQuery(this).parent().hide(); jQuery('#result_venue_logo_delete').val(1);", :class => 'inline_delete_icon'
+
+    = f.commit_button (f.object.new_record? ? 'Add result' : 'Edit result')

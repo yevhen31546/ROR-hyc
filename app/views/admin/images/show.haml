@@ -1,0 +1,27 @@
+%p
+  = image_tag @image.asset.url(:custom)
+%p
+  %strong Name:
+  = h @image.name
+%p
+  %strong File name:
+  =h @image.asset_file_name
+- if magick_asset(@image)
+  %p
+    %strong Dimensions:
+    #{magick_asset(@image).columns.to_s}x#{magick_asset(@image).rows.to_s}
+%p
+  %strong Original file size:
+  =h @image.asset_file_size
+%p
+  %strong Content type:
+  =h @image.asset_content_type
+%p
+  %strong Updated at:
+  =h @image.asset_updated_at
+
+= link_to 'Edit', edit_object_path
+|
+= link_to 'Delete', object_path(@image), :confirm => 'Are you sure?', :method => :delete
+|
+= link_to 'Back', collection_path

@@ -1,0 +1,3 @@
+- selected_event ||= nil
+<option></option>
+= options_from_collection_for_select(event_dinners, 'id', :title_with_date, selected_event_dinner.try(:id))

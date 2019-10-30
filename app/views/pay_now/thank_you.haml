@@ -1,0 +1,13 @@
+- @page_name = "Thank You for your payment"
+
+#main-content-inner
+  %h1= @page_name
+
+  #payment_confirmation.entry_summary
+    %dl
+      %dt Reference:
+      %dd= @order.reference
+
+  = render partial: 'pay_now/summary'
+
+  %p= link_to 'Print this page', 'javascript:print()'

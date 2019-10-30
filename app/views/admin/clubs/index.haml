@@ -1,0 +1,19 @@
+%h1 Clubs
+%ul#actions
+  %li= link_to 'Add new club', new_object_path, :class => 'add_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Initials
+      %th
+    - @clubs.each do |club|
+      %tr{:class => cycle('odd', 'even')}
+        %td= link_to club.name, edit_object_path(club)
+        %td= club.initials
+        %td
+          = link_to 'Edit', edit_object_path(club), :class => 'inline_edit_icon'
+          -# Copy currently only updates, doesn't create a copy
+          -# = link_to 'Copy', new_admin_club_path(:copy_id => club.id), :class => 'inline_copy_icon'
+          = link_to 'Delete', object_path(club), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

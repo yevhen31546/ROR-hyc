@@ -1,0 +1,11 @@
+%h2 Summary
+%table.pay-now-summary-table.index
+  %tbody
+    - @order.order_items.each do |order_item|
+      %tr{class: (cycle('odd', 'even'))}
+        %td= order_item.product.product_category.name + " - " + order_item.product.name
+        %td.price= number_to_currency order_item.amount
+  %tfoot
+    %tr
+      %th Total
+      %th.price= number_to_currency @order.total

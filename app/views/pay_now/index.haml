@@ -1,0 +1,52 @@
+- @page_name = 'Pay Now'
+- @no_sidebar = true
+
+%h1 Make a Payment to Howth Yacht Club
+.pay-now-container
+  = semantic_form_for @order, :url => create_order_path, :id => "payment_form" do |f|
+    = render 'layouts/error_messages', :target => @order
+    .product-container
+      .product-container-content
+        %h3
+          = "Members"
+          %hr
+        %ul
+          = f.input :member_name, :as => :string
+          = f.input :member_id, :as => :string, label: "Member ID", :required => true
+          = f.input :email, :as => :string
+    - @product_categories.each do |t|
+      .product-container
+        .product-container-content
+          %h3
+            = t.name
+            %hr
+          %ol
+            - t.products.each do |p|
+              - order_item = (@order.order_items.find {|oi| oi.product == p } || OrderItem.new(:product => p))
+              = f.fields_for :order_items, order_item do |order_item_f|
+                %li
+                  = order_item_f.label :amount, order_item_f.object.product.name
+                  = order_item_f.hidden_field :product_id
+                  %span= raw "&euro;"
+                  = order_item_f.text_field :amount, :class => "amount"
+    .product-container
+      .product-container-content
+        %ul
+          = label_tag 'order_total', "Total"
+          %span= raw "&euro;"
+          = text_field_tag 'order_total', '0'
+    .product-container
+      .product-container-content
+        %h3
+          = "Comment on Payment"
+          %hr
+        %ul{ :class => "payment_comment" }
+          = f.text_area :comment, :as => :string
+    .product-container
+      .product-container-content
+        %ul
+          = f.submit "Pay Now"
+
+
+
+

@@ -1,0 +1,31 @@
+%h1.bold
+  #{link_to 'Events', admin_events_path} &rsaquo;
+  Resources for #{link_to @event.title, edit_admin_event_path(@event)}
+
+- if @event.event_resources.length > 0
+  - if @event.event_resources.pre.length > 0
+    %h3 Pre
+    %table#pre_resources.index.sortable_table{:style => 'width: 400px'}
+      %tr
+        %th.handle{:style => 'width: 10px;'}
+        %th Resource
+        %th Actions
+      - @event.event_resources.pre.order('position asc').each do |resource|
+        = render :partial => 'resource', :object => resource
+
+  - if @event.event_resources.post.length > 0
+    %h3 Post
+    %table#post_resources.index.sortable_table{:style => 'width: 400px'}
+      %tr
+        %th.handle{:style => 'width: 10px;'}
+        %th Resource
+        %th Actions
+      - @event.event_resources.post.order('position asc').each do |resource|
+        = render :partial => 'resource', :object => resource
+- else
+  %p No resources
+
+%div#new_resource
+  %h2 Add Resource
+  = render 'form'
+  

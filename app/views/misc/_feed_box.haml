@@ -1,0 +1,9 @@
+%h2 Feed items
+
+- feed_items = FeedItem.limit(3)
+- Feed.update_feeds
+
+- if feed_items.present?
+  %ul
+    - feed_items.each do |feed_item|
+      %li= link_to feed_item.title, feed_item.link || ''

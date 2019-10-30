@@ -1,0 +1,11 @@
+= semantic_form_for [:admin, @contact] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :category, :as => :select, :collection => Contact::CATEGORIES
+    = f.input :position
+    = f.input :sub_position
+    = f.input :name
+    = f.input :phone
+    = f.input :email
+    = f.input :photo
+    = f.commit_button (f.object.new_record? ? 'Create' : 'Update')

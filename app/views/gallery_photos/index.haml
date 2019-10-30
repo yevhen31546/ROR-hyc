@@ -1,0 +1,19 @@
+- @page_name = "#{@gallery_album.title} - All Photos"
+
+= render :partial => 'gallery/breadcrumbs'
+
+#main-content-inner.no_sidebar
+  = render :partial => 'gallery/search_form'
+
+  %h1== #{@gallery_album.title} - #{@filter || "All"} Photos
+
+  - if @gallery_album.content.present?
+    .album_content= @gallery_album.content.html_safe
+
+  - if @gallery_album.filter_event_desc.present? && @filter == 'Event'
+    .album_content= @gallery_album.filter_event_desc.html_safe
+  
+  - if @gallery_album.filter_prize_giving_desc.present? && @filter == 'Prize Giving'
+    .album_content= @gallery_album.filter_prize_giving_desc.html_safe
+
+  = render :partial => 'index'

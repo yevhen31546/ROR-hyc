@@ -1,0 +1,15 @@
+- @page_name = 'Buy and Sell'
+
+- content_for :breadcrumbs do
+  %li= link_to "Buy and Sell", bs_ads_path
+  %li
+    %span New Buy and Sell
+
+- content_for :sidebar do
+  &nbsp;
+
+#main-content-inner
+  %h1 Buy and Sell
+  = render :partial => "form"
+
+

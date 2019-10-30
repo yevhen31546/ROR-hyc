@@ -1,0 +1,6 @@
+#twitter-box
+  %h2 Twitter
+
+  .tweet
+  -# link below is required for the Javascript to read the username
+  = link_to "@#{settings[:twitter_username]}", "http://twitter.com/#{settings[:twitter_username]}", :id => 'twitter-link'

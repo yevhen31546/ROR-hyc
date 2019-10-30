@@ -1,0 +1,43 @@
+%h1 Images
+
+%ul#actions
+  %li= link_to 'Add new image', new_admin_image_path(:layout => params[:layout]), :class => 'add_icon'
+
+= form_tag '', :method => :get do
+  = text_field_tag 'query', @query, :placeholder => "Name"
+  = text_field_tag 'category', @category, :placeholder => "Category", :style => 'width: 200px;'
+  = hidden_field_tag 'layout', params[:layout]
+  = hidden_field_tag 'CKEditorFuncNum', params[:CKEditorFuncNum]
+  = submit_tag 'Search'
+
+%br
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th
+      %th Category
+      %th Name
+      %th Filename
+      %th Content Type
+      %th Updated
+      %th Actions
+
+    - @images.each do |image|
+      %tr{:class => cycle('odd', 'even')}
+        %td.center
+          - thumb_img = object_thumbnail_tag(image, :asset)
+          = link_to(thumb_img, object_path(image))
+        %td= image.category.presence || 'None'
+        %td= link_to image.name, object_path(image)
+        %td= image.asset_file_name
+        %td= image.asset_content_type
+        %td(nowrap="nowrap")= image.asset_updated_at
+        %td(nowrap="nowrap")
+          - if @layout_false
+            = link_to_function 'Insert Image', "window.opener.CKEDITOR.tools.callFunction(#{params['CKEditorFuncNum']}, '#{image.asset.url(:custom)}'); window.close(); return false;", :class => 'inline_insert_image_icon'
+          - else
+            = link_to 'Show', object_path(image), :class => 'inline_show_icon'
+            = link_to 'Edit', edit_object_path(image), :class => 'inline_edit_icon'
+            = link_to 'Delete', object_path(image), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+  %br/

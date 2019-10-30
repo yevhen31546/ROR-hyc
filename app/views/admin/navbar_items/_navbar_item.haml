@@ -1,0 +1,9 @@
+%li{:id => "navbar-#{navbar_item.navbar_id}-ni-#{navbar_item.id.to_s}"}
+  - # %span{:class=>'handle'}
+  = link_to "<ins>&nbsp;</ins>#{h navbar_item.name}".html_safe, navbar_item.link
+  - # .navbar_item_tools
+  - #   = link_to image_tag('/images/icons/edit.png', :alt => 'Edit this navbar item'), edit_admin_navbar_item_path(navbar_item)
+  - #   = link_to image_tag('/images/icons/delete.png', :alt => 'Delete navbar item'), admin_navbar_item_path(navbar_item), :method => :delete, :confirm => "Are you sure?"
+  - #   = link_to image_tag('/images/icons/add.png', :alt => 'Add sub-navbar item'), new_admin_navbar_item_path(navbar_item, :parent_id => navbar_item.id, :navbar_id => navbar_item.navbar_id)
+  - if !navbar_item.reload.children.blank?
+    %ul= render :partial => 'admin/navbar_items/navbar_item', :collection => navbar_item.children

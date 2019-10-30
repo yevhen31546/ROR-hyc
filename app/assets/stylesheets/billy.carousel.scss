@@ -1,0 +1,21 @@
+/* Carousel */
+
+#billy-clip ul, #billy-clip li, #billy-scroller ul, #billy-scroller li { padding: 0; margin: 0 }
+
+#billy-holder { width: 1020px; height: 200px; position: relative; overflow: visible; }
+#billy-clip { width: 1020px; height: 200px; position: relative; overflow: hidden; z-index: 100; }
+
+ul#billy-scroller { width: 9999px; height: 200px; display: block; float: left; position: relative; }
+ul#billy-scroller ul { text-align: right; width: auto; }
+ul#billy-scroller li { width: 1020px; height: 200px; float: left; display: block; position: relative; overflow: hidden; }
+
+/* Indicators */
+ul#billy-indicators { position: absolute; left: 500px; top: 150px; width: auto; display: block; z-index: 999; }
+ul#billy-indicators li { display: block; width: 11px; height: 11px; float: left; margin: 0 5px 0 0; }
+// ul#billy-indicators li a { display: block; width: 11px; height: 11px; margin-right: 3px; background: transparent image-url('carousel/indicator.png'); }
+// ul#billy-indicators li a:hover, ul#billy-indicators li.active a { background: transparent image-url('carousel/indicator-current.png'); }
+
+/* Controls */
+#billy-prev, #billy-next { position: absolute; width: 49px; height: 98px; top: 50px; display: block; z-index: 200; cursor: pointer; }
+// #billy-prev { position: absolute; background: transparent image-url('carousel/billy-prev.png'); left: 100px; }
+// #billy-next { position: absolute; background: transparent image-url('carousel/billy-next.png'); right: 100px; }

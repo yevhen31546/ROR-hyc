@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  event_id: 1
+  category: MyString
+  trophy: MyString
+  boat: MyString
+  owner: MyString
+  club_id: 1
+  helm: MyString
+  crew: MyString
+
+two:
+  event_id: 1
+  category: MyString
+  trophy: MyString
+  boat: MyString
+  owner: MyString
+  club_id: 1
+  helm: MyString
+  crew: MyString

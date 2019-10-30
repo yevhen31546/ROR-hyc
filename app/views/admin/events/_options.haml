@@ -1,0 +1,3 @@
+- selected_event ||= nil
+<option></option>
+= options_from_collection_for_select events, 'id', (@year ? :title : :title_with_year), selected_event.try(:id)

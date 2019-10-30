@@ -1,0 +1,4 @@
+%h1 #{link_to 'Subscriptions', :action => 'index'} &rsaquo; Copy/paste subscription list
+
+- subscriptions_textarea= Subscription.all.map {|s| "#{s.email}\t#{s.first_name}\t#{s.last_name}" }.join("\n")
+%textarea(rows=30 cols=100)= subscriptions_textarea

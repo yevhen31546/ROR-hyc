@@ -1,0 +1,23 @@
+%h1 Crane Hire Prices
+
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Type
+      %th Member Price
+      %th Non-Member Price
+      %th Charge Period
+      %th Actions
+    - @crane_hire_prices.each do |crane_hire_price|
+      %tr{:class => cycle('odd', 'even')}
+        %td= crane_hire_price.name
+        %td= crane_hire_price.product_type
+        %td= crane_hire_price.member_price
+        %td= crane_hire_price.non_member_price
+        %td= crane_hire_price.charge_period
+        %td(nowrap="nowrap")
+          = link_to 'Details', object_path(crane_hire_price), :class => 'inline_show_icon'
+          = link_to 'Edit', edit_object_path(crane_hire_price), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(crane_hire_price), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

@@ -1,0 +1,6 @@
+- thumb_img = sanitize_gallery_thumb(gallery_category.cover_photo, gallery_category.name)
+- target = gallery_category_path(gallery_category)
+.gallery-category{:class => (is_first_in_row ? "gallery-thumbnail-block-first-in-row" : nil)}
+  .gallery-category-thumb= link_to(thumb_img, target)
+  %h2.gallery-category-title= link_to gallery_category.name, target
+  %p.gallery-category-info #{pluralize gallery_category.gallery_albums.count, 'album'} - Updated #{gallery_category.created_at.strftime("%b %Y")}

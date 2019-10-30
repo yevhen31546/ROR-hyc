@@ -1,0 +1,18 @@
+- @page_name = 'Crane Hire Booking Payment Form'
+- @no_sidebar = true
+
+%h1 Payment
+
+- if @crane_hire_booking.paid?
+  %p Booking payment is complete.
+- else
+  %p Complete payment by filling out your card details.
+
+  .pay-now-container
+    #payment_card_logos
+      = image_tag 'card_logos.png', alt: "VISA and Mastercard Accepted"
+      %br
+      = image_tag '3dsecure.png', alt: "VISA and Mastercard Accepted"
+
+    .pay-now-payment-form-wrapper= render partial: 'payments/form', locals: {payment_item: @payment_item, total: @crane_hire_booking.total_charge}
+

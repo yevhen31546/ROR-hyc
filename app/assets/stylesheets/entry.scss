@@ -1,0 +1,180 @@
+h1.event_title {
+   margin-bottom: 0;
+}
+
+h2.event_sub_title {
+  font-size: 18px;
+  margin-top: 0;
+}
+
+form.entry {
+  width: 566px;
+  margin-top: 30px;
+  fieldset fieldset, fieldset.commit { border: none; }
+
+  li.boolean label {
+    width: 500px;
+  }
+
+  legend {
+    font-size: 22px;
+  }
+
+  input#entry_sail_number_prefix, input#entry_sail_number, input#entry_sail_number_suffix {
+    width: auto !important;
+  }
+
+  ul.crew_member select, textarea, li.date_select select {
+    width: auto;
+  }
+
+  #entry_helm_gender_input.radio, #entry_crew_gender_input.radio {
+    > fieldset {
+      padding: 0;
+      margin: 0;
+    }
+
+    legend {
+      float: left;
+      margin: 0;
+    }
+
+    label {
+      line-height: 30px;
+      font-size: 16px;
+    }
+
+    ol {
+      float: left;
+      padding-left: 0;
+
+      li {
+        float: left;
+        margin: 0;
+
+        label { width: auto; padding-right: 20px; }
+      }
+    }
+
+  }
+
+  #charges {
+    .charge {
+      overflow: hidden;
+
+      .charge_name, .charge_selection {
+      }
+
+      .charge_name {
+        width: 370px;
+      }
+
+      .charge_selection {
+        select {
+          width: 100px;
+        }
+      }
+    }
+
+    .group_name {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+  }
+
+  .additional_note {
+    border-top: 1px solid #ccc;
+    padding: 15px 5px 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+}
+
+#entry_categories {
+  label {
+    width: 500px;
+  }
+
+  fieldset {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+table#entries {
+  width: 100%;
+
+  thead {
+    th {
+      color: #da241c;
+      border-bottom: 1px dotted #606776;
+      text-align: left;
+    }
+
+    th a {
+      color: inherit;
+      text-decoration: none;
+      position: relative;
+      display: block;
+
+      &.sortable_column {
+        text-decoration: underline;
+      }
+
+      // &.inactive_sort_column:hover:after, &.active_sort_column:after {
+      //   content: '';
+      //   border: 6px solid transparent;
+      //   position: absolute;
+      //   right: 10px;
+      // }
+
+      // &.inactive_sort_column:hover:after, &.active_sort_column.active_sort_column_asc:after {
+      //   top: 8px;
+      //   border-top-color: #da241c;
+      // }
+
+      // &.active_sort_column.active_sort_column_desc:after {
+      //   top: 2px;
+      //   border-bottom-color: #da241c;
+      // }
+    }
+  }
+
+  tbody td {
+    line-height: 30px;
+  }
+}
+
+.entry_summary {
+  dl {
+    overflow: hidden;
+  }
+
+  dt, dd {
+    float: left;
+  }
+
+  dt {
+    font-weight: bold;
+    width: 50px;
+  }
+}
+
+form.payment_item {
+  #payment_item_card_security_code {
+    width: auto !important;
+  }
+}
+
+#payment_card_logos {
+  float: right;
+  margin: 40px 40px 0 0;
+}
+
+#entry_conditions,
+#refund_policy {
+  width: 500px;
+  font-size: 9px;
+}

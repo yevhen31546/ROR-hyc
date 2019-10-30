@@ -1,0 +1,6 @@
+- if @news_categories.present?
+  %h4 NEWS CATEGORIES
+  %ul#news_categories
+    %li= link_to 'All News', '/news'
+    - @news_categories.each do |news_category|
+      %li= link_to news_category.name, category_news_items_path(:news_category_id => news_category)

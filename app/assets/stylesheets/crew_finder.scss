@@ -1,0 +1,21 @@
+form.crew_finder_ad {
+  width: 500px;
+
+  li {
+    textarea {
+      width: 500px;
+    }
+
+    fieldset {
+      width: 500px;
+    }
+
+    input[type='submit'] {
+      margin: auto;
+    }
+  }
+}
+
+.form-box.crew_finder .field.submit {
+  margin-top: -2px;
+}

@@ -1,0 +1,12 @@
+= semantic_form_for [:admin, @social_event], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :name
+    = f.input :date, :as => :datepicker
+    = f.input :featured
+    = f.input :description, :input_html => { :class => 'htmleditor' }
+
+
+
+  %ul
+    = f.commit_button (f.object.new_record? ? 'Add new event' : 'Edit event')

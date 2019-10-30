@@ -1,0 +1,25 @@
+- @page_name = 'Rankings'
+
+- content_for :breadcrumbs do
+  %li
+    %span  Rankings
+
+- content_for :sidebar do
+  %li= link_to 'Search', :action => :index
+  %li= link_to 'Ranking', :action => :rankings
+
+#main-content-inner.trophy-winners
+  %h1 Trophy Winners Ranking
+
+  = paginated_section @rankings do
+    %table.search-results
+      %thead
+        %th Boat
+        %th Owner
+        %th Trophies
+      %tbody
+        - @rankings.each do |ranking|
+          %tr
+            %td= ranking.boat
+            %td= ranking.owner
+            %td= ranking.rank

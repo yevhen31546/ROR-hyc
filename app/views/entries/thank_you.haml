@@ -1,0 +1,24 @@
+- @page_name = "Thank You for entering #{@event.title}"
+
+
+- content_for :breadcrumbs do
+  %li= link_to "Open Events", :controller => 'events', :action => :index, :event_type => 'open'
+  %li
+    %span= @page_name
+
+- content_for :sidebar do
+  - if @event.sponsor_logo.exists?
+    = image_tag @event.sponsor_logo.url(:normal)
+  - else
+    %p
+
+%h1 You have successfully entered '#{@entry.event.title}'!
+
+= render :partial => 'summary', :locals => {:entry => @entry}
+
+#payment_confirmation.entry_summary
+  %dl
+    %dt Reference:
+    %dd= @entry.reference 
+
+%p= link_to 'Print this page', 'javascript:print()'

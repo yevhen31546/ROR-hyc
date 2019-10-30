@@ -1,0 +1,52 @@
+.progress_small {
+  background: image-url('ajax-loader.gif') center no-repeat;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.navbar_wrapper {
+  float: left;
+  width: 400px;
+  border: 2px outset #fff;
+  margin-right: 20px;
+}
+
+.navbar_form_wrapper {
+  float: left;
+}
+
+.navbar_form {
+  float: left;
+  clear: left;
+  width: 520px;
+}
+
+.navbar_form label {
+  width: 140px !important;
+}
+
+.navbar_form li.boolean label {
+  width: 240px !important;
+}
+
+.new_navbar_item {
+  float: left;
+}
+
+a.new_navbar_item, a.new_navbar_item:hover {
+  text-decoration: none;
+}
+
+.new_navbar_item_wrapper {
+  float: left;
+  clear: left;
+}
+
+.new_navbar {
+  float: left;
+  clear: left;
+}
+
+.tree-context li a span {
+  text-align: left;
+}

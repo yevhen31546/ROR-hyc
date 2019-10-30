@@ -1,0 +1,10 @@
+%div{:style => 'margin-bottom: 10px;'}
+  = form_tag '', :method => :get do
+    = text_field_tag 'date', (@date), :class => 'ui-datepicker-chb-filter', :data => {"selectable-dates" => CraneHireBooking.selectable_dates.map {|d| d.strftime("%d-%m-%Y") }.join(',')}
+    = button_tag 'Filter by crane hire start date'
+
+  - if @date.present?
+    = link_to 'Show Print View', print_admin_crane_hire_bookings_path(:date => @date)
+
+- if @date
+  %p Bookings that start on #{@date}

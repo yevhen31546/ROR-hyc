@@ -1,0 +1,4 @@
+%ul
+  - if !@modules.empty?
+    - @modules.each do |mod|
+      %li= navbar_link mod.name, {:controller => File.join('admin', mod.controller), :action => mod.action}

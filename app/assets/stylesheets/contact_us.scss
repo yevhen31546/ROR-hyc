@@ -1,0 +1,105 @@
+body#body-contact-us-index {
+  .contact-holder {
+    color: #585858;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+  .contact-holder label {
+    font-weight: bold;
+    width: 50px;
+    display: inline-block;
+  }
+  .contact-holder h2 { font-size: 20px; margin: 0; }
+  .contact-holder input[type=text] {
+    width: 300px;
+  }
+  .contact-holder textarea {
+     height: 85px;
+     width: 300px;
+  }
+}
+
+.vcard {
+  float: left;
+  width: 170px;
+  overflow: hidden;
+
+  h2.org {
+    font-size: 16px !important;
+  }
+}
+
+#club_contacts {
+  margin-top: 30px;
+
+  td {
+    font-size: 14px;
+    padding: 5px 15px 5px 10px;
+    vertical-align: top;
+    border: 1px solid #E7E8EA;
+
+    &.location { font-weight: bold; color: #da241c; width: 165px; }
+    &.name {  color: #484646; }
+    &.phone { font-weight: bold; color: #302f2f; }
+    &.email { font-weight: bold; color: #d90c03;
+      a { color: #d90c03; text-decoration: underline; }
+    }
+  }
+}
+
+// #contact-form {
+//   float: left;
+//   clear: left;
+//   background-color: #e7e3e3;
+//   width: 230px;
+//   padding: 20px 23px;
+// }
+// #new_contact_us li { margin: 0; }
+// #new_contact_us label { display: none; }
+
+// #new_contact_us input[type=submit] {
+//   cursor: pointer;
+//   border: none;
+//   display: block;
+//   width: auto;
+//   position: relative;
+//   line-height: 50px;
+//   background: #996914;
+//   padding: 10px 10px 0px;
+//   font-size: 24px;
+//   color: #fff;
+//   text-align: left;
+//   -webkit-border-radius: 4px;
+//   -moz-border-radius: 4px;
+//   border-radius: 4px;
+//   behavior: url(/javascripts/pie.htc);
+// }
+
+// #new_contact_us .errorExplanation {
+//   width: auto;
+// }
+
+#map-holder {
+  float: left;
+  margin-left: 20px;
+}
+
+#map-canvas {
+  color: #000;
+  width: 390px !important;
+  height: 240px !important;
+}
+
+/** Enquiry Form **/
+
+.contact-us-wide-label {
+  label {
+    width: 100% !important;
+  }
+
+  fieldset {
+    border-bottom: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

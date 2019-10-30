@@ -1,0 +1,52 @@
+.blog-post .post-title, .blog-post .post-title a {
+  margin: 0;
+}
+
+.blog-post .post-info {
+  font-size: 11px;
+  color: #555;
+}
+
+.blog-post .comment-date {
+  float: right;
+  font-size: 11px;
+  color: #555;
+}
+
+
+.blog-post .comment-author {
+  font-size: 13px;
+}
+
+.blog-post .comment-info {
+  font-size: 13px;
+}
+
+.blog-post .comment {
+  border: 1px solid #cccccc;
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 600px;
+}
+
+.blog-post .post-metadata {
+  font-size: 90%;
+  color: #555555;
+  text-align: right;
+}
+
+.comments #new_blog_comment {
+  border: 1px solid #333;
+}
+
+.comments #new_blog_comment fieldset {
+  border: none;
+  margin: 0px auto;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.comments #new_blog_comment p { margin: 0px; }
+.comments #new_blog_comment p input {
+  margin-left: 240px;
+}

@@ -1,0 +1,65 @@
+%table.index{:class => @print_layout_class}
+  %tr
+    %th Is Admin
+    %th Is Member
+    %th Owner Name
+    %th Mobile
+    %th Email
+    %th Boat Name
+    %th Boat Type
+    %th LOA
+    %th Crane Size
+    %th Crane Hire
+    %th In/Out
+    %th Cradle
+    %th Extras
+    %th Charge
+    %th Remarks
+    - if !@print_layout_class
+      %th Date
+    %th Paid
+    %th Receipt
+    %th Crane Op
+    - if !@print_layout_class
+      %th Actions
+  - current_date = nil
+  - @crane_hire_bookings.each do |crane_hire_booking|
+    - if !@print_layout_class && crane_hire_booking.crane_hire_primary_start_at.to_date != current_date
+      - current_date = crane_hire_booking.crane_hire_primary_start_at.to_date
+      %tr{:class => cycle('odd', 'even')}
+        %td{:colspan => 21, :style => 'text-align: center; padding: 5px; font-size: 18px;'}= current_date
+    %tr{:class => cycle('odd', 'even')}
+      %td= crane_hire_booking.is_admin? ? 'A' : ''
+      %td= crane_hire_booking.is_member? ? 'Y' : 'N'
+      %td= crane_hire_booking.owner_name
+      %td= crane_hire_booking.mobile
+      %td= crane_hire_booking.email
+      %td= crane_hire_booking.boat_name
+      %td= crane_hire_booking.boat_type
+      %td= crane_hire_booking.loa
+      %td= crane_hire_booking.crane_size
+      %td
+        - if !crane_hire_booking.requested_cradle
+          = crane_hire_booking.crane_hire_primary_start_at.try(:in_time_zone).to_s
+          - if crane_hire_booking.crane_hire_secondary_start_at.present?
+            and
+            = crane_hire_booking.crane_hire_secondary_start_at.in_time_zone
+      %td= crane_hire_booking.crane_in_out
+      %td
+        - if crane_hire_booking.requested_cradle
+          == #{crane_hire_booking.cradle_hire_start_at.in_time_zone.to_date.to_s} - #{crane_hire_booking.cradle_hire_end_at.in_time_zone.to_date.to_s}
+          == (#{crane_hire_booking.requested_cradle_days} days)
+        - else
+          == -
+      %td= crane_hire_booking.extras_desc
+      %td= number_to_currency crane_hire_booking.total_charge
+      %td= truncate_html crane_hire_booking.comments.html_safe, :length => 100
+      - if !@print_layout_class
+        %td(nowrap="nowrap")= crane_hire_booking.created_at.to_s
+      %td= crane_hire_booking.paid? ? 'Paid' : 'Unpaid'
+      %td= crane_hire_booking.payment_item.try(:payment_id)
+      %td= crane_hire_booking.crane_op
+      - if !@print_layout_class
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(crane_hire_booking), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(crane_hire_booking), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

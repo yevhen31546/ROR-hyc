@@ -1,0 +1,24 @@
+= semantic_form_for([:admin, @crew_finder_ad]) do |f|
+  = render 'layouts/error_messages', :target => object
+  %fieldset
+    %ul
+      = f.hidden_field :are_you_human, :class => 'human_check', :value => "yes"
+      = f.input :contact_name
+      = f.input :contact_email
+      = f.input :contact_phone
+      = f.input :ad_type, :as => :select, :collection => CrewFinderAd::AD_TYPES, :include_blank => false
+
+  %fieldset.js-crew-finder-available
+    %ul= f.input :description, :input_html => {:rows => 10, :cols => 50}
+
+  %fieldset.js-crew-finder-wanted
+    %ul
+      %li= f.input :age
+      %li= f.input :interested_in
+      %li= f.input :availability
+      %li= f.input :preferred_position
+      %li= f.input :experience
+
+
+  %fieldset
+    %ul= f.commit_button f.object.new_record? ? 'Save' : 'Update', :button_html => { :id => nil }

@@ -1,0 +1,32 @@
+- @page_name = "#{@event.title}"
+
+- content_for :breadcrumbs do
+  %li= link_to "#{@event.event_type.humanize} Events", :controller => 'events', :action => :index, :event_type => @event.event_type
+  %li
+    %span= @page_name
+
+- content_for :sidebar do
+  - if @event.event_logos.present?
+    - @event.event_logos.each do |event_logo|
+      - if event_logo.image.exists?
+        - if event_logo.url.present?
+          = link_to event_logo.url, target: '_blank' do
+            = image_tag event_logo.image.url(:small)
+        - else
+          = image_tag event_logo.image.url(:small)
+
+  - elsif @event.event_logo.exists?
+    = image_tag @event.event_logo.url(:normal)
+  - elsif @event.sponsor_logo.exists?
+    = image_tag @event.sponsor_logo.url(:normal)
+  - else
+    %p
+
+#main-content-inner
+  %h1.event_title
+    == #{@page_name}
+
+  - if @event.sub_title.present?
+    %h2= @event.sub_title
+
+  = render :partial => 'admin/entries/form', :locals => {:no_admin_features => true}

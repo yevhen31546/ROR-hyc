@@ -1,0 +1,31 @@
+- @page_name = @page.seo_title_with_fallback
+- @page_description = @page.seo_description_with_fallback
+
+- @parents = []
+- content_for :breadcrumbs do
+  - navbar_item = NavbarItem.where(:page_id => @page.id).first
+  - if navbar_item && navbar_item.ancestors.present?
+    - navbar_item.ancestors.reverse.each do |parent|
+      %li= link_to parent.name, parent.link
+    %li
+      %span= navbar_item.name
+  - else
+    %li
+      %span= @page.title
+  
+- content_for :sidebar do
+  #sidebar_inner
+    - navbar_item = NavbarItem.where(:page_id => @page.id).first
+    -# raise navbar_item.root.inspect
+    - if navbar_item.present? && (navbar_item.children.present? || (navbar_item.siblings.present? && !navbar_item.parent.nil?))
+      %ul
+        - if navbar_item.children.present?
+          - navbar_items = [navbar_item.children].flatten
+        - else
+          - navbar_items = [navbar_item.siblings, navbar_item].flatten.sort_by {|ni| ni.position }
+        - navbar_items.each do |ni|
+          = render :partial => 'navbars/sidebar_navbar_item', :locals => {:navbar => navbar_item.navbar, :navbar_item => ni}
+
+%h1= @page.extended_title_with_fallback
+- #= interpolate_content(@page.content)
+= @page.content.try(:html_safe)          

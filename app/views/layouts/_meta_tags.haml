@@ -1,0 +1,40 @@
+- unless get_description.blank?
+  %meta(name='description' content=get_description)
+- unless get_keywords.blank?
+  %meta(name='keywords' content=get_keywords)
+-#%meta(name='language' content='en')
+
+-# Dublin Core Meta Tags (disabled, as it causes HTML5 validation errors)
+-#%meta{:name => 'DC.date', :content => Date.today.to_s(:iso)}
+-#%meta{:name => 'DC.contributor', :content => get_organisation_name}
+-#- unless ['', '53.344089'].include?(setting[:contact_latitude].to_s)
+-#  %meta{:name=>'geo.position', :content => "#{setting[:contact_latitude]}; #{setting[:contact_longitude]}"}
+
+- unless ['', 'googlexxxxxxxxxxxxxxxx'].include?(setting[:google_site_verification].to_s)
+  %meta{:name => 'google-site-verification', :content => setting[:google_site_verification]}
+
+-# Do not include metadata which already exists in the HTML
+-# %meta{:name => 'DC.title', :content => get_title}
+-# %meta{:name => 'DC.description', :content => get_description }
+-# %meta{:name => 'DC.format', :content => 'text/html'
+-# %meta{:name => 'DC.language', :content => 'en'}
+
+-# schema.org meta tags, http://www.google.com/webmasters/+1/button/
+-# %meta(itemprop="name" content=get_site_name)
+-# %meta(itemprop="description" content=get_description)
+-# %meta(itemprop="image" content="//#{request.host}#{image_path('logo.png')}"
+
+%meta{property: "og:url", content: request.original_url}
+%meta{property: "og:type", content: "article"}
+%meta{property: "og:title", content: get_title}
+- if @news_item && @news_item.image.exists?
+  %meta{property: "og:image", content: "//#{request.host}#{@news_item.image.url(:normal)}"}
+
+- if @page
+  - if @page.canonical.present?
+    %link{:rel=>"canonical", :href=>@page.canonical}
+  - if @page.robots.present?
+    %meta{:name => 'robots', :content => @page.robots}
+
+- if @bs_ad && !@bs_ad.new_record? && !@bs_ad.active?
+  %meta{:name => 'robots', :content => "noindex"}

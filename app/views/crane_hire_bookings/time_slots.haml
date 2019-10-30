@@ -1,0 +1,10 @@
+%h5 Choose from available slots
+
+- if @error_msg.present?
+  %p.error= @error_msg
+
+- @default_time_slots.each do |slot|
+  - input_id = 'slot-'+slot.gsub(/\D/, '')
+  = radio_button_tag 'crane_hire_booking[crane_hire_primary_start_at_time]', slot, (@selected_time == slot), :id => input_id, :class => "crane-hire-time-slot-input", :disabled => (@booked_time_slots.include?(slot))
+  = label_tag input_id, :class => 'crane-hire-time-slot-label' do
+    = slot + " - " + (Time.parse(slot)+30.minutes).strftime("%H:%M")

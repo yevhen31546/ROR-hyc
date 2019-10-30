@@ -1,0 +1,21 @@
+= semantic_form_for [:admin, object], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  = f.input :name
+  = f.input :role
+  -#= f.input :department, :input_html => {:size => 90}
+  -# = f.input :phone
+  -# = f.input :mobile
+  -# = f.input :email
+  = f.input :sort, :input_html => {:size => 5}
+
+  = f.input :content, :as => :text, :input_html => {:class => 'htmleditor'}
+
+  = f.input :photo
+  - if object.photo.exists?
+    %li(style='line-height: 48px; vertical-align: top')
+      %label
+      = image_tag object.photo.url(:thumb)
+      = f.hidden_field :photo_delete
+      = link_to_function 'Delete current photo', "jQuery(this).parent().hide(); jQuery('#team_member_photo_delete').val(1);", :class => 'inline_delete_icon'
+
+  = f.commit_button (f.object.new_record? ? 'Add new team member' : 'Edit team member')   

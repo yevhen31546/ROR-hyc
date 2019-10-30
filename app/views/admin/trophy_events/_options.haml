@@ -1,0 +1,1 @@
+= options_for_select([] + @trophy_events.map {|te| ["#{te.name} (#{te.year})", te.id.to_i] }, @trophy_event.try(:id).to_i)

@@ -1,0 +1,7 @@
+%li
+  .image
+    - if blog_post.image.exists?
+      = image_tag blog_post.image.asset.url(:thumb), :alt => blog_post.title
+  .snippet
+    = truncate blog_post.title, :length => 120
+    %p= link_to 'More >', blog_post, :class => 'read_more'

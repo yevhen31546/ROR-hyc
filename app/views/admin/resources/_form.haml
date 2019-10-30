@@ -1,0 +1,10 @@
+= semantic_form_for [:admin, @resource], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :name
+    = f.input :category
+    = f.input :asset
+
+    = f.input :layout, :as => :hidden, :value => (@layout_false ? 'false' : nil)
+
+    = f.commit_button (f.object.new_record? ? 'Add resource' : 'Update resource')

@@ -1,0 +1,18 @@
+%table.tides
+  %tr
+    %th.time Time
+    %th.height Height
+    %th.visual &nbsp;
+  - # Different days should have different background (zebra stripes)
+  - alternator = false; last_day = nil
+  - @tides.each do |tide|
+    - day = tide.tide_at.strftime "%d"
+    - alternator = !alternator if day != last_day
+    - last_day = day
+    - c = alternator ? "lighter" : "darker"
+
+    %tr{:class => c}
+      %td.time= tide.tide_at.strftime("%a, %d/%m %H:%M")
+      %td.height= "%.2fm" % tide.height
+      %td.visual
+        .bar{:style => "width: #{tide.height*20}px"}

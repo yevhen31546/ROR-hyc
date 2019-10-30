@@ -1,0 +1,21 @@
+%h1 Subscriptions
+
+%ul#actions
+  %li= link_to 'Add new subscription', new_object_path, :class => 'add_icon'
+  %li= link_to 'Copy/paste subscription list', copy_paste_admin_subscriptions_path, :class => 'copy_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Email
+      %th First name
+      %th Last name
+      %th Actions
+    - @subscriptions.each do |subscription|
+      %tr{:class => cycle('odd', 'even')}  
+        %td= subscription.first_name
+        %td= subscription.last_name
+        %td= subscription.email
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(subscription), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(subscription), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

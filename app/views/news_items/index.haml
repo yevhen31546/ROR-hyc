@@ -1,0 +1,18 @@
+- @page_name ||= @news_category.try(:name).presence || "News"
+
+- content_for :breadcrumbs do
+  %li
+    %span= @page_name
+
+- content_for :sidebar do
+  - unless @is_junior || @is_cruising
+    = render :partial => 'news_items/news_categories'
+  - else
+    &nbsp;
+
+#main-content-inner
+  %h1= @page_name
+
+  = paginated_section collection do
+    = news_filter
+    = render :partial => 'news_item_list', :collection => @news_items

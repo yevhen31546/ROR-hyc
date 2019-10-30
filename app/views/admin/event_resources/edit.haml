@@ -1,0 +1,3 @@
+%h1 #{link_to 'Events', admin_events_path} &rsaquo; #{link_to "Resources for #{@event_resource.event.title}", admin_event_event_resources_path(:event_id => @event_resource.event.id)} &rsaquo; Editing '#{@event_resource.name || @event_resource.id}'  
+
+= render 'form'

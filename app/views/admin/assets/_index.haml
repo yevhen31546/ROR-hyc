@@ -1,0 +1,23 @@
+%table.index
+  %thead
+    %tr
+      %th{:width => 60}
+      %th Thumbnail
+      %th Name
+      %th Updated      
+  %tbody
+    - assets.each do |asset|
+      %tr
+        - thumbnail = object_thumbnail_tag(asset, :asset)
+        %td
+          - if @select_type == 'single'
+            = link_to 'Use', '#', :"data-id" => asset.id, :class => 'use inline_insert_image_icon'
+          - elsif @select_type == 'multiple'
+            = check_box_tag 'ids[]', asset.id
+        %td.center
+          = object_thumbnail_tag(asset, :asset)
+        %td= asset.name
+        %td(nowrap="nowrap")= [asset.updated_at, asset.asset_updated_at].max
+
+- if @select_type == 'multiple'
+  %p= link_to 'Use', '#', :class => 'use_muliple inline_insert_image_icon'

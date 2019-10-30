@@ -1,0 +1,36 @@
+%h1 Enquiries
+
+%ul#actions
+  %li= link_to 'Export', export_admin_enquiries_path(format: :csv), class: 'download_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Phone
+      %th Email
+      %th HYC Member
+      %th Function Date
+      %th Arrival Time
+      %th Attendees
+      %th Function Type
+      %th Menu
+      %th Other Details
+      %th Date
+      %th Actions
+    - collection.each do |enquiry|
+      %tr{:class => cycle('odd', 'even')}
+        %td= enquiry.name
+        %td= enquiry.phone
+        %td= enquiry.email
+        %td= enquiry.hyc_member
+        %td= enquiry.function_date
+        %td= enquiry.arrival_time
+        %td= enquiry.num_attendees
+        %td= enquiry.function_type
+        %td= enquiry.menu
+        %td= nl2br(enquiry.message.html_safe)
+        %td(nowrap="nowrap")= enquiry.created_at.to_s
+        %td(nowrap="nowrap")
+          - #= link_to 'Close', edit_object_path(news_item), :class => 'inline_edit_icon'
+          = link_to 'Delete', admin_enquiry_path(enquiry), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

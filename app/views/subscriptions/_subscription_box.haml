@@ -1,0 +1,8 @@
+%h2
+  Sign-up to the
+  Howth Yacht Club
+  Newsletter
+= form_for :subscription, :url => main_app.subscriptions_path do |f|
+  = f.text_field :name, :placeholder => 'Your Name'
+  = f.text_field :email, :placeholder => 'Your Email Address'
+  = submit_tag 'Sign-up now'

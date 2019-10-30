@@ -1,0 +1,61 @@
+- @page_name = 'Buy and Sell'
+
+- content_for :breadcrumbs do
+  %li
+    = link_to "Buy and Sell", bs_ads_path
+  %li
+    %span= @bs_ad.name
+
+- content_for :sidebar do
+  .sidebar
+    - if @bs_ad.active?
+      .more
+        .detail.photo
+          = image_tag @bs_ad.photo.url(:original) if @bs_ad.photo.exists?
+        .detail.doc
+          - if @bs_ad.doc.exists?
+            %i.x24= object_thumbnail_tag(@bs_ad, :doc)
+            = link_to "Documentation", @bs_ad.doc.url
+
+#main-content-inner.bs_ad
+
+  = render :partial => "search"
+
+  %h1= @bs_ad.name
+
+  - if @bs_ad.active?
+    %p
+      Advert Status: Active from
+      = @activate_date.strftime("%d %b %Y")
+      - if @deactivate_date.present?
+        to
+        = @deactivate_date.strftime("%d %b %Y")
+
+    .details
+
+      .detail.ad_type= @bs_ad.ad_type.humanize
+      |
+      .detail.category= @bs_ad.category.humanize
+      |
+      .detail.location= @bs_ad.location
+
+
+      .detail.description= nl2br(@bs_ad.description)
+
+      .detail.price= number_to_currency(@bs_ad.price, :unit => @bs_ad.currency_unit.html_safe)
+
+      %hr
+
+      .detail.contact= @bs_ad.contact_name
+
+      .detail.contact_phone= @bs_ad.contact_phone
+
+      .detail.contact_phone= mail_to @bs_ad.contact_email, "Contact by Email", :encode => :javascript
+
+      .detail.reference
+        Reference:
+        = @bs_ad.id
+  - elsif !@bs_ad.active?
+    %p This ad is no longer active
+  - elsif !@bs_ad.approved?
+    %p This ad has not been approved yet.

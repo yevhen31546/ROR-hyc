@@ -1,0 +1,10 @@
+%h1 Crane Hire Bookings
+
+= render :partial => 'admin/crane_hire_bookings/actions'
+= render :partial => 'admin/crane_hire_bookings/date_filter'
+
+- if !@date
+  %p Upcoming crane hire bookings from today onwards
+
+= paginated_section @crane_hire_bookings do
+  = render :partial => 'admin/crane_hire_bookings/table'

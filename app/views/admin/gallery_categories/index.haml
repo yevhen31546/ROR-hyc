@@ -1,0 +1,13 @@
+%h1 Gallery Categories
+
+%ul#actions
+  %li= link_to 'Add new category', new_object_path, :class => 'add_icon'
+  %li= link_to 'Manage albums', admin_gallery_albums_path, :class => 'edit_image_icon'
+
+= paginated_section @gallery_categories do
+  %table.index
+    %tr
+      %th Name
+      %th Actions
+    - @gallery_categories.each do |gallery_category|
+      = render :partial => 'tr', locals: {gallery_category: gallery_category, level: 0}

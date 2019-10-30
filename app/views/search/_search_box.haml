@@ -1,0 +1,4 @@
+#search-box
+  = form_tag '/search', :method => :get do
+    %input#search-input{ :type => 'text', :name => 'query', :placeholder => 'Search', :value => @query}>
+    = image_submit_tag 'icons/search.png', :alt => 'Search', :id => 'search-go'

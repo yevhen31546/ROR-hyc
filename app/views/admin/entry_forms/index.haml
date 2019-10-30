@@ -1,0 +1,31 @@
+%h1 Entry Forms
+
+%ul#actions
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: 170px;'}
+    = form_tag '', :method => :get do
+      = select_tag 'year', options_for_select(Event.years, @year), :include_blank => false
+      = submit_tag 'Select Year'
+
+= paginated_section @events do
+  %table.index
+    %tr
+      %th Name
+      %th Starts
+      %th Form Created
+      %th Form Actions
+    - @events.each do |event|
+      %tr{:class => cycle('odd', 'even')}
+        %td= event.title
+        %td(nowrap="nowrap")= event.try(:date).try(:strftime, "%d/%b/%Y") || 'unknown'
+        %td(nowrap="nowrap")
+          - if event.entry_form
+            = event.entry_form.created_at.to_s
+          - else
+            == -
+        %td(nowrap="nowrap")
+          - if event.entry_form
+            = link_to 'Edit Form', edit_admin_entry_form_path(event.entry_form), :class => 'inline_edit_icon'
+            = link_to 'Duplicate Form', duplicate_admin_entry_form_path(event.entry_form), :class => 'inline_edit_icon'
+            = link_to 'Delete Form', admin_entry_form_path(event.entry_form), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+          - else
+            = link_to 'Create Entry form', new_admin_entry_form_path(:event_id => event.id), :class => 'inline_edit_icon'

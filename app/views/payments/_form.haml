@@ -1,0 +1,20 @@
+= semantic_form_for payment_item, :url => '', :html => {:class => "payment-form"} do |f|
+  = render 'layouts/error_messages', :target => f.object
+  %ul
+    %li
+      %strong Price:
+      == #{number_to_currency(total)}
+    = f.input :card_number, :input_html => {:placeholder => 'Card number', :autocomplete => 'off'}
+    .group
+      = f.input :expiry_month, :as => :select, :collection => expiry_months, :include_blank => false, :label => "Card Expiry"
+      = f.input :expiry_year, :as => :select, :collection => expiry_years, :include_blank => false, :label => false
+    = f.input :name_on_card, :input_html => {:placeholder => 'Name on card', :autocomplete => 'off'}
+    = f.input :card_security_code, :input_html => {:size => 4, :maxlength => 4, :autocomplete => 'off'}, :hint => '(last 3 or 4 digits on the back of the card)'
+
+    = f.commit_button 'Pay Now'
+
+:javascript
+  $('.formtastic.payment input[type=submit]').val('Pay now').removeAttr('disabled').css('cursor', 'pointer');
+  $('.formtastic.payment').submit(function() {
+    $('.formtastic.payment input[type=submit]').val('Please wait...').attr('disabled', 'disabled').css('cursor', 'progress');
+  });

@@ -1,0 +1,18 @@
+- per_row = 4
+
+- global_counter = 0
+
+- if @gallery_categories.present?
+  - @gallery_categories.each_with_index do |gallery_category, counter|
+    - is_first_in_row = (global_counter % per_row == 0)
+    = render :partial => 'gallery_categories/category', locals: {gallery_category: gallery_category, is_first_in_row: is_first_in_row}
+    - global_counter += 1
+
+- if @gallery_category && @gallery_category.gallery_albums.present?
+  - @gallery_category.gallery_albums.reorder('gallery_albums.position asc').each_with_index do |gallery_album, counter|
+    - is_first_in_row = (global_counter % per_row == 0)
+    = render :partial => 'gallery_categories/album', locals: {gallery_album: gallery_album, is_first_in_row: is_first_in_row}
+    - global_counter += 1
+
+- if @gallery_categories.blank? && (!@gallery_category || (@gallery_category && @gallery_category.gallery_albums.blank?))
+  %p Nothing here

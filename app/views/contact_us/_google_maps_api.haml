@@ -1,0 +1,64 @@
+-# Get the latitude/longitude via http://www.getlatlon.com/
+
+-# http://code.google.com/apis/maps/documentation/v3/examples/event-closure.html
+-# http://gmaps-samples-v3.googlecode.com/svn/trunk/single-infowindow/single-infowindow.html
+-# http://code.google.com/apis/maps/documentation/v3/examples/icon-complex.html
+-# http://gmaps-utility-library.googlecode.com/svn/trunk/mapiconmaker/1.1/examples/markericonoptions-wizard.html
+
+- if setting[:contact_latitude].blank? || setting[:contact_longitude].blank?
+  %p= link_to 'Find your latitude/longitude', 'http://mygeoposition.com/'
+  %p= link_to 'Change the contact us settings', { :controller => 'admin', :action => 'settings' }
+
+%script(src='http://maps.google.com/maps/api/js?sensor=false' type='text/javascript')
+:javascript 
+  var Demo = {
+    map: null,
+    infoWindow: null
+  };
+    
+  /* Called when clicking anywhere on the map and closes the info window. */
+  Demo.closeInfoWindow = function() {
+    Demo.infoWindow.close();
+  };
+  
+  /* Opens the shared info window, anchors it to the specified marker, and displays the marker's position as its content. */
+  Demo.openInfoWindow = function(marker) {
+    Demo.infoWindow.setContent(marker.content);
+    var markerLatLng = marker.getPosition();
+    Demo.infoWindow.open(Demo.map, marker);
+  };
+  
+  /* Called only once on initial page load to initialize the map. */
+  Demo.init = function() {
+    // Create single instance of a Google Map.
+    var centerLatLng = new google.maps.LatLng(#{setting[:contact_latitude]},#{setting[:contact_longitude]});
+    Demo.map = new google.maps.Map(document.getElementById('map-canvas'), {
+      zoom: 14,
+      center: centerLatLng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: false,
+      navigationControl: true,
+      scaleControl: true
+    });
+  
+    // Create a single instance of the InfoWindow object which will be shared by all Map objects to display information to the user.
+    Demo.infoWindow = new google.maps.InfoWindow();
+    
+    // Make the info window close when clicking anywhere on the map.
+    google.maps.event.addListener(Demo.map, 'click', Demo.closeInfoWindow);
+  
+    // Repeat the following following code for each marker
+    var position = new google.maps.LatLng(#{setting[:contact_latitude]},#{setting[:contact_longitude]});
+    var content = '<b>#{escape_javascript(setting[:contact_address_org])}</b><br/>' +
+               '#{escape_javascript(nl2br(setting[:contact_street_address]))}<br/>' +
+               '#{escape_javascript(nl2br(setting[:contact_extended_address]))}';
+    var title = '#{escape_javascript(setting[:contact_address_org])}';
+    var icon = new google.maps.MarkerImage('http://chart.apis.google.com/chart?cht=mm&chs=32x32&chco=FFFFFF,DD0000,000000&ext=.png', new google.maps.Size(32, 32), new google.maps.Point(0,0), new google.maps.Point(16, 32));
+    var shadow = new google.maps.MarkerImage('http://maps.gstatic.com/intl/en_ALL/mapfiles/shadow50.png', new google.maps.Size(37, 34), new google.maps.Point(0,0), new google.maps.Point(10, 34));
+    var marker = new google.maps.Marker({ map: Demo.map, position: position, icon: icon, shadow: shadow, title: title, content: content });
+    google.maps.event.addListener(marker, 'click', function() { Demo.openInfoWindow(this); });
+  }
+
+  jQuery(document).ready(function() {
+    Demo.init();
+  });

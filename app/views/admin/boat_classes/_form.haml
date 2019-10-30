@@ -1,0 +1,6 @@
+= semantic_form_for [:admin, @boat_class] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :name
+    = f.input :boat_category, :include_blank => false
+    = f.commit_button (f.object.new_record? ? 'Add boat class' : 'Edit boat class')

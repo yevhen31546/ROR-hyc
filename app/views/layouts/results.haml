@@ -1,0 +1,39 @@
+!!!
+%html(lang='en')
+  %head
+    %meta(charset='UTF-8')
+    %title= get_title
+    = stylesheet_link_tag '//fonts.googleapis.com/css?family=Droid+Sans:400,700'
+    = stylesheet_link_tag 'base', :media => nil
+    - unless controller_name == 'welcome' && action_name == 'index'
+      = stylesheet_link_tag 'followon', :media => nil
+    -#= stylesheet_link_tag (@stylesheets || []).to_a
+    = javascript_include_tag 'base'
+    - unless controller_name == 'welcome' && action_name == 'index'
+      = javascript_include_tag 'followon'
+    -#= javascript_include_tag (@javascripts || []).to_a
+    = render 'layouts/meta_tags'
+    = yield :head
+    = render 'layouts/google_analytics'
+  %body{:id => "body-#{controller_name.dasherize.parameterize}-#{@page ? @page.code : action_name.dasherize.parameterize}", :class => "controller-#{controller_name.dasherize.parameterize} action-#{action_name.dasherize.parameterize}"}
+    %a#top
+    = render 'layouts/old_browser'
+    #primary-wrapper
+      #secondary-wrapper
+        = render 'layouts/flash_messages'
+        #header
+          #logo= link_to image_tag('logo.png', :alt => get_site_name), main_app.root_path
+          = render 'navbars/main'
+          #user_and_search_bar
+            = render 'search/search_box'
+            / = render 'navbars/userbar'
+    #main-content= yield
+    #primary-wrapper
+      #secondary-wrapper
+        #footer
+          #newsletter_signup= render :partial => 'subscriptions/subscription_box'
+          #contact_details= render :partial => 'layouts/contact_details'
+        #copyright-credits
+          #sitemap= link_to 'Sitemap >', main_app.url_for(:controller => '/misc', :action => 'sitemap', :only_path => true)
+          #registration_details Registered in the Republic of Ireland. Registered No. 81187
+          #credits &copy; #{get_organisation_name} #{Time.now.year} | #{link_to 'web design', 'http://www.lucidity.ie/web-design'} &amp; #{link_to 'seo company', 'http://www.lucidity.ie/seo-search-engine-optimisation'} - lucidity digital

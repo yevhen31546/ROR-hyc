@@ -1,0 +1,12 @@
+.box.white_semi_trans.results_box
+  #results_helpful_links
+  %h2.flag= link_to "Results", results_path
+
+  %h2.upcoming_events Upcoming sailing events
+  - if @open_events.present?
+    %ul
+      - @open_events.each do |event|
+        - event_anchor = "#event-#{event.id}"
+        - event_url = (event.featured_url.presence || open_events_path(:year => event.date.year)) + event_anchor
+        - img = image_tag(event.featured_logo.url(:normal))
+        %li= link_to img, event_url

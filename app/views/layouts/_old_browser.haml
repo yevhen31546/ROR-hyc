@@ -1,0 +1,6 @@
+- if request.user_agent =~ /MSIE 7.*Trident\/[4-9]/
+  %div{ :style => "border-bottom: 1px solid black; margin-bottom: 10px; "}
+    = link_to 'Please turn off Compatibility View on your web browser to view this website, or upgrade your browser', 'http://www.browserchoice.eu/', :style => 'display: block; color: black; padding: 6px;font-size: 12px; background: #ffffe1; text-align: center; ', :onmouseover => "this.style.color = '#fff'; this.style.backgroundColor = '#3399ff'", :onmouseout => "this.style.color = '#000'; this.style.backgroundColor = '#ffffe1'"
+- elsif request.user_agent =~ /(MSIE [5-7]\.)|(Firefox\/[1-2]\.)/ && !(request.user_agent =~ /(MSIE [8-9]\.)/)
+  %div{ :style => "border-bottom: 1px solid black; margin-bottom: 10px; "}
+    = link_to 'You are using an outdated browser that this website no longer supports. For a faster, safer browsing experience, upgrade for free today.', 'http://www.browserchoice.eu/', :style => 'display: block; color: black; padding: 6px;font-size: 12px; background: #ffffe1; text-align: center; ', :onmouseover => "this.style.color = '#fff'; this.style.backgroundColor = '#3399ff'", :onmouseout => "this.style.color = '#000'; this.style.backgroundColor = '#ffffe1'"

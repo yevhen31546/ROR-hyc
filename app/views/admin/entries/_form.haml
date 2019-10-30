@@ -1,0 +1,456 @@
+#Codereview
+-# = debug(!@event.total_number_of_entries.nil?)
+-# - @event_type = @event.event_type
+-# %puts #{@event_type}
+-# - if @event_type == "training"
+-#   %puts "ok"
+- no_admin_features ||= false
+- entry_form_params = no_admin_features ? [@entry, {:url => event_entries_path(:event_id => @event.id)}] : [[:admin, @entry]]#
+- entry_form = @entry.entry_form
+
+-# %puts #{@entry.event.event_type}
+- if @event.present?
+  - @event_type = @event.event_type
+- else
+  - @event = @entry.event
+  - @event_type = @event.event_type
+
+= semantic_form_for *entry_form_params do |f|
+  = render 'layouts/error_messages', :target => @entry
+  %fieldset#event_details
+    - if no_admin_features && @event.dates_description.present?
+      %p
+        %strong Date:
+        = @event.dates_description
+
+    %ul
+      = f.input :entry_form_id, :as => :hidden
+
+
+  - if entry_form
+    - if entry_form.display_team?
+      %fieldset
+        %legend Team Details
+        %ul
+          = f.input :team, :label => "Team Name"
+          = f.input :team_captain, :label => "Team Captain"
+
+    - if entry_form.display_owner_name? || entry_form.display_contact_details?
+      %fieldset#owner_details
+        %legend
+          - if entry_form.display_owner_name?
+            - if @event_type == "training"
+              Student Details
+            - else
+              Owner Details
+          - else
+            - if @event_type == "training"
+              Student Details
+            - else
+              Contact Details
+        %ul
+          - if entry_form.display_owner_name?
+            - if @event_type == "training"
+              - if @entry.errors.present?
+                = f.input :owner_name, :label => "Student name(s)", :input_html => {:style => 'background: #fff4f4;border-color: #ff0000;'}
+              - else
+                = f.input :owner_name, :label => "Student name(s)"
+            - else
+              = f.input :owner_name, :label => "Owner name(s)"
+
+          - if entry_form.display_contact_details?
+            = f.input :address_line_1, :required => true
+            = f.input :address_line_2, :required => true
+            = f.input :address_line_3
+            = f.input :address_line_4
+            - if @event_type == "training"
+              - if entry_form.display_guardian? || entry_form.display_helm_guardian? || entry_form.display_crew_guardian? || entry_form.guardian_note.present?
+                %fieldset#guardian_training_fieldset
+                  -# %legend Guardian
+                  - if entry_form.guardian_note.present?
+                    %p= entry_form.guardian_note
+                  - if entry_form.display_guardian?
+                    %ul.guardian_fields
+                      = f.input :guardian, :label => "Parent/Guardian Name"
+                      -# = f.input :guardian_mobile, :label => "Mobile"
+                  - if entry_form.display_helm_guardian?
+                    %ul.crew_guardian_fields
+                      = f.input :helm_guardian, :label => "Helm Parent/Guardian Name"
+                      -# = f.input :helm_guardian_mobile, :label => "Mobile"
+                  - if entry_form.display_crew_guardian?
+                    %ul.crew_guardian_fields
+                      = f.input :crew_guardian, :label => "Crew Parent/Guardian Name"
+                      -# = f.input :crew_guardian_mobile, :label => "Mobile"
+                    
+            = f.input :phone, :required => true
+            = f.input :email, :required => true, :input_html => {:size => (!no_admin_features ? 100 : nil )}
+
+    - if entry_form.display_club?
+      %fieldset
+        %ul
+          = f.input :club_id, :as => :select, :collection => entry_form.clubs
+          = f.input :club_name_extra, :label => 'Club Name if not listed'
+    - if @event_type != "training"
+      %fieldset
+        %legend Boat Details
+        %ul
+          - if entry_form.display_loan_boat?
+            = f.input :loan_boat, :label => "If Loan boat click here"
+          - if entry_form.display_sail_no?
+            %li
+              - if no_admin_features # public side
+                %label Sail No. <abbr title="required">*</abbr>
+                = f.text_field :sail_number_prefix, :size => 3, :maxlength => 3
+                = f.text_field :sail_number, :size => 15
+                = f.text_field :sail_number_suffix, :size => 1, :maxlength => 1
+              - else
+                %label Sail details <abbr title="required">*</abbr>
+                %span{:style => 'display: inline-block;'}
+                  Prefix
+                  %br
+                  = f.text_field :sail_number_prefix, :size => 3, :maxlength => 3
+                %span{:style => 'display: inline-block;'}
+                  Number
+                  %br
+                  = f.text_field :sail_number, :size => 15
+                %span{:style => 'display: inline-block;'}
+                  Suffix
+                  %br
+                  = f.text_field :sail_number_suffix, :size => 1, :maxlength => 1
+          - if entry_form.display_boat_class?
+            = f.input :boat_class, :collection => entry_form.ordered_boat_classes, :include_blank => false, :required => true
+
+            - specific_is_visible = (f.object.boat_class.try(:name) == "Other")
+            = f.input :boat_class_specific, :label => "If 'Other' specify class", :wrapper_html => {:style => "display: #{specific_is_visible ? 'block': 'none'};"}
+
+          - if entry_form.rig_note_1.present?
+            %li
+              %p= entry_form.rig_note_1
+
+          - if entry_form.display_rig?
+            = f.input :rig, :collection => entry_form.rigs
+
+          - if entry_form.rig_note_2.present?
+            %li
+              %p= entry_form.rig_note_2
+
+          - if entry_form.display_fleet?
+            - if entry_form.fleet_note.present?
+              %li
+                %p= entry_form.fleet_note
+              = f.input :fleet, :collection => entry_form.fleets
+
+          - if entry_form.display_boat_name?
+            = f.input :boat_name
+
+          - if entry_form.display_boat_type_note.present?
+            %li
+              %p= entry_form.display_boat_type_note
+
+          - if entry_form.display_boat_builder_with_select?
+            = f.input :boat_builder, :as => :select, :collection => BoatBuilder.order('name asc')
+            = f.input :builder, :label => "Builder if not listed"
+          - elsif entry_form.display_boat_builder?
+            = f.input :builder, :label => "Boat Builder"
+
+          - if entry_form.display_boat_model?
+            = f.input :model
+
+          - if entry_form.display_country?
+            = f.input :country, :as => :select, :collection => entry_form.countries
+
+          - if entry_form.display_boat_type?
+            = f.input :loa, :label => "LOA", :hint => "in metres", :input_html => {:maxlength => 5, :size=> 5}
+            = f.input :lwl, :label => "LWL", :hint => "in metres", :input_html => {:maxlength => 5, :size=> 5}
+          - if entry_form.display_beam?
+            = f.input :beam, :hint => "in metres", :input_html => {:maxlength => 5, :size=> 5}
+          - if entry_form.display_hull_colour?
+            = f.input :hull_colour, :input_html => {:maxlength => 20, :size=> 20}
+
+          - if entry_form.handicap_note.present?
+            %li
+              %p= entry_form.handicap_note
+
+          - if entry_form.display_handicap?
+            = f.input :has_irc_cert_number, :label => "Have you an IRC Cert?"
+            = f.input :irc_cert_number, :label => "If 'yes', what is your IRC Cert No.", :label_html => {:style => 'width: 255px;'}, :input_html => {:style => 'width: 215px;'}
+            = f.input :has_echo_cert_number, :label => "Have you an ECHO Cert?"
+
+      
+    
+    - if entry_form.display_helm? || entry_form.display_helm_dob? || entry_form.helm_dob_note.present? || entry_form.display_helm_club? || entry_form.display_crew? || entry_form.display_crew_club?
+      %fieldset
+        -#%legend Crew Details
+        %ul
+          - if entry_form.display_helm?
+            = f.input :helm_name, :required => true
+          - if entry_form.display_helm_contact_details?
+            = f.input :helm_address_line_1, :label => "Helm Address Line 1", :required => true
+            = f.input :helm_address_line_2, :label => "Helm Address Line 2", :required => true
+            = f.input :helm_address_line_3, :label => "Helm Address Line 3"
+            = f.input :helm_address_line_4, :label => "Helm Address Line 4"
+            = f.input :helm_phone, :label => "Helm Phone", :required => true
+            = f.input :helm_email, :label => "Helm Email", :required => true
+          - if entry_form.display_helm_gender?
+            = f.input :helm_gender, :as => :radio, :collection => [['Male', 'M'], ['Female', 'F']], :label => "Helm Gender"
+          - if entry_form.display_helm_dob?
+            = f.input :helm_dob, :label => "Helm Date of Birth", :hint => "DD/MM/YY"
+          - if entry_form.helm_dob_note.present?
+            %li
+              %p= entry_form.helm_dob_note
+
+          - if entry_form.display_helm_club?
+            = f.input :helm_club_id, :as => :select, :collection => entry_form.clubs
+            = f.input :helm_club_name_extra, :label => 'Club Name if not listed'
+
+          - if entry_form.display_helm_sailing_level?
+            %h5 Specify the helm's highest sailing level achieved to date:
+            = f.input :helm_sailing_level, :label => false, :input_html => {:style => "width: 470px;"}
+          - if entry_form.display_helm_sailing_level_date?
+            = f.input :helm_sailing_level_date, :label => "Date sailing level achieved"
+
+          - if entry_form.display_crew?
+            = f.input :crew_name, :label => "Crew Name"
+          - if entry_form.display_crew_contact_details?
+            = f.input :crew_address_line_1, :label => "Crew Address Line 1", :required => true
+            = f.input :crew_address_line_2, :label => "Crew Address Line 2", :required => true
+            = f.input :crew_address_line_3, :label => "Crew Address Line 3"
+            = f.input :crew_address_line_4, :label => "Crew Address Line 4"
+            = f.input :crew_phone, :label => "Crew Phone", :required => true
+            = f.input :crew_email, :label => "Crew Email", :required => true
+          - if entry_form.display_crew_gender?
+            = f.input :crew_gender, :as => :radio, :collection => [['Male', 'M'], ['Female', 'F']], :label => "Crew Gender"
+          - if entry_form.display_crew_dob?
+            = f.input :crew_dob, :label => "Crew Date of Birth", :hint => "DD/MM/YY"
+          - if entry_form.crew_dob_note.present?
+            %li
+              %p= entry_form.crew_dob_note
+          - if entry_form.display_crew_club?
+            = f.input :crew_club_id, :as => :select, :collection => entry_form.clubs
+            = f.input :crew_club_name_extra, :label => 'Club Name if not listed'
+
+          - if entry_form.display_crew_sailing_level?
+            %h5 Specify the crew's highest sailing level achieved to date:
+            = f.input :crew_sailing_level, :label => false, :input_html => {:style => "width: 470px;"}
+          - if entry_form.display_crew_sailing_level_date?
+            = f.input :crew_sailing_level_date, :label => "Date sailing level achieved"
+
+          - if entry_form.crew_note.present?
+            %li
+              %p= entry_form.crew_note
+
+
+    - if entry_form.display_isora_registered?
+      %fieldset
+        %ul= f.input :is_isora_registered, :label => "Is your boat registered for ISORA?"      
+
+    - if entry_form.display_saturday_only_lambay?
+      %fieldset
+        %ul= f.input :is_saturday_only_lambay, :label => "Is this a Saturday only (Lambay) entry?"
+
+    - if entry_form.categories.present?
+      - entry_form.categories.each_with_index do |category, i|
+        %legend
+          = category.name
+          - if category.is_required?
+            %abbr(title="required") *
+        %fieldset
+          %ul#entry_categories
+            = hidden_field_tag "entry[categories_attributes][#{i}][entry_form_category_id]", category.id
+            - category.options_collection.each do |option|
+              %li
+                = radio_button_tag "entry[categories_attributes][#{i}][value]", option.strip, (option.strip == f.object.categories.detect { |c| c.entry_form_category_id == category.id}.try(:value).try(:strip))
+                = option.strip
+    - if @event_type != "training"
+      - if entry_form.display_guardian? || entry_form.display_helm_guardian? || entry_form.display_crew_guardian? || entry_form.guardian_note.present?
+        %fieldset#guardian_fieldset
+          %legend Guardian
+          - if entry_form.guardian_note.present?
+            %p= entry_form.guardian_note
+          - if entry_form.display_guardian?
+            %ul.guardian_fields
+              = f.input :guardian, :label => "Parent/Guardian Name"
+              = f.input :guardian_mobile, :label => "Mobile"
+          - if entry_form.display_helm_guardian?
+            %ul.crew_guardian_fields
+              = f.input :helm_guardian, :label => "Helm Parent/Guardian Name"
+              = f.input :helm_guardian_mobile, :label => "Mobile"
+          - if entry_form.display_crew_guardian?
+            %ul.crew_guardian_fields
+              = f.input :crew_guardian, :label => "Crew Parent/Guardian Name"
+              = f.input :crew_guardian_mobile, :label => "Mobile"
+
+    - if entry_form.display_non_spinnaker_class?
+      %fieldset
+        %legend Non Spinnaker Class
+        %ul
+          = f.input :non_spinnaker_class, :label => "I want to race in a Non Spinnaker Class"
+
+    - if entry_form.display_team_entry?
+      %fieldset
+        %legend Team Entry
+        %p For team prizes, please name the <strong>OTHER</strong> boats in the team.
+        %ul= f.input :team_entry
+
+    -#%fieldset#custom_fields
+    -#  - if entry_form.custom_fields.present?
+    -#    %ul
+    -#      - entry_form.custom_fields.each do |custom_field|
+    -#        %li{:class => custom_field.datatype}
+    -#          = label_tag custom_field.name
+    -#          - case custom_field.datatype
+    -#          - when 'string'
+    -#            = text_field_tag "entry[custom_fields][#{custom_field.id}]", ""
+    -#          - when 'boolean'
+    -#            = check_box_tag "entry[custom_fields][#{custom_field.id}]", "1"
+    -#          - when 'select'
+    -#            = select_tag "entry[custom_fields][#{custom_field.id}]", options_for_select(custom_field.options)
+    -#          - when 'text'
+    -#            = text_area_tag "entry[custom_fields][#{custom_field.id}]"
+
+    %fieldset#charges
+      %legend Entry Charge
+
+      - if entry_form.charge_note.present?
+        %div.charge_note= entry_form.charge_note.html_safe
+
+      %table#charges_table
+
+        - charges = (current_user && (current_user.is_editor? || current_user.is_admin?) && !no_admin_features ? f.object.entry_form.admin_applicable_charges : f.object.entry_form.applicable_charges)
+
+        - # there are a number of entry forms already in the system that use group instead of the heading field to group things together
+        - # so we need to first figure out which system is being used
+        - use_heading_field = f.object.entry_form.charges.any? { |c| c.heading.present? }
+
+        - if !use_heading_field
+          - starting_group = ending_group = false
+
+        - charges.each do |charge|
+          - if use_heading_field
+            - if charge.heading.present?
+              %tr.group_start
+                %td &nbsp;
+              %tr
+                %td.group_name{:colspan => 2}= charge.heading
+            - else
+              -# display nothing
+          - else
+            - if (charge.group_name.present? && @group_name != charge.group_name) || (@group_name.blank? && charge.group_name.present?)
+              - starting_group = true
+              %tr.group_start
+                %td &nbsp;
+              %tr
+                %td.group_name{:colspan => 2}= charge.group_name
+            - elsif starting_group && charge.group_name.blank?
+              - starting_group = false
+              %tr.group_end
+                %td &nbsp;
+
+            - @group_name = charge.group_name
+          %tr.charge
+            %td.charge_name
+              = charge.name
+              - if charge.price.present? && charge.charge_type != 'Quantity'
+                == (#{number_to_currency charge.price})
+            %td.charge_selection
+              - if current_user && (current_user.is_admin? || current_user.is_editor?) && !no_admin_features && Charge::DEFAULT_CHARGE_TYPES.include?(charge.charge_type)
+                = check_box_tag "entry[charges_accepted][#{charge.id}]", charge.id, f.object.charges.where(:id => charge.id).exists?
+              - else
+                - case charge.charge_type
+                - when 'Radio'
+                  - if f.object.charges_accepted.present?
+                    - checked = f.object.charges_accepted.include?(charge)
+                  - else
+                    - checked = f.object.charges.where(:id => charge.id).exists?
+                  = radio_button_tag "entry[charges_accepted][#{charge.group_name}]", charge.id, checked
+                - when 'Checkbox'
+                  - if f.object.charges_accepted.present?
+                    - checked = f.object.charges_accepted.include?(charge)
+                  - else
+                    - checked = f.object.charges.where(:id => charge.id).exists?
+                  = check_box_tag "entry[charges_accepted][#{charge.id}]", charge.id, checked
+                - when 'Quantity'
+                  - if f.object.charge_values.present?
+                    - selected_quantity = f.object.charge_values[charge.id]
+                  - elsif f.object.charges_entries.present?
+                    - selected_quantity = f.object.charges_entries.to_a.find { |ce| ce.charge_id == charge.id }.try(:quantity)
+                  = select_tag "entry[charges_accepted][#{charge.id}]", options_for_select((0..10).to_a.map { |i| i }, selected_quantity), :data => {:charge_id => charge.id}
+
+      %p.charge_total
+        %strong Total:
+        %span.total_value= number_to_currency(@entry.total)
+
+      - if entry_form.post_charge_note.present?
+        %div.additional_note.post_charge_note= entry_form.post_charge_note.html_safe
+
+      - if entry_form.additional_note.present?
+        %div.additional_note= nl2br(entry_form.additional_note).html_safe
+
+    - if entry_form.display_marina_accommodation_required? || entry_form.display_marina_accommodation_checkbox? || entry_form.display_arrival_date?
+      %fielset#marina_accomodation
+        %ul
+          - if entry_form.display_marina_accommodation_required?
+            %li
+              %label{:style => 'width: 600px;'} Marina Accomodation Required
+              = f.input :marina_accommodation_required, :as => :hidden, :value => 1
+          - if entry_form.display_marina_accommodation_checkbox?
+            = f.input :marina_accommodation_required, :as => :boolean
+          - if entry_form.display_arrival_date?
+            = f.input :arrival_date, :as => :datepicker, :hint => "DD/MM/YY"
+
+    %fieldset#additional
+      %legend Additional Comment
+      - if @event_type == "training"
+        %ul
+          = f.input :additional_comment, :label => false, :input_html => {:cols => 60}
+      - else
+        %ul
+          = f.input :additional_comment, :label => false, :input_html => {:cols => 60}
+        
+
+    - if current_user && (current_user.is_editor? || current_user.is_admin?) && !no_admin_features
+      = f.hidden_field :refund_policy_agreed, :value => 1
+    - else
+      %fieldset#terms
+
+        -# fourth training issue
+        %p
+          I agree to the #{link_to 'refund, cancellation and minimum age policy', '#refund_policy', :class => 'refund_policy_opener' }
+          = f.check_box :refund_policy_agreed
+
+        #refund_policy_wrapper.hide
+          #refund_policy
+            Should a Sailing Event be cancelled, HYC will attempt to reschedule to another date. An entrant may seek full refund by writing to Howth Yacht Club's Sailing Committee in respect of their inability to accept the rescheduled date.
+            %br
+            For online payment of any entry fee, the minimum age policy is regulated by the minimum age required to own a credit card - this is 18 years of age.
+            %p{:style => 'text-align: center;'}= button_tag 'OK', :onclick => 'javascript:$.fancybox.close()', :style => 'font-size: 14px;'
+
+
+      %fieldset#terms
+        - if @event_type == "training"
+          %p
+            I am the student or designated representative of this boat and I have read and agree to the #{link_to 'Conditions of Entry', '#entry_conditions', :class => 'entry_conditions_opener' }
+            = f.check_box :terms_agreed
+        - else
+          %p
+            I am the owner or designated representative of this boat and I have read and agree to the #{link_to 'Conditions of Entry', '#entry_conditions', :class => 'entry_conditions_opener' }
+            = f.check_box :terms_agreed
+
+        #entry_conditions_wrapper.hide
+          #entry_conditions
+            - if entry_form.entry_conditions.present?
+              = nl2br(entry_form.entry_conditions).html_safe
+              %p{:style => 'text-align: center;'}= button_tag 'OK', :onclick => 'javascript:$.fancybox.close()', :style => 'font-size: 14px;'
+            - else
+              No entry conditions for this event.
+
+  %fieldset
+    %ul
+      - if current_user && (current_user.is_editor? || current_user.is_admin?) && !no_admin_features
+        = f.input :created_at, :as => :datepicker, :label => "Entry Date"
+      - else
+        %li{:style => 'text-align: center;'} Entry Date #{Date.today.strftime("%d/%m/%y")}
+
+  %fieldset.commit
+    - submit_button_text = (!no_admin_features && is_admin? ? (f.object.new_record? ? 'Add entry' : 'Update entry') : "Enter")
+    %ul= f.commit_button submit_button_text

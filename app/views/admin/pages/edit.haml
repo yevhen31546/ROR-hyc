@@ -1,0 +1,6 @@
+%h1 #{link_to 'Pages', :action => 'index'} &rsaquo; Editing '#{@page.title}'
+
+%ul#actions
+  %li= link_to 'Visit page', @page.url, :class => 'visit_icon'
+
+= render 'form'

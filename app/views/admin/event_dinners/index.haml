@@ -1,0 +1,29 @@
+%h1 Event Dinners
+
+%ul#actions
+  %li= link_to 'Add new event dinner', new_admin_event_dinner_path(), :class => 'add_icon'
+
+%table.index#event_dinners
+  %tr
+    %th.sponsor
+    %th.title Event
+    %th.date Dinner Date
+    %th Bookings
+    %th.actions Actions
+  - @event_dinners.each do |event_dinner|
+    %tr{:class => cycle('odd', 'even')}
+      %td.sponsor= image_tag event_dinner.event.try(:sponsor_logo).try(:url, :thumb)
+      %td.title= event_dinner.event.try(:detailed_name)
+      %td.date
+        = display_multiple_dates(*event_dinner.event_date)
+      %td
+        - count = event_dinner.bookings.count
+        = link_to "#{count} #{'Booking'.pluralize(count)}", admin_event_dinner_bookings_path(:event_dinner_id => event_dinner.id)
+      %td.actions
+        = link_to 'Admin Booking Form', new_admin_event_dinner_booking_path(:event_dinner_id => event_dinner), :class => 'inline_show_icon'
+        - if (event_dinner.event)
+          = link_to 'Public Booking Form', new_event_event_dinner_booking_path(event_id: event_dinner.event_id), :class => 'inline_show_icon', :target => '_blank'
+        - if (event_dinner.event)
+          = link_to 'Public Ticket List', list_event_event_dinner_bookings_path(event_id: event_dinner.event_id), :class => 'inline_show_icon', :target => '_blank'
+        = link_to 'Edit', edit_object_path(event_dinner), :class => 'inline_edit_icon'
+        = link_to 'Delete', object_path(event_dinner), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

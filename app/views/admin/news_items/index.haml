@@ -1,0 +1,33 @@
+%h1 News
+
+%ul#actions
+  %li= link_to 'Add news item', new_object_path, :class => 'add_icon'
+  %li= link_to 'Visit news page', news_items_path, :class => 'visit_icon'
+  %li= link_to 'Manage news categories', admin_news_categories_path, :class => 'edit_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Title
+      %th Content
+      %th Category
+      %th Featured
+      %th(nowrap="nowrap") Publish At
+      %th Order
+      %th Date
+      %th Actions
+    - @news_items.each do |news_item|
+      %tr{:class => cycle('odd', 'even')}
+        %td= news_item.title
+        %td= truncate_html(news_item.content, :length => 200).html_safe
+        %td(nowrap="nowrap")
+          = news_item.news_category.try(:name) || 'No category'
+          = " (junior)" if news_item.is_junior?
+        %td(nowrap="nowrap")= news_item.featured.to_s
+        %td(nowrap="nowrap")= news_item.publish_at.to_s
+        %td(nowrap="nowrap")= news_item.ordering.to_s
+        %td(nowrap="nowrap")= news_item.created_at.to_s
+        %td(nowrap="nowrap")
+          = link_to 'Visit', news_item_path(news_item), :class => 'inline_visit_icon'
+          = link_to 'Edit', edit_object_path(news_item), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(news_item), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

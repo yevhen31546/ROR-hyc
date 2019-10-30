@@ -1,0 +1,45 @@
+
+- is_editor_or_admin = (current_user && (current_user.is_editor? || current_user.is_admin?))
+- unless is_editor_or_admin
+  %div= nl2br(@event_dinner_booking.event_dinner.comments).html_safe
+
+:javascript
+  var globalEventId = #{@event_dinner_booking.event_dinner.event_id};
+
+
+= semantic_form_for((is_admin_area? ? [:admin, @event_dinner_booking] : [@event, @event_dinner_booking])) do |f|
+  = render 'layouts/error_messages', :target => @event_dinner_booking
+
+  %fieldset
+    %ul= f.input :event_dinner_id, :as => :hidden
+
+    %ul
+      = f.input :name, :label => "Your Name"
+      = f.input :phone
+      = f.input :email
+      = f.input :table_name, :label => ' ' + @event_dinner_booking.event_dinner.table_name_type.humanize + ' Name'
+      = f.input :quantity, :label => 'Select number of tickets', :as => :select, :collection => 20.times.map { |i| i + 1 }, :include_blank => false, :size => 3, :input_html => {:class => "js-event-dinner-booking-select-quantity"}
+
+      = f.input :comments, :as => :text, :input_html => {:rows => 2, :cols => 80}
+
+  %fieldset
+    %p
+      %strong Total Price:
+      %span.event-dinner-total-price.js-event-dinner-total-price= render :template => 'event_dinner_bookings/total_charge'
+
+  - if is_editor_or_admin
+    %ul= f.hidden_field :refund_policy_agreed, :value => 1
+  - else
+    %fieldset#terms
+      %p
+        I agree to the #{link_to 'refund, cancellation and minimum age policy', '#refund_policy', :class => 'refund_policy_opener' }
+        = f.check_box :refund_policy_agreed
+
+      #refund_policy_wrapper.hide
+        #refund_policy
+          Should a Event be cancelled, HYC will attempt to reschedule to another date. An attendee may seek full refund by writing to Howth Yacht Club's Sailing Committee in respect of their inability to accept the rescheduled date.
+          %br
+          For online payment of any booking fee, the minimum age policy is regulated by the minimum age required to own a credit card - this is 18 years of age.
+          %p{:style => 'text-align: center;'}= button_tag 'OK', :onclick => 'javascript:$.fancybox.close()', :style => 'font-size: 14px;'
+
+  %ul= f.commit_button (is_editor_or_admin ? 'Save' : 'Proceed to Payment')

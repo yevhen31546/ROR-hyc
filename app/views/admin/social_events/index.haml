@@ -1,0 +1,22 @@
+%h1 Social Events
+
+%ul#actions
+  %li= link_to 'Add new event', new_object_path, :class => 'add_icon'
+  %li= link_to 'Visit events page', events_path, :class => 'visit_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Date
+      %th Featured
+      %th Actions
+    - @social_events.each do |event|
+      %tr{:class => cycle('odd', 'even')}
+        %td= event.name
+        %td(nowrap="nowrap")= event.date
+        %td= event.featured
+        %td(nowrap="nowrap")
+          -#= link_to 'Visit', event_path(event), :class => 'inline_visit_icon'
+          = link_to 'Edit', edit_object_path(event), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(event), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

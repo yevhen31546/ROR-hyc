@@ -1,0 +1,27 @@
+%h1 Site Settings
+
+%ul#actions
+  %li= link_to 'Add setting', new_object_path, :class => 'add_icon'
+
+= form_tag :action => :update_all do
+  %table.index.settings
+    %tr
+      %th Setting
+      %th Value
+    - Setting.all.each do |setting|
+      %tr{:class => cycle('odd', 'even')}  
+        %td.key(nowrap='nowrap')
+          = setting.label
+          %p.actual_key
+            #{setting.key} - #{link_to 'edit', edit_admin_setting_path(setting)}
+        %td.value
+          = link_to admin_setting_path(setting), :method => :delete, :confirm => 'Are you sure you want to delete this setting?', :class => 'setting_delete' do
+            = image_tag 'icons/cross.png', :alt => 'delete'
+          = hidden_field_tag 'settings[][id]', setting.id.to_s, :id => nil
+          - case setting.value_type
+          - when 'string'
+            = text_field_tag "settings[][value]", setting.value, :id => nil
+          - when 'text'
+            = text_area_tag "settings[][value]", setting.value.html_safe, :id => nil, :rows => 4, :cols => 60
+  
+  = submit_tag 'Save settings'

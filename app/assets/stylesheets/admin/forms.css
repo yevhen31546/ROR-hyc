@@ -1,0 +1,60 @@
+/* Forms (adapted from Blueprint CSS 0.81) */
+
+form.formtastic ul li       { list-style: none !important; }
+form.formtastic label    { display: block; width: 160px; display: inline-block; font-weight: bold; line-height: 3; vertical-align: top; }
+form.formtastic abbr[title=required] { margin-left: 2px; color: red; text-decoration: none; border-bottom: none; }
+form.formtastic .inline-hints { display: inline-block; font-size: 9px; margin-left: 3px; line-height: 3;}
+form.formtastic fieldset    { padding:1.4em; margin: 0 0 1.5em 0; border: 1px solid #ccc; }
+form.formtastic legend      { font-weight: bold; font-size:1.2em; }
+form.formtastic input.text,
+form.formtastic input.title   { width: 300px; line-height: 3; }
+form.formtastic li.boolean label { padding: 0px 5px; width: 390px; }
+form.formtastic li.hidden { display: none; }
+form.formtastic input[type=submit], form.formtastic input[type=text], form.formtastic input[type=password], form.formtastic input[type=file],
+form.formtastic input[type=tel], form.formtastic input[type=email], form.formtastic input[type=url],
+form.formtastic input.text, form.formtastic input.title, form.formtastic textarea, form.formtastic select { margin:0.5em 0; }
+
+input[type=text], input[type=password],
+input.text, input.title,
+input[type=tel], input[type=email], input[type=url],
+textarea, select {
+  background-color:#fff;
+  color: #000;
+  border: 1px solid #bbb;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 3px;
+}
+input { color: #000;}
+textarea { overflow: auto; }
+
+input[type=text]:focus, input[type=password]:focus,
+input.text:focus, input.title:focus,
+input[type=tel]:focus, input[type=email]:focus, input[type=url]:focus,
+textarea:focus, select:focus { border-color:#666; }
+
+
+input[type=checkbox], input[type=radio],
+input.checkbox, input.radio {
+  position:relative;
+}
+
+input[type=text], input[type=file] {
+  width: 400px;
+}
+
+form.inline p { margin-bottom:0; }
+
+.button-to { display: inline-block; }
+.dp-applied.ui-datepicker { display: inline-block !important; }
+
+#trophy_event_columns_input .inline-hints {
+  vertical-align: top;
+  line-height: 1.1;
+}
+
+input#entry_sail_number_prefix, input#entry_sail_number, input#entry_sail_number_suffix {
+  width: auto !important;
+}
+
+form.bs_ad li.status_display span {line-height: 3;}

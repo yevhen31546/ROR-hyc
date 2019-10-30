@@ -1,0 +1,21 @@
+#billy-holder
+  #billy-clip
+    %ul#billy-scroller
+      - slides = []
+      - slides << capture_haml do
+        %li
+          %h1 Slide 1
+      - slides << capture_haml do
+        %li
+          %h1 Slide 2
+      - slides << capture_haml do
+        %li
+          %h1 Slide 3
+      = slides.shuffle.join.html_safe
+  
+    %ul#billy-indicators
+      %li
+    
+  #billy-controls
+    #billy-prev
+    #billy-next

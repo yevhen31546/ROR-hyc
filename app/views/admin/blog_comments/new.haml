@@ -1,0 +1,6 @@
+%h2 Post a Comment for "#{link_to @blog_comment.blog_post.title, cms_blog_post_path(@blog_comment.blog_post)}"
+
+= semantic_form_for(@blog_comment) do |f|
+  = render 'layouts/error_messages', :target => object
+  = render 'admin/blog_comments/form', :locals => { :f => f }
+  %p= submit_tag 'Post Comment'

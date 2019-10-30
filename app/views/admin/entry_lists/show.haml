@@ -1,0 +1,12 @@
+%h1 
+  = link_to 'Entry Lists', admin_entry_lists_path(:event_id => @selected_event.id)
+  &rsaquo;
+  #{@selected_event.title}
+
+= form_tag multiple_admin_entries_path, :method => :post, :id => 'entry_multiple_form' do
+  %h2{:style => 'text-align: center; line-height: 29px; position: relative;'}
+    - if @is_results_list
+      %p{:style => 'position: absolute; margin: 0;'}
+        = submit_tag 'Enter in results', :onclick => "javascript: return confirm('Are you sure?');"
+    = @entry_list.name
+  = render :partial => 'admin/entries/index', :locals => {:admin => true, :multiple_select => @is_results_list, :entered_in_results => @is_results_list}

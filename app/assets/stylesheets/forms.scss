@@ -1,0 +1,83 @@
+@import '_shared';
+
+/* Forms (adapted from Blueprint CSS 0.81) */
+
+form.formtastic input[type=submit], input[type=submit] {
+  margin: 0;
+  width: auto; font-family: "Droid Sans";
+  font-size: 18px;
+  height: 42px;
+  line-height: 40px;
+  padding: 0 23px !important;
+  padding: 7px 10px; color: #fff;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid #b3c0db;
+  box-shadow: 2px 2px 2px #bbb;
+  cursor: pointer;
+  background-color: #E7E8EA;
+  @include linear-gradient(#858A94, #555C69);
+}
+
+input[type=submit].small_button {
+  font-size: 14px;
+  line-height: 30px;
+  height: 30px;
+  padding: 0px 8px !important; color: #fff;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+
+form.formtastic ul          { background: none; border: none; margin: 0; padding: 0; }
+form.formtastic ul li       { list-style: none; background: none; margin: 8px 0; padding: 0; }
+form.formtastic label    { display: block; min-height: 30px; line-height: 30px; width: 220px; display: inline-block; font-weight: bold; vertical-align: top; }
+form.formtastic abbr[title=required] { margin-left: 2px; color: red; text-decoration: none; border-bottom: none; }
+form.formtastic .inline-hints { display: inline; font-size: 9px; margin-left: 3px; }
+form.formtastic fieldset    { padding: 0 0 16px; margin: 0 0 30px; border: none; border-bottom: 1px solid #ccc; }
+form.formtastic fieldset legend { margin-bottom: 6px;}
+form.formtastic fieldset ol { float: left; }
+form.formtastic fieldset li label { }
+form.formtastic legend      { font-weight: bold; font-size:1.2em; border: none; }
+form.formtastic input.text,
+form.formtastic input.title   { width: 300px;  }
+form.formtastic li.boolean label { padding: 0px 5px; width: 240px; }
+form.formtastic li.hidden { display: none; }
+form.formtastic input[type=submit], form.formtastic input[type=text], form.formtastic input[type=password], form.formtastic input[type=file],
+form.formtastic input[type=tel], form.formtastic input[type=email],
+form.formtastic, form.formtastic input.text, form.formtastic input.title, form.formtastic textarea, form.formtastic select { margin: 0; width: 250px; padding: 5px; }
+
+form.formtastic input[type=submit]:hover {
+  color: #fff;
+  box-shadow: 2px 2px 4px #777;
+}
+form.formtastic input[type=submit]:active {
+  top: 2px;
+  position: relative;
+}
+
+input[type=text], input[type=password],
+input[type=tel], input[type=email],
+input.text, input.title,
+textarea, select {
+  background-color:#fff;
+  border: 1px solid #bbb;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 3px;
+}
+textarea { overflow: auto; }
+
+input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus,
+input[type=email]:focus, input.text:focus,
+input.title:focus, textarea:focus, select:focus { border-color: #666; outline: 1px solid #bbb; }
+
+
+input[type=checkbox], input[type=radio],
+input.checkbox, input.radio {
+  position:relative; top:0; margin-right: 10px;
+}
+
+form.inline p { margin-bottom:0; }
+
+.button-to { display: inline-block; }

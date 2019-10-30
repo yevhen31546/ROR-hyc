@@ -1,0 +1,55 @@
+= semantic_form_for [:admin, @event], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %fieldset
+    %ul
+      = f.input :event_type, :as => :hidden
+
+      = f.input :event_logo, :hint => "This logo is used on the online entry form"
+      - if @event.event_logo.exists?
+        = image_tag @event.event_logo.url(:thumb)
+
+      = f.input :sponsor_logo, :hint => "This logo is used on the open events list"
+      - if @event.sponsor_logo.exists?
+        = image_tag @event.sponsor_logo.url(:thumb)
+
+  %fieldset.js-admin-event-logos-fieldset
+    %legend Event Logos
+    - i = 0
+    #sortable_event_logos
+      = f.fields_for :event_logos do |event_logo_form|
+        = render :partial => 'event_logo', :locals => {:event_logo_form => event_logo_form, :i => i}
+        - i += 1
+      %p= link_to 'Add Logo', "#", :class => 'js-add-new-event-logo'
+
+  %ul
+    = f.input :event_type, :as => :hidden
+    = f.input :title, :input_html => {:size => 80}
+    = f.input :sub_title, :input_html => {:size => 80}
+    = f.input :date, :as => :datepicker, :input_html => {:size => 12, :style => 'width: 90px;'}, :label => 'Event Start Date'
+
+    = f.input :dates_description, :as => :text, :input_html => {:rows => 2, :cols => 80}, :hint => "Manual representation of event dates"
+
+    %li{:style => 'float: right; width: 200px; margin: 20px 160px 0 0; height: 130px; font-size: 14px; border-left: 1px solid #333; padding-left: 10px;'} These dates apply to "Entry List Public" only
+    = f.input :online_entry_show_date, :as => :datepicker, :input_html => {:size => 12, :style => 'width: 90px;'}
+    = f.input :online_entry_hide_date, :as => :datepicker, :input_html => {:size => 12, :style => 'width: 90px;'}
+    = f.input :entry_list_show_date, :as => :datepicker, :input_html => {:size => 12, :style => 'width: 90px;'}
+    = f.input :entry_list_hide_date, :as => :datepicker, :input_html => {:size => 12, :style => 'width: 90px;'}
+
+  %ul
+    = f.input :show_results, :label => "Show Events (& Classes) on Results Public List"
+    = f.input :is_featured, :label => "Featured on homepage"
+    = f.input :featured_url, :label => "Website address", :input_html => {:size => 80}
+    = f.input :featured_position, :label => "Position on homepage"
+    -# - if @event.event_type == 'training'
+    = f.input :total_number_of_entries, :label => "Total number of entries"
+    = f.input :featured_logo
+    - if @event.featured_logo.exists?
+      = image_tag @event.featured_logo.url(:thumb)
+
+
+  -#%fieldset
+  -#  %ul
+  -#    = f.input :gallery_album_id, :as => :select, :collection => options_from_collection_for_select(GalleryAlbum.all, :id, :title), :label => 'Attach Gallery'
+
+  %ul
+    = f.commit_button (f.object.new_record? ? 'Add new event' : 'Edit event')

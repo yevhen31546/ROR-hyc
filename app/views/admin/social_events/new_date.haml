@@ -1,0 +1,6 @@
+- i = 0
+= semantic_form_for [:admin, @event] do |f|
+  %ul
+    = f.fields_for :event_dates do |builder|
+      = render(:partial => 'date', :locals => {:f => builder}) if (i >= @target_i.to_i)
+      - i += 1

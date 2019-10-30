@@ -1,0 +1,11 @@
+%h1= @page_name = 'Forgot Password'
+
+%p Fill out the form below and instructions to reset your password will be emailed to you
+
+= form_tag password_resets_path, :class => 'formtastic' do
+  %label Email
+  %br/
+  = text_field_tag 'email'
+  %br/
+  %br/
+  = submit_tag 'Reset my password'

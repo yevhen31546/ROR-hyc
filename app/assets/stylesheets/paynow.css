@@ -1,0 +1,43 @@
+.product-container {
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin-top: 10px;
+}
+.pay-now-container .formtastic {
+	width: 100%;
+}
+#order_comment {
+	width: 99%;
+}
+
+.pay-now-payment-form-wrapper {
+  width: 250px;
+}
+
+.pay-now-summary-table {
+  width: 100%;
+}
+
+.pay-now-summary-table tr.odd {
+  background-color: #fff;
+}
+
+.pay-now-summary-table tr.even {
+  background-color: #eee;
+}
+
+.pay-now-summary-table td, .pay-now-summary-table th {
+    padding: 6px;
+    border: 1px solid #696F7B;
+}
+
+.pay-now-summary-table th {
+  font-size: 110%;
+  color: white;
+  background-color: #696F7B;
+  vertical-align: bottom;
+}
+
+.pay-now-summary-table .price {
+  text-align: right;
+}

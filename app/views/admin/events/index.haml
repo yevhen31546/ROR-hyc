@@ -1,0 +1,71 @@
+%h1 #{@event_type} Events
+-# %div= @events.inspect
+%ul#actions
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: 170px;'}
+    = form_tag '', :method => :get do
+      = select_tag 'year', options_for_select(Event.by_event_type(@event_type).years, @year), :include_blank => false
+      = submit_tag 'Select Year'
+  %li= link_to 'Add new event', new_admin_event_path(:event_type => @event_type), :class => 'add_icon'
+  - if @event_type == "training"
+    %li= link_to 'Visit events page', '/training-events', :class => 'visit_icon'
+  - else
+    %li= link_to 'Visit events page', events_path, :class => 'visit_icon'
+
+%table.index#events
+  %tr
+    %th.sponsor
+    %th.title Event
+    %th.date{:style => ''} Date
+    %th.resources{:colspan => 2} Event Information
+    %th.actions Actions
+  - i = 0
+  - @events.each do |event|
+    %tr.spacer.spacer_top
+      %td{:colspan => 6} &nbsp;
+    %tr
+      %td.sponsor= image_tag event.sponsor_logo.url(:thumb)
+      %td.title= event.title_with_sub
+      %td.date
+        - if event.dates_description.present?
+          = simple_format(event.dates_description)
+        - else
+          = display_multiple_dates(*event.dates)
+      %td.resources.pre
+        %ul
+          - if event.entry_form
+            - if @normal_number_of_entries[i]
+              -# %li{:style => 'color: currentColor; cursor: not-allowed; opacity: 0.5; text-decoration: none; pointer-events: none;'}= link_to 'Online Entry', new_event_entry_path(:event_id => event)
+              %li{:style => 'display: none;'}= link_to 'Online Entry', new_event_entry_path(:event_id => event)
+            - else
+              %li= link_to 'Online Entry', new_event_entry_path(:event_id => event)
+            - i = i + 1
+          - event.event_resources.pre.order('position asc').each do |resource|
+            %li
+              - if resource.resource_type == 'document'
+                = link_to resource.name, resource.resource.url(:original), :target => '_blank'
+              - elsif resource.resource_type == 'url'
+                = link_to resource.name, resource.url, :target => resource.url_target
+              - elsif resource.resource_type == 'comment'
+                = simple_format resource.comment
+          - if event.website.present?
+            %li= link_to 'Website', event.website, :target => '_blank'
+          %li= link_to 'Entry List', event_entries_path(:event_id => event)
+          -# %puts #{event_entries_path(:event_id => event)}
+          -# %puts #{event.inspect}
+      %td.resources.post{:style => 'border-left: none;'}
+        %ul
+          - event.event_resources.post.order('position asc').each do |resource|
+            %li
+              - if resource.resource_type == 'document'
+                = link_to resource.name, resource.resource.url(:original), :target => '_blank'
+              - elsif resource.resource_type == 'url'
+                = link_to resource.name, resource.url, :target => resource.url_target
+              - elsif resource.resource_type == 'comment'
+                = simple_format resource.comment
+      %td.actions
+        = link_to 'Edit', edit_object_path(event), :class => 'inline_edit_icon'
+        = link_to 'Resources', admin_event_event_resources_path(:event_id => event), :class => 'inline_edit_icon'
+        = link_to 'Delete', object_path(event), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+        -# %puts #{object_path(event)}
+    %tr.spacer
+      %td{:colspan => 6} &nbsp;

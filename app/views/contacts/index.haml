@@ -1,0 +1,45 @@
+- @page_name = "Committee Members & Class Captains"
+- @page_description = "Committee Members & Class Captains in Howth Yacht Club"
+
+- content_for :breadcrumbs do
+  %li
+    %span Committee Members & Class Captains
+
+- content_for :sidebar do
+  = render :partial => 'contact_us/sidebar'
+
+%h1= @page_name
+- Contact::CATEGORIES.each do |category|
+  - contacts = @contacts_by_category[category]
+  - if contacts.present?
+    %h3.contact_category= category.humanize.split.map{|c| c.capitalize}.join(" ")
+    - if contacts
+      %table.contacts
+        - contacts.each do |contact|
+          %tr.contact
+            %td.contact-name-td{:nowrap => true}
+              = link_to contact.name, '#contact-popup-'+contact.id.to_s, class: 'contact-name contacts-popup'
+              .contact-popup-wrapper
+                .contact-popup{:id => 'contact-popup-'+contact.id.to_s}
+                  - if contact.photo.exists?
+                    .contact-popup-photo= image_tag contact.photo.url(:small), :alt => contact.name
+
+                    .contact-popup-name= contact.name
+                    .contact-popup-position
+                      = contact.position
+                      - if contact.sub_position.present?
+                        %br
+                        = contact.sub_position
+
+                    .contact_phone= contact.phone
+                    .contact_email= mail_to contact.email
+            %td{:nowrap => true}
+              %span.contact-position= contact.position
+            %td
+              - flag_img_prefix = Contact::FLAGS[contact.position.downcase.gsub(/[^a-z]/, '')]
+              - if flag_img_prefix.present?
+                - flag_img_path = "contacts/flags/#{flag_img_prefix}-flag.png"
+                = image_tag flag_img_path
+            %td
+              - if contact.sub_position.present?
+                %span.contact-sub-position= contact.sub_position

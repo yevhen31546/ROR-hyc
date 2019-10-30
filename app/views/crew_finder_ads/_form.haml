@@ -1,0 +1,24 @@
+= semantic_form_for([@crew_finder_ad]) do |f|
+  = render 'layouts/error_messages', :target => @crew_finder_ad
+  %fieldset
+    %ul
+      = f.hidden_field :are_you_human, :class => 'human_check'
+      = f.input :contact_name
+      = f.input :contact_phone
+      = f.input :contact_email
+      = f.input :ad_type, :as => :select, :collection => CrewFinderAd::AD_TYPES, :include_blank => false, :input_html => { :class => "js-crew-finder-change-ad-type" }
+
+  %fieldset.js-crew-finder-wanted
+    %ul= f.input :description, :input_html => {:rows => 10, :cols => 50}
+
+  %fieldset.js-crew-finder-available
+    %p Please complete the details below
+    %ul
+      %li= f.input :age, :as => :radio, :collection => CrewFinderAd::AGE_GROUPS
+      %li= f.input :interested_in_arr, :as => :check_boxes, :collection => CrewFinderAd::INTERESTED_IN_OPTIONS, label: "Interested In"
+      %li= f.input :availability_arr, :as => :check_boxes, :collection => CrewFinderAd::AVAILABILITY_OPTIONS, label: "Availability"
+      %li= f.input :preferred_position, :as => :radio, :collection => CrewFinderAd::POSITIONS, label: "Preferred Position(s) on Board"
+      %li= f.input :experience, :as => :radio, :collection => CrewFinderAd::SAILIING_EXPERIENCE_OPTIONS, label: "Sailing Experience"
+
+  %fieldset
+    %ul= f.commit_button f.object.new_record? ? 'Save' : 'Update', :button_html => { :id => nil }

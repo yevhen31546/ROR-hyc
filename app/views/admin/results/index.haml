@@ -1,0 +1,53 @@
+%h1 Results
+
+
+%ul#actions
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: 550px;'}
+    = form_tag '', :method => :get, :id => 'results_finder' do
+      = hidden_field_tag 'event_type', @event_type
+      = select_tag 'year', options_for_select(Result.years, @year), :include_blank => false, :id => 'event_year_filter_alt'
+      - if @year
+        = select_tag 'event_title', options_for_select(Result.event_titles(@year, @event_type).map {|r| r.event_title }, @event_title), :include_blank => true
+      = submit_tag 'Filter'
+  %li= link_to 'Add result', new_admin_result_path(:year => @year, :event_type => @event_type, :event_title => @event_title), :class => 'add_icon'
+
+- if @results.present?
+  %h2
+    - if @event_ordering
+      #{@event_type.titleize} Events in #{@year}
+    - else
+      '#{@event_title}' Result classes for #{link_to "#{@event_type} events in #{@year}", admin_results_path(:year => params[:year], :event_type => params[:event_type])}
+
+  = form_tag update_all_admin_results_path, :method => :post do
+    = hidden_field_tag 'year', @year
+    = hidden_field_tag 'event_title', @event_title
+    = hidden_field_tag 'event_type', @event_type
+    %table.index
+      %tr
+        - if @event_ordering
+          %th{:style => 'width: 180px;'} Event Title
+        - else
+          %th Event Class
+        %th Order
+        %th Actions
+      - @results.each do |result|
+        %tr{:class => cycle('odd', 'even')}
+          - if @event_ordering
+            %td
+              = text_field_tag "result_event_titles[#{result.event_title}][event_title]", result.event_title, :size => 28, :maxlength => "28", :style => 'width: 170px;'
+          - else
+            %td= result.class_name
+          %td
+            - if @event_ordering
+              = text_field_tag "result_positions[#{result.id}][event_position]", result.event_position, :size => 2, :style => 'width: auto;'
+            - else
+              = text_field_tag "result_positions[#{result.id}][position]", result.position, :size => 2, :style => 'width: auto;'
+          %td(nowrap="nowrap")
+            - if @event_ordering
+              = link_to 'View Results', admin_results_path(:year => params[:year], :event_type => params[:event_type], :event_title => result.event_title), :class => 'inline_show_icon'
+              = link_to "Delete all '#{result.event_title} #{result.year}' results", delete_by_event_title_admin_result_path(result, :year => params[:year], :event_type => params[:event_type]), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+            - else
+              = link_to 'View', iframe_result_path(result), :class => 'inline_show_icon'
+              = link_to 'Edit', edit_object_path(result), :class => 'inline_edit_icon'
+              = link_to 'Delete', object_path(result), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+    = submit_tag 'Save'

@@ -1,0 +1,392 @@
+/*
+ *= require ../fancybox/jquery.fancybox-1.3.4.css
+*/
+@import '_shared';
+
+/* style sheet for welcome page  */
+#body-welcome-index #main-content {
+  background: none;
+  margin-top: 0;
+  padding-top: 18px;
+  background: transparent;
+}
+
+#hp_minor_sidebar, #hp_main_column, #hp_major_sidebar {
+  float: left;
+}
+
+#hp_minor_sidebar {
+  position: relative;
+  padding: 234px 0 0 25px;
+  width: 159px;
+  height: 934px;
+
+  #new_member_join_now {
+    display: block;
+    background: asset-url('welcome/new_members_join_now.png', image);
+    width: 177px;
+    height: 233px;
+    position: absolute;
+    top: -12px;
+    left: 11px;
+  }
+
+  h3 {
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  .mini_marketing_event {
+    border-bottom: 1px dotted #606776;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+
+    p {
+      font-size: 11px;
+      line-height: 16px;
+    }
+
+    &:last-child {
+      margin-bottom: 0px;
+      border-bottom: 0px;
+    }
+  }
+
+  .all_social_events {
+    font-size: 14px;
+    padding-bottom: 40px;
+  }
+
+  #hp_juniors {
+    border-bottom: 1px dotted #606776;
+    margin-bottom: 15px;
+  }
+
+  #social_events_button, #webcam_button {
+    margin-top: 20px;
+    display: block;
+  }
+}
+
+#main_wrapper {
+  width: 654px;
+  float: left;
+}
+
+#hp_main_column {
+  width: 410px;
+  padding: 22px 30px;
+  height: auto;
+}
+
+#hp_major_sidebar {
+  margin-left: 16px;
+  position: relative;
+  width: 290px;
+
+  .box {
+    padding: 20px;
+    width: 250px;
+    min-height: 211px;
+    float: left;
+    margin-bottom: 20px;
+
+    h2.flag {
+      background: asset-url('welcome/ribbon_banner-bg.png', image);
+      width: 194px;
+      height: 49px;
+      position: relative;
+      left: -26px;
+      color: #fff;
+      font: bold 20px/41px "Droid Sans";
+      text-indent: 25px;
+      margin-top: 0;
+
+      a {color: #fff; display: block; }
+    }
+
+    h2.upcoming_events {
+      font-size: 21px;
+    }
+
+    form p {
+      margin-bottom: 0;
+    }
+
+    input[type=text], input[type=password] {
+      width: 250px;
+      height: 41px;
+      font-size: 13px;
+      padding: 0 20px;
+      border: 1px solid #b3b3b3;
+      @include border-radius(2px);
+    }
+
+    #username_field input {
+      background: #fff asset-data-url('icons/member.png') 255px 12px no-repeat;
+    }
+
+    #password_field input {
+      background: #fff asset-data-url('icons/password.png') 255px 6px no-repeat;
+    }
+
+    input[type=submit] {
+      background: transparent asset-data-url('buttons/button-blue-grey.png') top left no-repeat;
+      box-shadow: none;
+      width: 166px;
+      height: 48px;
+      padding: 0 0 8px !important;
+      padding-bottom: 8px;
+      border: none;
+      line-height: 40px;
+    }
+
+    &.results_box {
+      min-height: 120px;
+    }
+  }
+
+  // #results_finder {
+  //   padding: 20px;
+  //   width: 310px;
+  //   height: 211px;
+  //   float: left;
+
+  //   h2 {
+  //     background: asset-url('welcome/ribbon_banner-bg.png', image);
+  //     width: 181px;
+  //     height: 50px;
+  //     position: relative;
+  //     left: -26px;
+  //     color: #fff;
+  //     font: bold 20px/41px "Droid Sans";
+  //     text-indent: 25px;
+  //     margin-top: 0;
+  //   }
+
+  //   a { text-decoration: underline; }
+
+  //   #results_helpful_links {
+  //     float: right;
+  //     color: #b7b7b7;
+
+  //     a {
+  //       color: #b7b7b7;
+  //       font-size: 12px;
+  //       text-decoration: underline;
+  //     }
+  //   }
+
+  //   select {
+  //     width: 194px;
+  //   }
+
+  //   form p {
+  //     margin-bottom: 0;
+  //   }
+
+  //   input[type=submit] {
+  //     background: transparent asset-data-url('buttons/button-blue-grey.png') top left no-repeat;
+  //     width: 166px;
+  //     height: 48px;
+  //     padding: 0;
+  //     padding-bottom: 8px;
+  //     border: none;
+  //     line-height: 40px;
+  //   }
+  // }
+
+  #ads {
+    float: left;
+    width: 300px;
+    height: 250px;
+    padding: 25px;
+    background: rgb(255, 255, 255);
+  }
+
+  #info_box {
+    float: left;
+    margin-top: 20px;
+    background: #E0E2E8;
+    width: 288px;
+    min-height: 267px;
+    border: 1px solid #fff;
+
+    ul#info_tabs {
+      margin: 0;
+      padding: 0;
+      padding-left: 14px;
+      width: 288px;
+      height: 53px;
+      overflow: hidden;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      background: #606776 url('welcome/toolbar-bg.png') center no-repeat;
+
+      li {
+        float: left;
+        list-style: none;
+        margin: 12px 0px;
+
+        a {
+          display: inline-block;
+          text-align: center;
+          width: 87px;
+          height: 27px;
+          line-height: 27px;
+          opacity: 0.6;
+          color: #fff;
+          text-decoration: none;
+
+          &:hover, &.active {
+            opacity: 1;
+          }
+
+          &.active {
+            background: #da241c; /* Old browsers */
+            background: -moz-linear-gradient(top,  #e65b55 0%, #e1453f 10%, #dd2b24 50%, #da241c 94%, #b91b14 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e65b55), color-stop(10%,#e1453f), color-stop(50%,#dd2b24), color-stop(94%,#da241c), color-stop(100%,#b91b14)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  #e65b55 0%,#e1453f 10%,#dd2b24 50%,#da241c 94%,#b91b14 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  #e65b55 0%,#e1453f 10%,#dd2b24 50%,#da241c 94%,#b91b14 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  #e65b55 0%,#e1453f 10%,#dd2b24 50%,#da241c 94%,#b91b14 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  #e65b55 0%,#e1453f 10%,#dd2b24 50%,#da241c 94%,#b91b14 100%); /* W3C */
+
+            @include border-radius(6px);
+          }
+        }
+      }
+    }
+
+    .tab {
+      display: none;
+
+      &:first-child {
+        display: block;
+      }
+    }
+
+    #webcam.tab {
+      text-align: center;
+
+      a {
+        margin-top: 15px;
+        display: block;
+      }
+    }
+  }
+
+  #facebook_wrapper {
+    float: left;
+    margin-top: 18px;
+    width: 288px;
+    background: #fff;
+    border: 1px solid #aaaaaa;
+    border-top: 1px solid #2d599a;
+  }
+
+  #additional_hp_sidebar_box {
+    width: 288px;
+    float: left;
+    background: #fff;
+    margin-top: 18px;
+    padding: 20px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 12px;
+    line-height: 1.4em;
+  }
+}
+
+html.no-rgba #ads {
+  background: transparent asset-data-url("white_very_semi_trans.png") top left repeat;
+}
+
+table.tide_table {
+  width: 300px;
+
+  tr.past td {
+    color: #ccc;
+  }
+}
+
+#tides {
+  overflow: hidden;
+}
+
+#tides-form {
+  background-color: #606776;
+  overflow: hidden;
+  color: #fff;
+
+  .date-box {
+    float: left;
+    margin-left: 15px;
+    padding-bottom: 10px;
+
+    input {
+      width: 100px;
+      font-size: 14px;
+    }
+  }
+}
+
+#tides-information {
+  background: #e0e2e8;
+  min-height: 160px;
+}
+
+table.tides {
+  width: 100%;
+  font-size: 13px;
+  th, td {
+    padding: 3px 15px;
+    text-align: left;
+    background: #e0e2e8; border: 1px solid #fff;
+  }
+  th { font-weight: bold; }
+  td { }
+  .time {width: 130px;}
+  .height {text-align: right; width: 30px;}
+  .bar { background-color: #de3932; height: 10px; }
+  .lighter {background: #fff;}
+  .darker {background: #e9e9e9;}
+}
+
+.open-events {
+  font-size: 12px;
+  table {
+    td {
+      padding: 5px;
+    }
+
+    tr:nth-child(2n) {
+      background-color: #eee;
+    }
+  }
+}
+
+//#today {
+//  li { list-style: none; margin: 10px; font-size: 13px; font-weight: bold; padding-left: 10px; }
+//  li.open { border-left: 4px solid #DA251C; }
+//  li.club { border-left: 4px solid #565D6A; }
+//  li.social { border-left: 4px solid #838F2E; }
+//}
+
+
+.results_box {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0;
+  }
+}
+
+// just forcing this to be hidden, otherwise it seems to appear in bottom left hand corner when homepage loads
+#ui-datepicker-div {
+  display: none;
+}
+

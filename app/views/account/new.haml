@@ -1,0 +1,22 @@
+- @page_name = 'Signup'
+
+
+- content_for :breadcrumbs do
+  %li
+    %span= @page_name
+
+- content_for :sidebar do
+  &nbsp;
+
+#main-content-inner
+  %h1= @page_name
+  
+  = semantic_form_for @user, :url => '' do |f|
+    = render 'layouts/error_messages', :target => @user
+    %ul
+      = f.input :login
+      = f.input :email, :as => :string
+      = f.input :password
+      = f.input :password_confirmation
+
+      = f.commit_button 'Sign up'   

@@ -1,0 +1,7 @@
+= semantic_form_for [:admin, @video] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :title, :required => true
+    = f.input :url
+
+    = f.commit_button (f.object.new_record? ? 'Add video' : 'Edit video') 

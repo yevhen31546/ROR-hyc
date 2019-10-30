@@ -1,0 +1,16 @@
+:textile
+  Hi,
+
+  Someone has made a payment online.
+  Their details are as follows:
+
+  *Member Name:* #{@order.member_name}
+  *Member ID:* #{@order.member_id}
+  *Member Email:* #{@order.email}
+  *Order Reference:* #{@order.reference}
+  *Amount:* #{number_to_currency @order.payment_item.amount}
+  *Realex Order ID:* #{@order.payment_item.payment_id}
+
+  #{link_to('View Details', edit_admin_order_path(@order.id, :only_path => false))}
+
+  Regards.

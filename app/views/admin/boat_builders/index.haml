@@ -1,0 +1,16 @@
+%h1 Builders
+
+%ul#actions
+  %li= link_to 'Add new builder', new_object_path, :class => 'add_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Actions
+    - @boat_builders.each do |builder|
+      %tr{:class => cycle('odd', 'even')}
+        %td= builder.name
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(builder), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(builder), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

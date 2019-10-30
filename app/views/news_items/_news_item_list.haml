@@ -1,0 +1,8 @@
+.news-item-list
+  %h2.news-title
+    - unless @news_item_list
+      = link_to news_item_list.title, news_item_path(news_item_list)
+    - else
+      = news_item_list.title
+  .news-info #{news_item_list.created_at.strftime('%d/%m/%y')}
+  

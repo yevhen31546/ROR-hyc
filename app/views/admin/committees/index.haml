@@ -1,0 +1,19 @@
+%h1 Committees
+%ul#actions
+  %li= link_to 'Add new committee', new_object_path, :class => 'add_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Phone
+      %th Email
+      %th
+    - @committees.each do |committee|
+      %tr{:class => cycle('odd', 'even')}
+        %td= committee.name
+        %td= committee.phone
+        %td= committee.email
+        %td
+          = link_to 'Edit', edit_object_path(committee), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(committee), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

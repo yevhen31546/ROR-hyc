@@ -1,0 +1,8 @@
+#contact-box
+  = form_for ContactUs.new, :url => contact_us_path, :html => { :id => nil } do |f|
+    = f.text_field :name, :size => 16, :placeholder => 'Your Name', :id => nil
+    = f.text_field :phone, :size => 16, :placeholder => 'Your Phone', :id => nil 
+    = f.text_field :email, :size => 16, :placeholder => 'your@emailaddress.com', :id => nil
+    = f.text_area :message, :cols => 16, :rows => 3, :placeholder => 'Your Message', :id => nil
+
+    = submit_tag 'Send Message'

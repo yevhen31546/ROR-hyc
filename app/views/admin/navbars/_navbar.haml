@@ -1,0 +1,4 @@
+- items = @navbar.navbar_items.top_level
+- if !items.empty?
+  %ul.navbar{:id => "navbar-#{@navbar.id}"}
+    = render :partial => 'admin/navbar_items/navbar_item', :collection => items

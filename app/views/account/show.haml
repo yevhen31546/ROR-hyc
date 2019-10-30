@@ -1,0 +1,28 @@
+- @page_name = 'Members Area' 
+- @no_sidebar = true
+- content_for :breadcrumbs do
+  %li
+    %span= @page_name
+
+%h1= @page_name
+
+%p You are logged in as #{current_user.login}
+
+#members_page_sections_wrapper
+  #members_menu_wrapper
+    %ul.members_menu
+      = admin_content do
+        %li= link_to 'Access admin area', admin_path
+      %li= link_to 'My Account', edit_account_path
+      -#%li= link_to 'My Profile [TODO]', '#'
+      -#%li= link_to 'Members Directory [TODO]', '#'
+      -#%li= link_to 'Club Documents [TODO]', '#'
+      %li= link_to 'Logout', logout_path
+
+  #members_latest_news
+    %h2 Members News
+    = render :partial => 'news_items/news_item', :collection => @news_items
+
+
+  #members_contact_committee
+    %p= link_to 'Contact committee',   committees_path, :class => 'button'

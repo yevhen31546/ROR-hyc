@@ -1,0 +1,149 @@
+:javascript
+  var cradle_unavailable_days_by_cradle_period =
+  #{CraneHireBooking.get_cradle_day_unavailability.to_json}
+
+= semantic_form_for((is_admin_area? ? [:admin, @crane_hire_booking] : [@crane_hire_booking])) do |f|
+  = render 'layouts/error_messages', :target => @crane_hire_booking
+  %fieldset
+    %legend Boat Owner Details
+    %ul
+      = f.input :is_member, :as => :radio, :collection => [["Yes I am a member", true], ["No I am not a member", false]], :label => "Are you a member of HYC?", :input_html => {:class => "js-ch-membership-change"}
+      = f.input :owner_name
+      = f.input :mobile
+      = f.input :email
+
+  %fieldset
+    %legend Boat Details
+    %ul
+      = f.input :boat_name
+      = f.input :boat_type
+      = f.input :loa, :as => :numeric, :hint => "metres", :label => "Length Overall (LOA)", :input_html => {:class => "js-ch-loa"}
+
+  %fieldset
+    %legend Crane
+
+    - if is_admin_area?
+      = f.input :crane_op, :label => "Admin: Crane Op"
+
+    %ul
+      = f.input :crane_in_out, :as => :radio, :collection => [["Crane into water", "in"], ["Crane out of water", "out"]], :label => false
+      = f.input :crane_size, :as => :radio, :collection => [["Big Crane (15 tons)", "big"], ["Small Crane (3 tons, Centre point lift only)", "small"]], :label => "What size crane do you need?", :input_html => {:class => "js-ch-size-change"}
+
+    %table.crane_hire_pricing_table
+      %thead
+        %tr
+          %th
+          %th
+          %th.js_ch_member_prices Members
+          %th.js_ch_non_member_prices Non-Members
+      %tbody
+        - @crane_hire_prices.cranes.each do |crane_hire_price|
+          %tr{:class => "js-ch-crane-price", :data => {:size => crane_hire_price.name.sub('Crane - ', '').gsub(/[\sm]/, '') } }
+            %td.ch_crane_price_checkbox_td= f.radio_button :crane_hire_price_id, crane_hire_price.id
+            %td.ch_crane_price_name
+              = crane_hire_price.name.sub('Crane - ', '')
+            %td.js_ch_member_prices= crane_hire_price.member_price ? number_to_currency(crane_hire_price.member_price) : '-'
+            %td.js_ch_non_member_prices= crane_hire_price.non_member_price ? number_to_currency(crane_hire_price.non_member_price) : '-'
+
+  %fieldset
+    %legend Cradle
+
+    %p.js-ch-cradle-unavailable-msg Cradle is only available with the big crane
+
+    .js-cradle-available-fields
+
+      %p
+        Cradle is booked from 11:30 to 10.30am on the following day. When Cradle is booked,
+        Big Crane is in use from 11:00am to 11:30 am on Day 1 and from 10:30am to 11:00am on day 2
+
+      %p If you want longer than 24 hours, please contact the marina office 01 839 2777
+
+      %ul
+        = f.input :requested_cradle_days, :as => :radio, :collection => @cradle_period_options, :label => "Do you need a cradle?", :input_html => {:class => 'js-cradle-period-change'}
+
+  %fieldset
+    %legend Extras
+    %table.crane_hire_pricing_table
+      %thead
+        %tr
+          %th
+          %th
+          %th.js_ch_member_prices Members
+          %th.js_ch_non_member_prices Non-Members
+      %tbody
+        - @crane_hire_prices.extras.each do |crane_hire_price|
+          %tr{:class => (crane_hire_price.member_price.present? ? 'js_ch_member_prices' : '') + ' ' + (crane_hire_price.non_member_price.present? ? 'js_ch_non_member_prices' : '')}
+            %td.ch_crane_price_checkbox_td= f.check_box crane_hire_price.code, class: "js-crane-hire-extra-select"
+            %td.ch_crane_price_name
+              = f.label crane_hire_price.code, crane_hire_price.name
+            %td.js_ch_member_prices= crane_hire_price.member_price ? number_to_currency(crane_hire_price.member_price) : '-'
+            %td.js_ch_non_member_prices= crane_hire_price.non_member_price ? number_to_currency(crane_hire_price.non_member_price) : '-'
+            %td
+              - if crane_hire_price.charge_period.present?
+                == per #{crane_hire_price.charge_period}
+
+  %fieldset
+    %p
+      %strong Payment will be taken at the Marina Office, not online.
+
+    %p
+      .crane-hire-total-price.js-crane-hire-total-price= render :template => 'crane_hire_bookings/total_charge'
+      Total Price
+      %br
+
+  %fieldset
+    %p
+      = link_to 'More Information on Booking Times for Cranes and Cradles + ', '#', class: 'booking-more-info-opener'
+
+    .booking-more-info-wrapper.hide
+      .booking-more-info
+        %p The big crane can lift up to 15 tons and has a facility for cradle alongside.
+
+        %p The small crane can lift up to 3 tons with centre-lift.
+
+        %h3 Half-hour time slots
+
+        %p The cranes are booked by selecting a half hour time slot.
+
+        %p The half-hour time slots are from:
+
+        %ul
+          %li 9:00am to 8:30pm in the summer and
+          %li 9:00am to about 3:30pm in the winter.
+
+        %p The change from summer to winter times is in mid-April.
+
+        %h3 Cradle use
+
+        %p When the cradle is in use, the lift-out and lift-in times on the big crane are allocated for that boat. These half-hour slots are reserved for that boat and do not appear as available on the online booking panel.
+
+
+  %fieldset.js-crane-hire-availability-fieldset
+    %legend Availability
+
+    - date_format = "%d-%m-%Y"
+
+    %ul
+      %li
+        = f.input :crane_hire_primary_start_at_date, :as => :string, :format => date_format, :hint => "DD-MM-YYYY", :label => "Choose a date", :input_html => {:value => @crane_hire_booking.crane_hire_primary_start_at_date.try(:strftime, date_format), :class => 'js-crane-hire-datepicker'}
+
+    .js-crane-hire-availability-time-slot-search
+      - if @crane_hire_booking.crane_size.present? && @crane_hire_booking.crane_hire_primary_start_at_date.present?
+        - crane_size = @crane_hire_booking.crane_size
+        - date = @crane_hire_booking.crane_hire_primary_start_at_date.strftime(date_format)
+        - @selected_time = @crane_hire_booking.crane_hire_primary_start_at_time
+        - @time_slots = CraneHireBooking.get_crane_hire_time_slot_availability(crane_size, date)
+        = render :template => 'crane_hire_bookings/time_slots'
+
+  %fieldset
+    %ul= f.input :comments, :input_html => {:rows => 10, :cols => 50}
+
+  %fieldset
+    %legend Terms and Conditions
+    %ul
+      %li Crane/Cradle no shows will be charged in full
+      %li It is the responsibility of the boat owner to supply adequate manpower for crane use.
+
+
+  %fieldset
+    %ul= f.commit_button (is_admin_area? ? 'Save' : 'Submit'), :button_html => { :id => nil }

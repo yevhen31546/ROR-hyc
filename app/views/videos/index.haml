@@ -1,0 +1,7 @@
+%h1 Videos
+
+- Video.all.each do |video|
+
+  - youtube_video_code = video.url.to_s.match(%r#youtu.*(?:v=|\/)([\w-]{11})(?:&.+)?$#)[1] rescue nil;  # matches http://www.youtube.com/v/[videoid] or http://www.youtube.co.uk/watch?v=[videoid]    
+  - if youtube_video_code.present?
+    %iframe(width='480' height='390' src="http://www.youtube.com/embed/#{youtube_video_code}" frameborder='0')

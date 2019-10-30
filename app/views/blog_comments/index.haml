@@ -1,0 +1,10 @@
+%h1 Blog comments
+
+#main
+  - if !@blog_comments.empty?
+    = render :partial => 'blog_comments/blog_comment', :collection => @blog_comments
+  - else
+    %p No blog comments
+
+  - if is_admin?
+    %p= link_to 'New comment', new_object_path

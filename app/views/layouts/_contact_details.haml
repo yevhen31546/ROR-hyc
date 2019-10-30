@@ -1,0 +1,31 @@
+= link_to 'Post News', 'mailto:websitehyc@gmail.com', :class => 'contact_button news_submission_contact_button'
+= link_to 'Webmaster', 'mailto:jdeane@hyc.ie', :class => 'contact_button webmaster_contact_button'
+
+.vcard
+  %h2 Contact
+  .contact-holder
+    %h3.org.fn= setting[:contact_address_org]
+    .address.adr
+      .street-address= setting[:contact_street_address]
+      - unless setting[:contact_extended_address].blank?
+        .extended-address= setting[:contact_extended_address]
+      .locality= setting[:contact_locality]
+      .region= setting[:contact_region]
+    %br
+    - unless setting[:contact_number].blank?
+      .tel
+        %label telephone: 
+        %span.type.hide main
+        %span.value= setting[:contact_number]
+    - unless setting[:contact_fax].blank?
+      .tel
+        %label fax:
+        %span.type.hide fax
+        %span.value= setting[:contact_fax]
+    %label email:
+    %a.email{:href => "mailto:#{setting[:contact_email]}"}= setting[:contact_email]
+    - unless ['', '53.344089'].include?(setting[:contact_latitude].to_s)    
+      .geo.hide
+        .latitude= setting[:contact_latitude]
+        .longitude= setting[:contact_longitude]
+    %p= link_to 'CONTACT THE OFFICE >', main_app.contact_us_path, :id => 'contact_office'

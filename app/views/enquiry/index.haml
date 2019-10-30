@@ -1,0 +1,27 @@
+-#- @page_name = page_seo_title('contact')
+- @page_name = "Event Enquiry"
+-#- @page_description = page_seo_description('contact')
+
+- content_for :breadcrumbs do
+  %li
+    %span Enquiry
+
+- @no_sidebar = true
+
+#contact-form
+  %h1 Enquiry Form
+  = semantic_form_for @contact_us, :url => '' do |f|
+    = render 'layouts/error_messages', :target => @contact_us
+    %ul
+      = f.hidden_field :are_you_human, :class => 'human_check'
+      = f.input :name, :required => true, :input_html => { :placeholder => 'Your Name' }
+      = f.input :phone, :as => :string, :input_html => { :placeholder => 'Your Phone Number' }
+      = f.input :email, :required => true, :as => :string, :input_html => { :placeholder => 'your@emailaddress.com' }
+      = f.input :hyc_member, :required => true, :as => :radio, :collection => ['Yes', 'No'], :label => "Are you a HYC Member?", :wrapper_html => {:class => "contact-us-wide-label"}
+      = f.input :function_date, :required => true, :as => :string
+      = f.input :arrival_time, :required => true, :as => :string
+      = f.input :num_attendees, :required => true, :as => :string
+      = f.input :function_type, :required => true, :as => :select, :collection => ContactUs::FUNCTION_TYPES
+      = f.input :menu, :required => true, :as => :select, :label => "Menu Selection", :collection => ContactUs::MENUS
+      = f.input :message, :as => :text, :label => "Other details", :input_html => { :placeholder => nil }
+      = f.commit_button 'Send'

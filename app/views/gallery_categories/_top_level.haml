@@ -1,0 +1,5 @@
+- per_row = 4
+
+- if @gallery_categories.present?
+  - @gallery_categories.each_with_index do |gallery_category, counter|
+    = render :partial => 'gallery_categories/top_level_category', locals: {gallery_category: gallery_category, i: counter}

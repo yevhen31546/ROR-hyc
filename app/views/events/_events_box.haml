@@ -1,0 +1,7 @@
+- events = Event.find(:all, :limit => '10', :conditions => "`date` >= CURRENT_DATE", :order => 'date asc') 
+
+#events-box
+  %h2 Events
+  %ul
+    - events.each do |event|
+      %li= link_to "#{event.created_at.to_s(:longdate)} - #{event.title}", event

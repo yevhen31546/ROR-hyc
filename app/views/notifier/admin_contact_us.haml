@@ -1,0 +1,21 @@
+:textile
+  Hi,
+
+  Someone has filled an enquiry form online.
+  Their details are as follows:
+
+  *Reference:* #{@contact_us.id}
+  *Name:* #{@contact_us.name}
+  *Phone:* #{@contact_us.phone}
+  *Email:* #{@contact_us.email}
+  *HYC Member*: #{@contact_us.hyc_member}
+  *Function Date:* #{@contact_us.function_date}
+  *Arrival Time:* #{@contact_us.arrival_time}
+  *Number of Attendees:* #{@contact_us.num_attendees}
+  *Function Type:* #{@contact_us.function_type}
+  *Menu:* #{@contact_us.menu}
+  *Other Details:* #{nl2br(@contact_us.message)}
+  *Created:* #{@contact_us.created_at}
+
+  Regards.
+

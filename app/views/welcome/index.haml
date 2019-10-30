@@ -1,0 +1,63 @@
+- @page_name = page_seo_title('homepage')
+- @page_description = page_seo_description('homepage')
+
+#main_wrapper.white_semi_trans
+  #hp_minor_sidebar
+    = link_to '', page_url("join-our-club"), :id => 'new_member_join_now'
+
+    #hp_events_box
+      %h2 Social
+      = render :partial => "social_event", :collection => @social_events
+    #hp_juniors
+      = render :inline => @sidebar_content.html_safe
+
+    =# link_to image_tag('welcome/social_events_button.png', :alt => "Social Events >"), '#', :id => 'social_events_button'
+
+    -#= link_to image_tag('welcome/webcam_button.png', :alt => "Live HYC WebCam >"), '/webcam', :id => 'webcam_button', :class => 'iframe'
+
+  #hp_main_column
+    #hp_news_box
+      %ul#hp_news_items.news_items
+        - require "html_truncator"
+        - @news_items.each do |news_item|
+          %li.news-item
+            %h2.title= HTML_Truncator.truncate(news_item.title, 120, :length_in_chars => true).html_safe
+            .image
+              - if news_item.image.exists?
+                = link_to news_item do
+                  = image_tag news_item.image.url(:normal), :alt => news_item.title
+            .preview= HTML_Truncator.truncate(news_item.content, 200, :length_in_chars => true).html_safe
+
+            %p= link_to 'More >', news_item, :class => 'read_more'
+      %p= link_to 'Browse all news', news_items_path
+
+#hp_major_sidebar
+  = render :partial => 'results_sidebar'
+
+  -##ads= image_tag 'welcome/ad-placeholder.jpg'
+
+  #info_box
+    %ul#info_tabs
+      %li= link_to 'Webcam', '#webcam', :class => 'active'
+      %li= link_to 'Weather', '#weather'
+      %li= link_to 'Tides', '#tides'
+    .tabs
+      #webcam.tab
+        = link_to image_tag('welcome/webcam_button.jpg', :alt => "Live HYC WebCam >"), '/webcam', :id => 'webcam_button', :class => 'iframe'
+      -##today.tab
+      -#  %ul#today_events
+      -#    - if @open_events_today.length == 0
+      -#      %li No open event today.
+      -#    - else
+      -#      = render :partial => "open_event", :collection => @open_events_today
+      #weather.tab
+        %div{:style => 'margin: 9px;'}= render :partial => 'welcome/weather'
+      #tides.tab
+        = render :partial => "tides/tide-box"
+
+  #facebook_wrapper<
+    <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FHowthyachtclub&amp;width=290&amp;height=427&amp;colorscheme=light&amp;show_faces=false&amp;header=true&amp;stream=true&amp;show_border=false&amp;appId=411577895591385" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width: 288px; height:427px; " allowTransparency="true"></iframe>
+
+  - if @additional_sidebar_content.present?
+    #additional_hp_sidebar_box
+      = @additional_sidebar_content.html_safe

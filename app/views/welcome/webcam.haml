@@ -1,0 +1,68 @@
+%html
+  %head
+    %title HYC Webcam
+    -#<link rel="stylesheet" type="text/css" href="/includes/main.css" />
+
+  %body
+    %table{:align => "center", :border => "0", :cellpadding => "0", :cellspacing => "0", :width => "95%"}
+      %tr
+        %td.heading2{:align => "center"} View looking North from Howth Yacht Club
+    %table{:align => "center", :border => "0", :cellpadding => "0", :cellspacing => "0", :width => "90%"}
+      %tr
+        %td.text{:align => "center"}
+          &nbsp;
+          %br
+          %script{:language => "JavaScript"}
+            var ImageReloaded = 0;
+            
+            var BaseURL = "";
+            // This is the path to the image generating asp file.
+            var File = "http://videofeed.hyc.ie/live";
+            
+            // Force an immediate image load
+            var theTimer = setTimeout('reloadImage()', 1);
+            // This function will stop unneeded reloads if client has slow bandwidth
+            function ImageLoaded()
+            {
+            ImageReloaded = 1;
+            }
+            
+            
+            function reloadImage()
+            {
+            // Reload the image every one second (1000 ms)
+            theTimer = setTimeout('reloadImage()', 1000);
+            
+            // Here we load the image
+            if (ImageReloaded=1)
+            {
+            theDate = new Date();
+            var url = BaseURL;
+            url += File;
+            url += '?dummy=' + theDate.getTime().toString(10);
+            // The dummy above enforces a bypass of the browser image cache
+            
+            document.theImage.src = url;
+            ImageReloaded = 0;
+            }
+            }
+            
+            document.write('<img name="theImage" onload="ImageLoaded()" src="" height="360" ');
+            document.write('width="480" alt="Live image">');
+
+    %table{:align => "center", :border => "0", :cellpadding => "0", :cellspacing => "4", :width => "90%"}
+      %tr
+        %td.tabletextbold{:align => "center"}
+          View from Camera refreshes once per second
+    %table{:align => "center", :border => "0", :cellpadding => "0", :cellspacing => "0", :width => "90%"}
+      %tr
+        %td.text{:align => "center", :width => "50%"}
+          &nbsp;
+          %br
+          Provided by
+          = succeed "," do
+            %a{:href => "http://www.camworx.com/", :target => "window"} Camworx
+          the leading specialists in network camera remote monitoring solutions
+        %td.text{:align => "center"}
+          %a{:href => "http://www.camworx.com/", :target => "window"}
+            %img{:alt => "Camworx Logo", :border => "0", :height => "64", :src => "/assets/welcome/logo_camworx.jpg", :vspace => "0", :width => "165"}/

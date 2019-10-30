@@ -1,0 +1,18 @@
+- @page_name = 'Login'
+
+- content_for :breadcrumbs do
+  %li
+    %span= @page_name
+
+#main-content-inner
+  %h1= @page_name
+
+  = semantic_form_for @user_session, :url => login_path do |f|
+    = render 'layouts/error_messages', :target => @user_session
+    %ul
+      = f.input :login
+      = f.input :password
+      = f.input :remember_me, :as => :boolean, :label_html => {:style => 'font-weight: normal'}
+      = f.commit_button 'Login'
+
+      %li= link_to 'Forgot Your Password?', forgot_password_path 

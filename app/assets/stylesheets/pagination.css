@@ -1,0 +1,30 @@
+nav.pagination {
+  margin: 10px 0;
+}
+
+nav.pagination .first, nav.pagination .last { display: none; }
+nav.pagination a { text-decoration: none; }
+
+nav.pagination .prev a, nav.pagination .next a {
+  color: #444;
+  font-size: 12px;
+}
+
+nav.pagination .page {
+}
+nav.pagination .page a {
+  padding: 1px 6px 1px 6px;
+  display: inline-block;
+  color: #666;
+  border: 1px solid #D7D7D7;
+  border-radius: 2px;
+  background-color: #fff;
+}
+nav.pagination .page.current {
+  display: inline;
+  border: 1px solid #D7D7D7;  
+  color: #fff;
+  background-color: #9DA1A7;
+  border-radius: 2px;
+  padding: 3px 6px 3px 6px;
+}

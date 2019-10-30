@@ -1,0 +1,5 @@
+= semantic_form_for [:admin, @boat_builder] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :name, :required => true
+    = f.commit_button (f.object.new_record? ? 'Add builder' : 'Edit builder')

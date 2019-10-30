@@ -1,0 +1,18 @@
+.news-item
+  %h2.news-title
+    - unless @news_item
+      = link_to news_item.title, news_item_path(news_item)
+    - else
+      = news_item.title
+  .news-info #{news_item.created_at.to_s(:longdate)}
+  - if @news_item && news_item.image.exists?
+    .news-image= image_tag news_item.image.url(:normal), :alt => news_item.title
+
+  - if !defined?(news_item_counter) || news_item_counter < 1  # show full post for the first item, and a truncated version for the rest
+    .news-content= interpolate_content(news_item.content).html_safe
+  - else
+    .news-content= truncate_html news_item.content.html_safe, :length => 350
+    = link_to 'More >', news_item, :class => 'read_more'
+  
+  -# - if !defined?(news_item_counter)
+  -#   = render 'layouts/social_media_buttons'

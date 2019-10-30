@@ -1,0 +1,60 @@
+- @no_sidebar = true
+- @page_name = 'Crew Finder'
+
+- content_for :breadcrumbs do
+  %li
+    = link_to "Crew Finder", crew_finder_ads_path
+  %li
+    %span= @crew_finder_ad.contact_name
+
+#main-content-inner.crew_finder
+  = render :partial => "search"
+
+  %h1= @crew_finder_ad.contact_name
+
+  .details
+
+    .detail.ad_type= @crew_finder_ad.ad_type.humanize
+
+    %br
+
+    - if @crew_finder_ad.ad_type == 'wanted'
+      .detail.description= nl2br(@crew_finder_ad.description)
+    - else
+      .detail
+        %strong Age:
+        = @crew_finder_ad.age
+
+      .detail
+        %strong Interested in:
+        = @crew_finder_ad.interested_in
+
+      .detail
+        %strong Availability:
+        = @crew_finder_ad.availability
+
+      .detail
+        %strong Preferred Position(s):
+        = @crew_finder_ad.preferred_position
+
+      .detail
+        %strong Sailing Experience:
+        = @crew_finder_ad.experience
+
+    %hr
+
+    .detail.contact= @crew_finder_ad.contact_name
+
+    - if @crew_finder_ad.contact_email.present?
+      .detail.contact_email= mail_to @crew_finder_ad.contact_email, "Contact by Email", :encode => :javascript
+
+    - if @crew_finder_ad.contact_phone.present?
+      .detail.contact_phone= link_to "Contact by Phone - #{@crew_finder_ad.contact_phone}", 'tel:'+@crew_finder_ad.contact_phone
+
+    .detail.reference
+      Reference:
+      = @crew_finder_ad.id
+
+    .detail.created
+      Posted On:
+      = @crew_finder_ad.created_at.strftime("%H:%M %d-%b-%Y")

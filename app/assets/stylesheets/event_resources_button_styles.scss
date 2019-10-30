@@ -1,0 +1,38 @@
+.event-resources-button-style {
+  color: #fff !important;
+  padding: 1px 3px;
+  display: inline-block;
+  text-decoration: none !important;
+
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.event-resources-button-style-online-entry {
+  background: lighten(#60035E, 0%);
+}
+
+.event-resources-button-style-entry-form {
+  background: lighten(#007236, 0%);
+}
+
+.event-resources-button-style-notice-of-race {
+  background: lighten(#448CCB, 0%);
+}
+
+.event-resources-button-style-sailing-instructions {
+  background: lighten(#A764A8, 0%);
+}
+
+.event-resources-button-style-entry-list {
+  background: lighten(#8c6239, 0%);
+}
+
+.event-resources-button-style-event-webpage {
+  background: lighten(#f8941d, 0%);
+}
+
+.event-resources-button-style-event-website {
+  background: lighten(#f8941d, 0%);
+}

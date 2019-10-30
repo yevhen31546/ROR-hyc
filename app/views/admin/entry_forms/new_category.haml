@@ -1,0 +1,7 @@
+- i = 0
+= semantic_form_for @entry_form, :url => '' do |f|
+  = f.semantic_fields_for :categories do |category_form|
+    - i += 1
+    - if i.to_i == @target_i.to_i
+      = render :partial => 'category', :locals => {:category_form => category_form, :entry_form => @entry_form, :i => i}
+    

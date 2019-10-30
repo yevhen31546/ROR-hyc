@@ -1,0 +1,10 @@
+%h1 #{link_to 'Orders', :action => 'index'} &rsaquo; Details for '#{@order.reference}'
+
+
+= render partial: "pay_now/summary"
+
+- if @order.comment.present?
+  %br
+  %br
+  %h2 Comments
+  = nl2br @order.comment

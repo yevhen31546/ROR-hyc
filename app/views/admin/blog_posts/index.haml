@@ -1,0 +1,26 @@
+%h1 Blog
+
+%ul#actions
+  %li= link_to 'Add new blog post', new_object_path, :class => 'add_icon'
+  %li= link_to 'Manage blog comments', admin_blog_comments_path, :class => 'comments_icon'
+  %li= link_to 'Manage blog categories', admin_blog_categories_path, :class => 'edit_icon'
+  %li= link_to 'Visit blog page', blog_posts_path, :class => 'visit_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Title
+      %th Content
+      %th Category
+      %th Date
+      %th Actions
+    - @blog_posts.each do |blog_post|
+      %tr{:class => cycle('odd', 'even')}
+        %td= blog_post.title
+        %td= truncate_html(blog_post.content, :length => 200).html_safe
+        %td= blog_post.blog_category.try(:name) || 'No category'
+        %td(nowrap="nowrap")= blog_post.created_at.to_s
+        %td(nowrap="nowrap")
+          = link_to 'Visit', blog_post_path(blog_post), :class => 'inline_visit_icon'
+          = link_to 'Edit', edit_object_path(blog_post), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(blog_post), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

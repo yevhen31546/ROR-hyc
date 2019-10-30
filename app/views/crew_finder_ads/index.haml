@@ -1,0 +1,36 @@
+- @page_name = 'Crew Finder'
+
+- content_for :breadcrumbs do
+  %li
+    %span Crew Finder
+
+- content_for :sidebar do
+  &nbsp;
+
+#main-content-inner
+  %h1 Crew Finder
+
+  = render :partial => "search"
+
+  %p{style: "text-align: center;"}
+    = link_to 'Create new Ad', new_crew_finder_ad_path
+    %br
+    %small To edit or delete an ad, #{link_to 'contact the webmaster', 'mailto:jdeane@hyc.ie'}
+
+  - if @crew_finder_ads.present?
+    %h2 Latest Ads
+
+    = paginated_section @crew_finder_ads do
+      %table.search-results
+        %thead
+          %th Name
+          %th Ad type
+        %tbody
+          - @crew_finder_ads.each do |crew_finder_ad|
+            %tr
+              %td= link_to crew_finder_ad.contact_name.truncate(30), crew_finder_ad
+              %td= crew_finder_ad.ad_type.humanize
+
+  - else
+    %p No ads at the moment
+

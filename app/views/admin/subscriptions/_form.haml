@@ -1,0 +1,8 @@
+= semantic_form_for [:admin, @subscription] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :email, :required => true, :as => :string
+    = f.input :first_name, :required => true
+    = f.input :last_name, :required => true
+
+    = f.commit_button (f.object.new_record? ? 'Add subscription' : 'Edit subscription') 

@@ -1,0 +1,70 @@
+@import '_shared';
+
+#members_page_sections_wrapper {
+  width: 100%;
+  overflow: hidden;
+
+  > div {
+    float: left;
+  }
+
+  #members_menu_wrapper {
+    width: 25%;
+    @include box-sizing(border-box);
+    padding: 0px 0 0px 0;
+    background: #DFE1E4;
+    margin-right: 5%;
+
+    ul, li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      padding-left: 20px;
+      line-height: 32px;
+
+      &:hover {
+        background: #565C6A;
+        color: #fff;
+      }
+    }
+  }
+
+  #members_latest_news {
+    width: 55%;
+    @include box-sizing(border-box);
+    padding: 0 20px 0 0;
+
+    h2 {
+      margin-top: 0;
+    }
+
+  }
+
+  #members_contact_committee {
+    width: 15%;
+    @include box-sizing(border-box);
+    padding: 0 0;
+
+    a {
+      display: block;
+      font-size: 16px;
+      line-height: 18px;
+      padding: 10px 0;
+    }
+  }
+}
+
+#committees_list {
+  padding: 0;
+  li {
+    h3, p { margin: 0; }
+
+    list-style-type: none;
+    margin-bottom: 10px;
+  }
+}

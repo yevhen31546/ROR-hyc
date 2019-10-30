@@ -1,0 +1,34 @@
+-# hCard microformat validator - http://hcard.geekhood.net/
+
+.vcard
+  .contact-holder
+    %h2.org.fn= setting[:contact_address_org]
+    .address.adr
+      .street-address= setting[:contact_street_address]
+      - unless setting[:contact_extended_address].blank?
+        .extended-address= setting[:contact_extended_address]
+      .locality= setting[:contact_locality]
+      .region= setting[:contact_region]
+      .country-name= setting[:contact_country_name]
+  .contact-holder
+    - unless setting[:contact_number].blank?
+      .tel
+        %label Tel: 
+        %span.type.hide Work
+        %span.value= setting[:contact_number]
+    - unless setting[:contact_mobile].blank?
+      .tel
+        %label Mobile:
+        %span.type.hide Mobile
+        %span.value= setting[:contact_mobile]
+    - unless setting[:contact_fax].blank?
+      .tel
+        %label Fax:
+        %span.type.hide Fax
+        %span.value= setting[:contact_fax]
+    %label Email:
+    %a.email{:href => "mailto:#{setting[:contact_email]}"}= setting[:contact_email]
+    - unless ['', '53.344089'].include?(setting[:contact_latitude].to_s)    
+      .geo.hide
+        .latitude= setting[:contact_latitude]
+        .longitude= setting[:contact_longitude]

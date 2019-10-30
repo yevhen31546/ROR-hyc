@@ -1,0 +1,11 @@
+= semantic_form_for [:admin, @crane_hire_price], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :name
+    = f.input :code
+    = f.input :product_type
+    = f.input :member_price
+    = f.input :non_member_price
+    = f.input :charge_period
+
+    = f.commit_button (f.object.new_record? ? 'Add Price' : 'Edit Price')

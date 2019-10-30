@@ -1,0 +1,7 @@
+#testimonials-box
+  %h2 Testimonials
+  - testimonial = Testimonial.random.first
+  - if testimonial
+    %div
+      = truncate testimonial.quote.html_safe, :length => 120
+      %span.name= [testimonial.name, testimonial.from].reject(&:blank?).join(', ')

@@ -1,0 +1,24 @@
+%h1 #{link_to 'Blog', :controller => 'blog_posts'} &rsaquo; Blog comments
+
+%ul#actions
+  %li= link_to 'Manage blog posts', admin_blog_posts_path, :class => 'edit_icon'
+  %li= link_to 'Manage blog categories', admin_blog_categories_path, :class => 'edit_icon'
+  %li= link_to 'Visit blog page', blog_comments_path, :class => 'visit_icon'
+
+%table.index
+  %tr
+    %th Author
+    %th Comment
+    %th Date
+    %th Actions
+  - @blog_comments.each do |blog_comment|
+    %tr{:class => cycle('odd', 'even')}  
+      %td= blog_comment.author
+      %td= truncate_html(blog_comment.comment, :length => 200).html_safe
+      %td(nowrap="nowrap")= blog_comment.created_at.to_s
+      %td(nowrap="nowrap")
+        - if blog_comment.status != 'approved'
+          = link_to 'Approve', approve_admin_blog_comment_path(blog_comment), :class => 'inline_approve_icon'
+        = link_to 'Visit', blog_comment_path(blog_comment), :class => 'inline_visit_icon'      
+        = link_to 'Edit', edit_object_path(blog_comment), :class => 'inline_edit_icon'
+        = link_to 'Delete', object_path(blog_comment), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

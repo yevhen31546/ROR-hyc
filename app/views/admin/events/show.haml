@@ -1,0 +1,14 @@
+- @page_name = @events.title
+- @page_description = @events.title
+
+%h1= @event.title
+
+.details
+  Posted on
+  = @event.created_at.to_s
+
+.content= @event.content.html_safe
+
+- if is_admin?
+  %p= link_to 'Edit', edit_object_path(@event)
+  %p= link_to 'Delete', object_path(@event), :confirm => 'Are you sure?', :method => :delete

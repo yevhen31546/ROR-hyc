@@ -1,0 +1,95 @@
+#Codereview
+-# = debug(@events)
+- @page_name = "#{@event_type.humanize} Events"
+
+- content_for :breadcrumbs do
+  %li
+    %span= @page_name
+-# %p= select_tag "whatever", options_for_select([ "VISA", "MasterCard" ], "MasterCard"), :include_blank => false
+#main-content-inner
+
+  %strong= @page_name
+  = form_tag '', :method => :get do
+    %p
+      = select_tag 'year', options_for_select(Event.by_event_type(@event_type).years, @year), :include_blank => false
+      = submit_tag 'Select Year', :class => 'small_button'
+
+  %p Unless stated below, ALL results are in the Main Results Section - details will be added as info is received.
+
+  - if !@events.empty?
+    -# %div= @events.inspect
+    %table#events{:cellspacing => 10}
+      %thead
+        %tr
+          %th.sponsor
+          %th.title Event
+          %th.date Date
+          %th.resources{:colspan => 2} Event Information
+      %tbody
+        - i = 0
+        - @events.each do |event|
+          -# %puts #{@normal_number_of_entries.pop}
+          -# %puts #{@normal_number_of_entries[i]}
+          -# %puts #{i}
+          - event_class = "event-#{event.id}"
+          %tr.spacer.spacer_top{class: event_class}
+            %td{:colspan => 5}
+              = content_tag(:a, nil, :name => event_class)
+              &nbsp;
+          %tr.event{class: event_class}
+            %td.sponsor
+              - if event.sponsor_logo.exists?
+                = image_tag event.sponsor_logo.url(:thumb)
+            %td.title
+              = event.title_with_sub
+            %td.date
+              - if event.dates_description.present?
+                = simple_format(event.dates_description)
+              - else
+                - event.dates.each do |date|
+                  = date.strftime("%d-%m-%Y")
+                  %br
+            %td.resources.pre
+              %ul
+                -# = debug(event.total_number_of_entries)
+                - if event.enterable?
+                  -# %li= link_to 'Online Entry', new_event_entry_path(:event_id => event), class: er_style_classes('online_entry')
+                  - if @normal_number_of_entries[i]
+                    -# Disable
+                    %li{:style => 'display: none;'}= link_to 'Online Entry', new_event_entry_path(:event_id => event), class: er_style_classes('online_entry')
+                  - else
+                    -# Show
+                    %li= link_to 'Online Entry', new_event_entry_path(:event_id => event), class: er_style_classes('online_entry')
+                  - i = i + 1
+                - event.event_resources.pre.order('position asc').each do |resource|
+                  %li
+                    - if resource.resource_type == 'document'
+                      = link_to resource.name, resource.resource.url(:original), :target => '_blank', class: er_style_classes(resource)
+                    - elsif resource.resource_type == 'url'
+                      = link_to resource.name, resource.url, :target => resource.url_target, class: er_style_classes(resource)
+                    - elsif resource.resource_type == 'comment'
+                      = simple_format resource.comment
+                - if event.website.present?
+                  %li= link_to 'Website', event.website, :target => '_blank', class: er_style_classes('event_website')
+                - if event.show_entry_list?
+                  %li= link_to 'Entry List', event_entries_path(:event_id => event), class: er_style_classes('entry_list')
+                -#- if event.event_dinner.present?
+                -#  %li= link_to 'Purchase Dinner Tickets', new_event_event_dinner_booking_path(event_id: event.id)
+                -#  - if event.event_dinner.bookings.present?
+                -#    %li= link_to 'Tickets List', list_event_event_dinner_bookings_path(event_id: event.id)
+            %td.resources.post{:style => 'border-left: none;'}
+              %ul
+                - event.event_resources.post.order('position asc').each do |resource|
+                  %li
+                    - if resource.resource_type == 'document'
+                      = link_to resource.name, resource.resource.url(:original), :target => '_blank', class: er_style_classes(resource)
+                    - elsif resource.resource_type == 'url'
+                      = link_to resource.name, resource.url, :target => resource.url_target, class: er_style_classes(resource)
+                    - elsif resource.resource_type == 'comment'
+                      = simple_format resource.comment
+              -#- if event.gallery_album
+              -#  %li= link_to 'Photos', gallery_category_gallery_album_gallery_photos_path(:gallery_album_id => event.gallery_album, :gallery_category_id => event.gallery_album.gallery_category)
+          %tr.spacer{class: event_class}
+            %td{:colspan => 5} &nbsp;
+  - else
+    %p No Events

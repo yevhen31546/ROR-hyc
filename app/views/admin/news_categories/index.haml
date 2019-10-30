@@ -1,0 +1,17 @@
+%h1 #{link_to 'News', admin_news_categories_path} &rsaquo; News Categories
+
+%ul#actions
+  %li= link_to 'Add new news category', new_object_path, :class => 'add_icon'
+  %li= link_to 'Manage news', admin_news_items_path, :class => 'edit_icon'
+  %li= link_to 'Visit news page', news_items_path, :class => 'visit_icon'  
+
+%table.index
+  %tr
+    %th Name
+    %th Actions
+  - @news_categories.each do |news_category|
+    %tr{:class => cycle('odd', 'even')}  
+      %td= news_category.name
+      %td(nowrap="nowrap")
+        = link_to 'Edit', edit_object_path(news_category), :class => 'inline_edit_icon'
+        = link_to 'Delete', object_path(news_category), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

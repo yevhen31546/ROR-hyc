@@ -1,0 +1,6 @@
+.show_event.event
+
+  .date= @event.try(:date).try(:to_s) || 'No Date Set'
+
+  %h1= @event.title
+

@@ -1,0 +1,31 @@
+%h1 Modules
+
+%ul#actions
+  %li= link_to 'Add new module', new_object_path, :class => 'add_icon'
+
+= form_tag '' do
+  %table.index
+    %tr
+      %th Superadmin?
+      %th Admin?
+      %th Name
+      %th Controller/Action
+      %th Sort Order
+      %th Actions
+    - collection.each do |object|
+      %tr{:class => cycle('odd', 'even')}
+        %td
+          = hidden_field_tag "admin_modules[#{object.id}][id]", object.id
+          = hidden_field_tag "admin_modules[#{object.id}][superadmin_active]", "0"
+          = check_box_tag "admin_modules[#{object.id}][superadmin_active]", "1", object.superadmin_active
+        %td
+          = hidden_field_tag "admin_modules[#{object.id}][active]", "0"
+          = check_box_tag "admin_modules[#{object.id}][active]", "1", object.active
+        %td= object.name
+        %td= [object.controller, object.action].join('/')
+        %td= object.sort
+        %td(nowrap="nowrap")
+          = link_to 'Visit', url_for(:controller => object.controller, :action => object.action), :class => 'inline_visit_icon'
+          = link_to 'Edit', edit_object_path(object), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(object), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+  = submit_tag

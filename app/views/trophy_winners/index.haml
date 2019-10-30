@@ -1,0 +1,52 @@
+- @page_name = 'Trophies'
+
+- content_for :breadcrumbs do
+  %li
+    %span Trophies
+
+#main-content-inner.trophy-winners
+  %h1 Trophies
+
+  .form-box
+    = form_tag '', :method => :get do
+      .field.year
+        = label_tag 'year', 'Year'
+        %br
+        = select_tag 'year', options_for_select(@years, @year)
+
+      .field.type
+        = radio_button_tag 'event_type', 'Club', @event_type == "Club"
+        = label_tag "event_type_Club", 'Club'
+        = radio_button_tag 'event_type', 'Open', @event_type == "Open"
+        = label_tag "event_type_Open", 'Open'
+
+      .field.events
+        = label_tag 'trophy_event_id', 'Events'
+        %br
+        = select_tag 'trophy_event_id', options_for_select(@trophy_events.map { |te| [te.name, te.id] }, @trophy_event.try(:id))
+
+      .field.submit
+        = submit_tag 'Search'
+
+  %p Data for the current year will be updated towards the end of that year
+
+  %hr
+
+  - if @trophy_winners
+    - if @trophy_winners.present?
+      = paginated_section @trophy_winners do
+        %table.search-results
+          %thead
+            %th Trophy
+            %th Category
+            - @trophy_event.columns.each do |column|
+              %th= column.to_s.humanize
+          %tbody
+            - @trophy_winners.each do |trophy|
+              %tr
+                %td= trophy.trophy.truncate(30)
+                %td= trophy.category
+                - @trophy_event.columns.each do |column|
+                  %td= trophy.send(column)
+    - else
+      %p No trophies for #{@trophy_event.name} (#{@year})

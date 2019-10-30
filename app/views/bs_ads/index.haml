@@ -1,0 +1,43 @@
+- @page_name = 'Buy and Sell'
+
+- content_for :breadcrumbs do
+  %li
+    %span= @page_name
+
+- content_for :sidebar do
+  %h3 How Buy & Sell Works
+  = page_content 'bsads-how-it-works'
+
+#main-content-inner
+  %h1= @page_name
+
+  = render :partial => "search"
+
+  - if @bs_ads.present?
+    %h2 Latest Ads
+
+    %p
+      = link_to 'Request deletion of an Advert', "", {style: "float: right;", rel: 'nofollow', onclick: "javascript:this.href='mailto:jdeane-at-hyc.ie'.replace('-at-', '@');"}
+      Most recent ads on top
+
+    = paginated_section @bs_ads do
+      %table.search-results
+        %thead
+          %th= link_to 'Item', "?" + request.query_parameters.reject {|k,_| k == 'order'}.collect {|k,v| "#{k}=#{v}"}.join("&") + '&order=name'
+          %th= link_to 'Ad type', "?" + request.query_parameters.reject {|k,_| k == 'order'}.collect {|k,v| "#{k}=#{v}"}.join("&") + '&order=ad_type'
+          %th= link_to 'Category', "?" + request.query_parameters.reject {|k,_| k == 'order'}.collect {|k,v| "#{k}=#{v}"}.join("&") + '&order=category'
+          %th= link_to 'Area', "?" + request.query_parameters.reject {|k,_| k == 'order'}.collect {|k,v| "#{k}=#{v}"}.join("&") + '&order=location'
+          %th= link_to 'Price', "?" + request.query_parameters.reject {|k,_| k == 'order'}.collect {|k,v| "#{k}=#{v}"}.join("&") + '&order=price'
+        %tbody
+          - @bs_ads.each do |bs_ad|
+            %tr
+              %td= link_to bs_ad.name.truncate(30), bs_ad
+              %td= bs_ad.ad_type.humanize
+              %td= bs_ad.category.humanize
+              %td= bs_ad.location
+              %td= number_to_currency(bs_ad.price, :unit => bs_ad.currency_unit.html_safe)
+
+  - else
+    %p Sorry, no ads online at the moment
+
+  %p= link_to 'Create Your Ad', new_bs_ad_path

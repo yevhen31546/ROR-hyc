@@ -1,0 +1,18 @@
+= semantic_form_for [:admin, @event_dinner] do |f|
+  = render 'layouts/error_messages', :target => object
+
+  %fieldset
+    %ul= f.input :event_id, :as => :hidden
+
+    %ul
+      - if @event_dinner.new_record? || @event_dinner.event.date > Date.today
+        = f.input :event_id, :as => :select, :collection => @events.map { |e| [e.title_with_year, e.id] }, :label => 'Event'
+      - elsif @event_dinner.event
+        %li== Event: #{@event_dinner.event.title}
+
+      = f.input :event_date, :as => :datepicker, :input_html => {:size => 12, :style => 'width: 90px;'}, :label => 'Event Date'
+      = f.input :ticket_price
+      = f.input :table_name_type, :as => :select, :collection => [['Boat', 'boat'], ['Table', 'table']], :label => 'Table Name'
+      = f.input :comments, :as => :text, :input_html => {:rows => 2, :cols => 80}
+
+  %ul= f.commit_button "Save"

@@ -1,0 +1,19 @@
+%h1 Admin dashboard
+
+- if Rails.env.production? && (setting[:google_analytics_id].blank? || setting[:google_analytics_id] == 'UA-XXXXX-X')
+  #flash-notice Warning: Google Analytics ID not set up
+
+%h2 Common Tasks
+
+%ul#actions
+  %li= link_to 'Update a page', admin_pages_path, :class => 'edit_icon' if AdminModule.active.find_by_name('pages')
+  %li= link_to 'Upload an image', new_admin_image_path, :class => 'upload_icon' if AdminModule.active.find_by_name('images')
+  %li= link_to 'Upload a PDF file', new_admin_resource_path, :class => 'upload_icon' if AdminModule.active.find_by_name('resources')
+  %li= link_to 'Update the gallery', admin_gallery_albums_path, :class => 'edit_icon' if AdminModule.active.find_by_name('gallery')
+  %li= link_to 'Change Settings', {:controller => 'admin/settings'}, :class => 'settings_icon' if AdminModule.active.find_by_name('settings')
+  %li= link_to 'Add new page', new_admin_page_path, :class => 'add_icon' if AdminModule.active.find_by_name('pages')
+  %li= link_to 'Add news item', new_admin_news_item_path, :class => 'add_icon' if AdminModule.active.find_by_name('news')
+  %li= link_to 'Add new blog post', new_admin_blog_post_path, :class => 'add_icon' if AdminModule.active.find_by_name('blog')
+  %li= link_to 'Add new video', new_admin_video_path, :class => 'add_icon' if AdminModule.active.find_by_name('videos')
+  %li= link_to 'Visit homepage', :root, :class => 'visit_icon'
+

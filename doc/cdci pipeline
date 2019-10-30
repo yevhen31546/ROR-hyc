@@ -1,0 +1,42 @@
+Dokku and Github
+It's actually really easy.
+
+Go from Local straight to Production
+
+Check Your Git is a local Git but current production
+make sure when you make ssh key that you include 'admin' in the name.
+
+git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+git remote -v
+origin	https://github.com/vinylmatt/hycruby.git (fetch)
+origin	https://github.com/vinylmatt/hycruby.git (push)
+cat ~/.ssh/id_rsa.pub | ssh root@172.105.81.48 dokku ssh-keys:add adminmattu
+root@172.105.81.48's password: 
+HASH HASH HERE
+git remote add production4 dokku@172.105.81.48:hyc-prod
+git push production4 master
+
+Log onto the server as root to rake the DB
+ssh root@172.105.81.48
+
+
+dokku run hyc-prod rake db:migrate:up VERSION=20190910041206
+
+The version number comes from here:
+https://github.com/vinylmatt/hycruby/tree/master/db/migrate
+
+Once this is all done we 
+dokku ps:rebuild hyc-prod
+dokku config:set hyc-prod PAYMENT_URL=https://https://hyc-payment-dev.vinyl-matt.com/
+
+and that is that. There are warnings. There is old crap.
+See the video in this folder about how to setup the links for backend and front end.
+
+
+
+

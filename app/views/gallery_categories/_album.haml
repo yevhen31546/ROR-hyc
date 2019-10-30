@@ -1,0 +1,12 @@
+- thumb_img = sanitize_gallery_thumb(gallery_album.cover_photo, gallery_album.title)
+- target = gallery_album_gallery_photos_path(gallery_album)
+.gallery-album{:class => (is_first_in_row ? "gallery-thumbnail-block-first-in-row" : nil)}
+  .gallery-album-thumb= link_to(thumb_img, target)
+  %h2.gallery-album-title= link_to gallery_album.title, target
+  -#%p.gallery-album-info
+  -#  #{gallery_album.created_at.to_s(:long)}
+  -#  -#, #{pluralize gallery_album.gallery_photos.count, 'photo'}
+  - if (gallery_album_filters = gallery_album.filters).present?
+    .gallery-album-filters
+      - gallery_album_filters.each do |filter|
+        = link_to filter, gallery_album_gallery_photos_path(gallery_album, :filter => filter), :class => 'gallery-album-filter'

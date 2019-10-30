@@ -1,0 +1,21 @@
+-# %puts #{@event.inspect}
+- @page_name = "Entry List for #{@event.title}"
+- content_for :breadcrumbs do
+  %li= link_to "#{@event.event_type.humanize} Events", :controller => 'events', :action => :index, :event_type => @event.event_type
+  %li
+    %span= @page_name
+
+#main-content-inner
+  %h1= @page_name
+  -# %puts #{@event.inspect}
+  %p
+    - if @event.enterable?
+      - if @normal_number_of_entries
+        = link_to 'Enter This Event', '#', :id => 'disable_enter_this_event'
+      - else
+        = link_to 'Enter This Event', new_event_entry_path(:event_id => @event)
+
+    - else
+      You cannot enter this event at this time
+
+  = render :partial => 'admin/entries/index', :locals => {:admin => false}

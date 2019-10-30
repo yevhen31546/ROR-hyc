@@ -1,0 +1,47 @@
+h3.contact_category {
+  color: #404559;
+  font-size: 1.3em;
+}
+
+.contacts {
+  overflow: hidden;
+  margin-bottom: 50px;
+}
+
+.contact td {
+  vertical-align: top;
+  padding: 6px 15px 8px 0;
+}
+
+.contact-name-td {
+  width: 140px;
+}
+
+.contact-popup-wrapper {
+  display: none;
+}
+
+.contact-popup {
+  width: 400px;
+}
+
+.contact-popup-photo {
+  float: right;
+  margin: 3px 0;
+  border: 5px solid #e1e1e1;
+  display: inline-block;
+  font-size: 0;
+
+  img {
+    margin: 0;
+  }
+}
+
+.contact-popup-name {
+  font-size: 1.4em;
+}
+
+.contact-popup-position {
+  margin: 10px 0;
+  font-style: italic;
+}

@@ -1,0 +1,60 @@
+%h1 Crane Hire Bookings - Payment List
+
+= render :partial => 'admin/crane_hire_bookings/actions'
+= render :partial => 'admin/crane_hire_bookings/date_filter'
+
+- if !@date
+  %p All bookings (future and past) ordered by descending crane hire start date
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Is Admin
+      %th Is Member
+      %th Owner Name
+      %th Mobile
+      %th Charge
+      %th Crane Size
+      %th Crane Hire
+      %th Cradle
+      %th Extras
+      %th Payment Ref
+      %th Created
+      %th Actions
+    - @crane_hire_bookings.each do |crane_hire_booking|
+      %tr{:class => cycle('odd', 'even')}
+        %td= crane_hire_booking.is_admin? ? 'A' : ''
+        %td= crane_hire_booking.is_member? ? 'Y' : 'N'
+        %td= crane_hire_booking.owner_name
+        %td= crane_hire_booking.mobile
+        %td= number_to_currency crane_hire_booking.total_charge
+        %td= crane_hire_booking.crane_size
+        %td
+          - if !crane_hire_booking.requested_cradle
+            = crane_hire_booking.crane_hire_primary_start_at.try(:in_time_zone).to_s
+            - if crane_hire_booking.crane_hire_secondary_start_at.present?
+              and
+              = crane_hire_booking.crane_hire_secondary_start_at.in_time_zone
+            %br
+            = number_to_currency crane_hire_booking.crane_hire_price.try(:price_for_member_type, crane_hire_booking.is_member).to_f
+        %td
+          - if crane_hire_booking.requested_cradle
+            == #{crane_hire_booking.cradle_hire_start_at.in_time_zone.to_date.to_s} - #{crane_hire_booking.cradle_hire_end_at.in_time_zone.to_date.to_s}
+            == (#{crane_hire_booking.requested_cradle_days} days)
+            %br
+            = number_to_currency crane_hire_booking.cradle_hire_price
+          - else
+            == -
+        %td
+          - if crane_hire_booking.extras_charges.present?
+            %br
+            - crane_hire_booking.extras_charges.each do |extra_code, extra_charge|
+              == #{extra_code.to_s.titleize}
+              == (#{number_to_currency extra_charge})
+              %br
+
+        %td= crane_hire_booking.payment_item.try(:payment_id)
+        %td(nowrap="nowrap")= crane_hire_booking.created_at.to_s
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_admin_crane_hire_booking_path(crane_hire_booking, :admin_list => true), :class => 'inline_edit_icon'
+          = link_to 'Delete', admin_crane_hire_booking_path(crane_hire_booking, :admin_list => true), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

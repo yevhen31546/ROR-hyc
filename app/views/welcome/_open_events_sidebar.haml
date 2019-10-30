@@ -1,0 +1,10 @@
+.box.open-events.white_semi_trans
+  %h2= link_to "Open Events", events_url
+
+  %table
+    %th Date
+    %th Title
+    - @open_events.each do |event|
+      %tr
+        %td= event.date
+        %td= event.title

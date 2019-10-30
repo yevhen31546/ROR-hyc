@@ -1,0 +1,27 @@
+
+- @page_name = @blog_post.title
+- @page_description = @blog_post.title
+.show_blog_post
+  %h1= @blog_post.title
+
+  .details
+    Posted on
+    = @blog_post.created_at.to_s
+
+  .content= @blog_post.content.html_safe
+
+  - if is_admin?
+    %p= link_to 'Edit', edit_object_path(@blog_post)
+    %p= link_to 'Delete', object_path(@blog_post), :confirm => 'Are you sure?', :method => :delete
+
+  .comments
+    -# %h2 Post a Comment
+    -# = semantic_form_for(BlogComment.new(:blog_post_id => @blog_post.id)) do |f|
+    -#   = render 'admin/blog_comments/form', :locals => { :f => f }
+    -#   %p= submit_tag 'Create'
+
+    %h2 Comments
+    - if !@blog_post.blog_comments.empty?
+      %ul= render :partial => 'admin/blog_comments/blog_comment', :collection => @blog_post.blog_comments
+    - else
+      %p No comments yet.

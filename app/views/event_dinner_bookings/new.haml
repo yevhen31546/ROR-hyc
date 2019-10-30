@@ -1,0 +1,14 @@
+- @page_name = 'Purchase Dinner Tickets for ' + @event_dinner.title_with_date
+- @no_sidebar = true
+
+- content_for :breadcrumbs do
+  %li
+    %span #{@page_name}
+
+- if @event_dinner.event && @event_dinner.event.sponsor_logo.exists?
+  %div{:style => "float: right; margin-left: 20px;"}
+    = image_tag @event_dinner.event.sponsor_logo.url(:normal)
+
+%h1= @page_name
+
+= render :partial => "event_dinner_bookings/form"

@@ -1,0 +1,8 @@
+%fieldset
+  = f.hidden_field :_destroy
+  = link_to 'remove', '#', :class => 'remove_fields inline_delete_icon'
+  %ul.custom_field
+    = f.input :name
+    = f.input :datatype, :as => :radio, :collection => CustomField::DATATYPES, :label => false
+    = f.input :extra
+    = f.input :is_required, :label => "Required?"

@@ -1,0 +1,16 @@
+%h1 Fleets
+
+%ul#actions
+  %li= link_to 'Add new fleet', new_object_path, :class => 'add_icon'
+
+= paginated_section collection do
+  %table.index
+    %tr
+      %th Name
+      %th Actions
+    - @fleets.each do |fleet|
+      %tr{:class => cycle('odd', 'even')}
+        %td= fleet.name
+        %td(nowrap="nowrap")
+          = link_to 'Edit', edit_object_path(fleet), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(fleet), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

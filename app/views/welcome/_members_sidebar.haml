@@ -1,0 +1,13 @@
+#members_sidebar.white_semi_trans
+  %h2 Members Area
+
+  - if current_user
+    %ul
+      - if is_admin?
+        %li= link_to 'Access admin area', admin_path
+      %li= link_to 'Members Directory', '#'
+      %li= link_to 'Update profile', '#'
+      %li= link_to 'Contact committee', '#'
+      %li= link_to 'Forum', '#'  
+  - else
+    = render :partial => 'user_sessions/login_box'

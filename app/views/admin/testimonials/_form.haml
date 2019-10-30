@@ -1,0 +1,8 @@
+= semantic_form_for [:admin, @testimonial] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :name, :required => true
+    = f.input :from
+    = f.input :quote, :as => :text, :input_html => {:class => 'htmleditor'}
+
+    = f.commit_button (f.object.new_record? ? 'Add testimonial' : 'Edit testimonial') 

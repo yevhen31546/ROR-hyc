@@ -1,0 +1,10 @@
+- navbar = Navbar.find_by_code('main', :joins => :navbar_items, :order => 'navbar_items.position asc')
+- if navbar && !navbar.top_level_navbar_items.empty?
+  %nav
+    %ul.navbar.sf-menu{:id => "navbar-#{navbar.code}"}
+      - navbar.top_level_navbar_items.each do |navbar_item|
+        - link = navbar_item.link.is_a?(Hash) ? main_app.url_for(navbar_item.link) : navbar_item.link # this is because the hash params dont resolve to routes in engines
+        - class_name = current_page?(link) ? 'current' : ''
+        - class_name += " #{navbar_item.css_class}"  if navbar_item.css_class.present?
+        %li{:class => class_name}
+          = navbar_link navbar_item.name, link, :target => navbar_item.target.presence

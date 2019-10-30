@@ -1,0 +1,10 @@
+= semantic_form_for [:admin, @gallery_album] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :title, :required => true
+    -
+    = f.input :gallery_category, as: :select, collection: all_gallery_category_options()
+    = f.input :content, :as => :text, :input_html => {:class => 'htmleditor'}
+    = f.input :filter_event_desc, :as => :text, :input_html => {:class => 'htmleditor'}
+    = f.input :filter_prize_giving_desc, :as => :text, :input_html => {:class => 'htmleditor'}
+    = f.commit_button (f.object.new_record? ? 'Add album' : 'Edit album')

@@ -1,0 +1,47 @@
+= semantic_form_for([:admin, @bs_ad]) do |f|
+  = render 'layouts/error_messages', :target => object
+  %fieldset
+    %ul
+      = f.hidden_field :are_you_human, :class => 'human_check', :value => "yes"
+      = f.input :name, :label => 'Item'
+      = f.input :ad_type, :as => :select, :collection => BsAd::AD_TYPES, :include_blank => false
+      = f.input :category, :as => :select, :collection => BsAd::CATEGORIES, :include_blank => false
+      = f.input :location
+      = f.input :price
+      = f.input :currency, :as => :select, :collection => BsAd::CURRENCIES, :include_blank => false
+      = f.input :description, :input_html => {:rows => 10, :cols => 50}
+      = f.input :photo
+      = image_tag @bs_ad.photo.url(:thumb) if @bs_ad.photo.exists?
+      = f.input :doc
+      = link_to "Current document", @bs_ad.doc.url if @bs_ad.doc.exists?
+      = f.input :contact_name
+      = f.input :contact_email
+      - if @bs_ad.status.present?
+        %li.status_display
+          %label Status:
+          %div{:style => 'display: inline-block;'}
+            - current_status = (@bs_ad.active? ? 'active' : 'inactive')
+            %p
+              Currently
+              %strong #{current_status.humanize}
+
+            %p
+              Active From <b>#{@bs_ad.created_at.strftime("%d %b %Y")}</b>
+              - if @bs_ad.inactive_date.present?
+                to <b>#{@bs_ad.inactive_date.strftime("%d %b %Y")}</b>
+            %p
+              - if @bs_ad.inactive_date.present?
+                Inactive From <b>#{@bs_ad.inactive_date.strftime("%d %b %Y")}</b>
+              - if @bs_ad.delete_date.present?
+                to <b>#{@bs_ad.delete_date.strftime("%d %b %Y")}</b>
+            - if @bs_ad.delete_date
+              %p
+                Deleted after <b>#{@bs_ad.delete_date.strftime("%d %b %Y")}</b>
+            %p
+              Change to
+              = f.select :new_status, options_for_select([['-', nil]]+BsAd::STATUSES)
+      - else
+        = f.input :status, :as => :select, :collection => BsAd::STATUSES, :include_blank => false
+
+  %fieldset
+    %ul= f.commit_button f.object.new_record? ? 'Save' : 'Update', :button_html => { :id => nil }

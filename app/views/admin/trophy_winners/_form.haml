@@ -1,0 +1,19 @@
+= semantic_form_for([:admin, @trophy_winner]) do |f|
+  = render 'layouts/error_messages', :target => object
+  %fieldset
+    %p Trophy Event: #{f.object.trophy_event.name} - #{f.object.trophy_event.event_type} - #{f.object.trophy_event.year}
+    %ul
+      = f.input :trophy
+      - if f.object.trophy_event
+        = f.input :trophy_event_id, :as => :hidden
+      - else
+        = f.input :trophy_event_id, :as => :select, :collection => TrophyEvent.all
+      = f.input :category
+      - f.object.trophy_event.columns.each do |column|
+        = f.input column
+      = f.input :trophy_comment
+      = f.input :trophy_given_by
+
+      
+  %fieldset
+    %ul= f.commit_button f.object.new_record? ? 'Save' : 'Update', :button_html => { :id => nil }

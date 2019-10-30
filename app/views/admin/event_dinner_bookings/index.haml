@@ -1,0 +1,39 @@
+%h1 Event Dinner Bookings
+
+%ul#actions
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0; width: auto;'}
+    = form_tag '', :method => :get do
+      = select_tag 'year', options_for_select(EventDinner.years, @year), :include_blank => false, :id => 'event_dinner_year_filter'
+      = select_tag :event_dinner_id, render(:partial => 'admin/event_dinners/options', :locals => {:event_dinners => @event_dinners, :selected_event_dinner => @selected_event_dinner})
+      = submit_tag 'Show Entries'
+
+    - if @selected_event_dinner
+      %li= link_to 'Add new entry', new_admin_event_dinner_booking_path(:event_dinner_id => @selected_event_dinner), :class => 'add_icon'
+
+- if @selected_event_dinner.present?
+  %table.index#event_dinners
+    %tr
+      %th
+      %th Name
+      %th Phone
+      %th Email
+      %th= @selected_event_dinner.table_name_type.humanize + ' Name'
+      %th Qty
+      %th Charge
+      %th Payment
+      %th Comments
+      %th.actions Actions
+    - @selected_event_dinner.bookings.each do |booking|
+      %tr{:class => cycle('odd', 'even')}
+        %td= booking.is_admin? ? 'A' : ''
+        %td= booking.name
+        %td= booking.phone
+        %td= booking.email
+        %td= booking.table_name
+        %td= booking.quantity
+        %td= number_to_currency booking.total_charge
+        %td= booking.payment_ref
+        %td= nl2br(booking.comments)
+        %td.actions
+          = link_to 'Edit', edit_object_path(booking), :class => 'inline_edit_icon'
+          = link_to 'Delete', object_path(booking), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'

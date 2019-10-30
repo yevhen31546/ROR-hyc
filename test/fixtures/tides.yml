@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tide_at: 2012-12-10 18:03:24
+  height: 1.5
+
+two:
+  tide_at: 2012-12-10 18:03:24
+  height: 1.5

@@ -1,0 +1,147 @@
+table.calendar, table.calendar * {
+  margin: 0;
+  padding: 0;
+  border: none;
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: auto;
+}
+table.calendar { background-color: #eee; }
+
+table.calendar .monthNames { font-size: 1.25em; background-color: #dddddd; border: 1px solid green;  }
+table.calendar .monthNames a { color: #5870c7; font-weight: bold; text-decoration: none; display: block; }
+table.calendar .otherMonth { color: #aaa; background: none; }
+table.calendar .day { border: 1px solid #eeeeee; width: 28px; padding: 1px 3px 1px 3px; background: no-repeat image-url('events/calendar-bg.gif'); }
+table.calendar .event { background: no-repeat image-url('events/calendar-event.gif'); }
+table.calendar .event a { color: white; font-weight: bold; text-decoration: none; display: block; }
+table.calendar .today { border: 1px dotted red; }
+
+body.controller-events,
+body.controller-entries.action-index,
+body.controller-social-events {
+
+  #main-content-inner {
+    width: 890px;
+    margin: 0 15px;
+  }
+
+  .show_event.event {
+    padding: 15px;
+
+    h1 {margin-bottom: 0px;}
+    .date {font-size: 16px;}
+  }
+
+  #events {
+    width: 100%;
+
+    tr.spacer {
+      &.spacer_top {
+        border-top: 1px dotted #606776;
+      }
+
+      td {
+        line-height: 10px;
+      }
+
+    }
+
+    .highlighted-open-event {
+      background: #fef898;
+    }
+
+    th {
+      color: #b0b1b5;
+      font-weight: bold;
+      line-height: 30px;
+      padding: 0 10px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+
+    td {
+      vertical-align: top;
+      color: #404559;
+      font-size: 14px;
+      padding: 0 10px;
+      border-left: 1px dotted #cbcdd2;
+
+      p { margin-top: 0; }
+
+      &:first-child {
+        border-left: none;
+        padding-left: 0;
+      }
+
+      &.sponsor {
+        width: 100px;
+        text-align: center;
+      }
+
+      &.title {
+        color: #da241c;
+        width: 140px;
+      }
+
+      &.date {
+        width: 120px;
+      }
+
+
+      &.resources {
+        width: 220px;
+      }
+    }
+
+    p.event_status {
+      font-size: 12px;
+      color: #B0B1B5;
+    }
+
+    td.resources {
+
+      ul {
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        margin-left: 23px;
+        list-style: none;
+        position: relative;
+
+        a {
+          font-size: 12px;
+          color: #707483;
+          text-decoration: underline;
+          text-transform: uppercase;
+        }
+
+
+        &:before {
+          content: "";
+          width: 12px;
+          height: 12px;
+          background: #da241c;
+          position: absolute;
+          top: 7px;
+          left: -18px;
+        }
+
+        &:after {
+          content: "";
+          width: 0px;
+          height: 0px;
+          border: 4px solid transparent;
+          border-left: 4px solid #fff;
+          position: absolute;
+          top: 9px;
+          left: -14px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+= semantic_form_for [:admin, @object], :html => {:multipart => true} do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :name, :required => true
+    = f.input :controller, :required => true
+    = f.input :action, :required => true
+    = f.input :active, :as => :boolean
+    = f.input :superadmin_active, :as => :boolean
+    = f.input :sort, :as => :string
+    = f.commit_button (f.object.new_record? ? 'Add module' : 'Edit module')

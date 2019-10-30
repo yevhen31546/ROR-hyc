@@ -1,0 +1,22 @@
+= semantic_form_for [:admin, @navbar_item] do |f|
+  = render 'layouts/error_messages', :target => object
+  %ul
+    = f.input :navbar_id, :as => :hidden, :required => true
+    = f.input :parent_id, :as => :hidden
+    = f.input :name, :required => true
+
+    = f.input :page, :label => 'Link to Page'
+    - if f.object.new_record?
+      = f.input :should_create_page, :as => :boolean, :label => 'Create new page?'
+
+    = f.input :asset, :label => 'OR link to Resource'
+    = f.input :url, :as => :string, :label => 'OR link to URL'
+    = f.input :controller, :label => 'OR link to Controller'
+    = f.input :action, :label => 'AND Action'
+    = f.input :parameters, :label => 'AND Parameters'
+    = f.input :css_class, :label => 'CSS class'
+    = f.input :target, :as => :select, :collection => NavbarItem::TARGETS, :include_blank => true
+
+    %li
+      = f.submit (f.object.new_record? ? 'Create' : 'Save')
+      = link_to 'Cancel', admin_navbars_path, :class => 'cancel'

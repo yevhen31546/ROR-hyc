@@ -1,0 +1,11 @@
+%li{:class => open_event.event_type}
+  == #{open_event.date.strftime('%d/%m/%y')} - 
+  - path = nil
+  - if open_event.enterable?
+    - path = new_event_entry_path(:event_id => open_event)
+  - elsif open_event.show_entry_list?
+    - path = event_entries_path(:event_id => open_event)
+  - if path
+    = link_to open_event.title, path
+  - else
+    = open_event.title

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  event_dinner_id: 1
+  name: MyString
+  phone: MyString
+  email: MyString
+  table_name: MyString
+  quantity: 1
+  total_paid: 9.99
+  comments: MyText
+
+two:
+  event_dinner_id: 1
+  name: MyString
+  phone: MyString
+  email: MyString
+  table_name: MyString
+  quantity: 1
+  total_paid: 9.99
+  comments: MyText

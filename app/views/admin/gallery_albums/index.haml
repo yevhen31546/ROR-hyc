@@ -1,0 +1,44 @@
+%h1 Gallery
+
+%ul#actions
+  %li= link_to 'Add new album', new_object_path, :class => 'add_icon'
+  %li= link_to 'Visit gallery page', gallery_categories_path, :class => 'visit_icon'
+  %li= link_to 'Manage all categories', admin_gallery_categories_path, :class => 'edit_image_icon'
+  %li{:style => 'border: 1px solid #B7B7A8; background: #F6F5F4; padding: 5px 12px 5px 16px; margin: 0 10px 10px 0;'}
+    = form_tag '', :method => :get do
+      = select_tag 'gallery_category_id', options_for_select(all_gallery_category_options(), @selected_gallery_category_id), :include_blank => false
+      = submit_tag 'Filter'
+
+= form_tag update_all_admin_gallery_albums_path, :method => :post do
+  = submit_tag 'Save'
+  
+  = paginated_section collection do
+    %table.index
+      %tr
+        %th Cover
+        %th Title
+        %th Photos
+        %th Category
+        %th Position
+        %th Date
+        %th Actions
+      - @gallery_albums.each do |gallery_album|
+        %tr{:class => cycle('odd', 'even')}
+          - thumb_img = object_thumbnail_tag(gallery_album.cover_photo, :photo)
+          %td.center= link_to(thumb_img, admin_gallery_album_gallery_photos_path(gallery_album))
+          %td{:nowrap => true}
+            = gallery_album.title
+            %br
+            %span{:style => 'color: #444; font-size: 90%;'}== [gallery "#{gallery_album.title.downcase}"]
+          %td(nowrap="nowrap")= pluralize(gallery_album.gallery_photos.count, 'photo')
+          %td(nowrap="nowrap")= gallery_album.try(:gallery_category).try(:name_with_ancestors) || ' - '
+          %td(nowrap="nowrap")= text_field_tag "gallery_albums[#{gallery_album.id}][position]", gallery_album.position, :size => 2, :style => 'width: auto;'
+          %td(nowrap="nowrap")= gallery_album.created_at.to_s
+          %td(nowrap="nowrap")
+            = link_to 'Manage photos',  admin_gallery_album_gallery_photos_path(gallery_album), :class => 'inline_edit_image_icon'
+            = link_to 'Visit', gallery_album_gallery_photos_path(gallery_album), :class => 'inline_visit_icon'
+            = link_to 'Edit', edit_object_path(gallery_album), :class => 'inline_edit_icon'
+            = link_to 'Delete', object_path(gallery_album), :confirm => 'Are you sure?', :method => :delete, :class => 'inline_delete_icon'
+
+  = submit_tag 'Save'
+            
