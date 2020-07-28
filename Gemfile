@@ -4,7 +4,7 @@ ruby '2.3.0'
 
 gem "rails", "3.2.22.4"
 gem "mysql2", "~> 0.3.21"
-gem 'json', '~> 1.8.3'
+gem 'json', '~> 2.3.1'
 gem "jquery-rails", "~> 2.0.3"
 gem "paperclip", "~> 2.7.0"
 gem "parndt-acts_as_tree", "~> 1.2.5", :require => "acts_as_tree"
